@@ -48,6 +48,16 @@
  * The dangling else will not cause a shift/reduce conflict - it's
  * solved by precedence rules.
  */
+
+/*
+ * gram.y for Pascal Compiler
+ * University of South Carolina
+ * author: Yixing Cheng, Zibo Meng, Ruofan Xia
+ * date: 4/7/2014
+ *
+ *
+ */
+
 %{
 
 #include "symtab.h"
@@ -205,10 +215,10 @@ optional_par_id_list:
 id_list:
     new_identifier
   {
-     $$ =  addendIDList($1,NULL);
+     $$ =  appendIDList($1,NULL);
   }| id_list ',' new_identifier
   {
-     $$ = addendIDList($3,$1);
+     $$ = appendIDList($3,$1);
   };
 
 

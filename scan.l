@@ -1,7 +1,11 @@
 %{
 /*
  * lex/flex input for "Pascal" lexical scanner
- *
+ * scan.l as lexical analyzer and generate yylex() used by Parser
+ * University of South Carolina
+ * author: Yixing Cheng, Zibo Meng, Ruofan Xia
+ * date: 4/7/2014
+ * 
  */
 
 #include <ctype.h>

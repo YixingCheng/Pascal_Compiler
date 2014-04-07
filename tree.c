@@ -1,7 +1,14 @@
-/* tree.c file */
+/*
+ *  tree.c for Pascal Compiler
+ *  University of South Carolina
+ *  author: Yixing Cheng, Zibo Meng, Ruofan Xia
+ *  date: 4/7/2014
+ *
+ */
 #include <stdlib.h>
 #include <stdio.h>
 #include "tree.h"
+#include <assert.h>
 
 INDEX_LIST addend(TYPE type, INDEX_LIST head)
 {
@@ -27,11 +34,13 @@ INDEX_LIST addend(TYPE type, INDEX_LIST head)
 }
 
 
-ID_LIST addendIDList(ST_ID id, ID_LIST head)
+ID_LIST appendIDList(ST_ID id, ID_LIST head)
 {
-   ID_LIST end, pointer;
-   
-   end = (ID_LIST)malloc(sizeof(ID_NODE));
+   ID_LIST end, listEntry;   
+   listEntry = head;
+   end = (ID_LIST)malloc(sizeof(struct n));
+   assert(end);
+
    end->id = id;
    end->next = NULL;
    
@@ -41,12 +50,11 @@ ID_LIST addendIDList(ST_ID id, ID_LIST head)
    }
    else   
    {
-      /*while(pointer->next != NULL)
-         temp2 = pointer->next;
+      while(listEntry->next != NULL){
+          listEntry = listEntry->next;
+        }
 
-      pointer->next = end;*/
-      end->next = head;
-      head = end;
+      listEntry->next = end;
    }
    return head;
 }
