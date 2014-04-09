@@ -215,7 +215,7 @@ optional_par_id_list:
 id_list:
     new_identifier
   {
-     $$ =  appendIDList($1,NULL);
+     $$ =  appendIDList($1,NULL);      //ethan's commit@4/7/2014
   }| id_list ',' new_identifier
   {
      $$ = appendIDList($3,$1);
@@ -232,7 +232,8 @@ identifier:
     LEX_ID
   {};
 
-new_identifier:
+
+new_identifier:                 //this is the case id1,id2.. TYPENAME             
     new_identifier_1
   {
      $$ = st_enter_id($1);
@@ -363,7 +364,6 @@ constant:
   {}| sign identifier
   {}| number
   {
-     
      $$ = $1;
   }| constant_literal
   {};
@@ -412,26 +412,9 @@ string:
   {}| string LEX_STRCONST
   {};
 
-type_definition_part:
+type_definition_part:                //ethan's commit@4/7/2014 9:24pm
     LEX_TYPE type_definition_list semi
-  {
-     TYPE typeu = ty_get_unresolved();
-     ST_ID id;
-     TYPE next;
-     while(typeu != NULL)
-     {	  
-        TYPE type = ty_query_ptr(typeu,&id,&next);
-      	if(type == NULL)
-	{
-	   int tmpblk;
-           ST_DR stdr = st_lookup(id,&tmpblk);
-           if(stdr != NULL)
-	      ty_resolve_ptr(typeu,stdr->u.typename.type);
-           else 
-              error("Unresolved type name: \"%s\"",st_get_id_str(id));
-        }
-        typeu = next;        
-     }
+  {  resolvePointer();
   };
 
 type_definition_list:
@@ -448,18 +431,8 @@ type_definition:
   };
 
 type_denoter:
-    typename{  
-      int tmpblk;    
-      ST_DR stdr = st_lookup($1,&tmpblk);
-      if(stdr != NULL)
-      {
-         $$ = stdr->u.typename.type;
-      }
-      else
-      {
-         error("Undeclared type name: \"%s\"",st_get_id_str($1));
-         $$ = ty_build_basic(TYERROR);
-      } 
+    typename{                       //ethan's commit@4/7/2014 9:58pm
+      $$ = checkTypeName($1);
   }| type_denoter_1
   {
     $$ = $1;
@@ -468,25 +441,17 @@ type_denoter:
 type_denoter_1:
     new_ordinal_type
   {}| new_pointer_type
-  {
-     
-     $$ = $1;
+  {   $$ = $1;
   }| new_procedural_type
-  {
-     
-     $$ = $1;
+  {   $$ = $1;
   }| new_structured_type
-  {
-     
-     $$ = $1; 
+  {   $$ = $1; 
   };
 
 new_ordinal_type:
     enumerated_type
   {}| subrange_type
-  {
-     
-     $$ = $1;
+  {  $$ = $1;
   };
 
 enumerated_type:
@@ -503,26 +468,13 @@ enumerator:
   {};
 
 subrange_type:
-    constant LEX_RANGE constant
-  {
-     
-     /* error */
-     TYPE subrange;
-     if($1 > $3)
-     {
-        error("Empty subrange in array index");
-        error("Illegal index type (ignored)");
-        subrange = ty_build_basic(TYERROR);
-     }
-     else
-        subrange = ty_build_subrange(ty_build_basic(TYSIGNEDLONGINT), $1, $3);
-     $$ = subrange;
+    constant LEX_RANGE constant       //ethan's commit@4/7/2014 10:40pm
+  {  $$ = createSubrange($1, $3);  
   };
 
 new_pointer_type:
     pointer_char pointer_domain_type
-  {
-    $$ = $2;
+  { $$ = $2;
   };
 
 pointer_char:
@@ -532,11 +484,9 @@ pointer_char:
 
 pointer_domain_type:
     new_identifier
-  {
-     $$ = ty_build_ptr($1,NULL);
+  { $$ = ty_build_ptr($1,NULL);
   }| new_procedural_type
-  {
-     $$ = ty_build_ptr(NULL,$1);
+  { $$ = ty_build_ptr(NULL,$1);
   };
 
 new_procedural_type:
@@ -547,118 +497,33 @@ new_procedural_type:
      $$ = typroc;
   }| LEX_FUNCTION optional_procedural_type_formal_parameter_list functiontype
   {
-     
-     TYPETAG tytag = ty_query($3);
-     if (tytag != TYSIGNEDINT &&
-         tytag != TYDOUBLE &&
-         tytag != TYSIGNEDLONGINT &&
-         tytag != TYUNSIGNEDCHAR &&
-         tytag != TYSIGNEDCHAR &&
-         tytag != TYPTR &&
-         tytag != TYSUBRANGE)
-         error("Function return type must be simple type");
-      
+     if(checkTypetag($3)){
+       }
+     else{
+        error("Function return type must be simple type");
+       }      
      $$ = ty_build_func($3, $2, TRUE);
   };
 
 optional_procedural_type_formal_parameter_list:
     /* empty */
-  {
-     
-     $$ = NULL;
+  { $$ = NULL;
   }| '(' procedural_type_formal_parameter_list ')'
-  {
-     
-     PARAM_LIST plist = $2;
-     while(plist)
-     {
-        TYPETAG tytag = ty_query(plist->type);
-        if (tytag != TYSIGNEDINT &&
-            tytag != TYDOUBLE &&
-            tytag != TYSIGNEDLONGINT &&
-            tytag != TYUNSIGNEDCHAR &&
-            tytag != TYSIGNEDCHAR &&
-            tytag != TYPTR &&
-            tytag != TYSUBRANGE)
-            error("Parameter type must be a simple type");
-        PARAM_LIST pnxt = plist->next;
-        while(pnxt)
-        {
-           if(plist->id == pnxt->id)
-              error("Duplicate parameter name: \"%s\"",st_get_id_str(plist->id)); 
-           pnxt = pnxt->next;
-        }
-        plist = plist->next;
-     }
-     $$ = $2;
-  };
+  {  $$ = createParalist($2); };
 
 procedural_type_formal_parameter_list:
     procedural_type_formal_parameter
-  {
-     
-     $$ = $1;
+  {  $$ = $1;
   }| procedural_type_formal_parameter_list semi procedural_type_formal_parameter
-  {
-     
-     PARAM_LIST p1, p2, p3;
-     p1 = $1;
-     p3 = p1;
-     p2 = $3;
-     while(p1->next != NULL)
-     {
-        p1 = p1->next;
-     }
-     p1->next = p2;
-     $$ = p3;
+  {  $$ = appendParaList($1, $3);   
   };
 
 procedural_type_formal_parameter:
     id_list
   {}| id_list ':' typename
-  {
-     
-     ID_LIST idlist = $1;
-     int tmpblk;
-     ST_DR dr1 = st_lookup($3, &tmpblk);
-     PARAM_LIST plist = NULL;
-     TYPE ty;
-     if(dr1 != NULL && dr1->tag == TYPENAME)
-        ty = dr1->u.typename.type;
-     else
-     {
-        error("Undeclared type name: \"%s\"",st_get_id_str($3));
-        ty = ty_build_basic(TYERROR);
-     }
-     addbeginParamList(idlist->id, ty, FALSE, &plist);
-     idlist = idlist->next; 
-     while(idlist)
-     {
-        addbeginParamList(idlist->id, ty, FALSE, &plist);
-        idlist = idlist->next;
-     }
-     $$ = plist;
+  {  $$ = createFormPara($1, $3, FALSE);   
   }| LEX_VAR id_list ':' typename
-  {
-     
-     ID_LIST idlist = $2;
-     int tmpblk;
-     ST_DR dr1 = st_lookup($4, &tmpblk); 
-     PARAM_LIST plist = NULL;
-     TYPE ty;
-     if(dr1 != NULL && dr1->tag == TYPENAME)
-        ty = dr1->u.typename.type;
-     else
-        ty = ty_build_basic(TYERROR);
-
-     addbeginParamList(idlist->id, ty, TRUE, &plist);
-     idlist = idlist->next;
-     while(idlist)
-     {
-        addbeginParamList(idlist->id, ty, TRUE, &plist);
-        idlist = idlist->next;
-     }
-     $$ = plist;
+  {  $$ = createFormPara($2, $4, TRUE);
   }
    | LEX_VAR id_list
   {};
@@ -666,16 +531,12 @@ procedural_type_formal_parameter:
 new_structured_type:
     LEX_PACKED unpacked_structured_type
   {}| unpacked_structured_type
-  {
-     
-     $$ = $1;
+  { $$ = $1;
   };
 
 unpacked_structured_type:
     array_type
-  {
-     
-     $$ = $1;
+  { $$ = $1;
   }| file_type
   {}| set_type
   {}| record_type
@@ -685,46 +546,14 @@ unpacked_structured_type:
 
 array_type:
     LEX_ARRAY '[' array_index_list ']' LEX_OF type_denoter
-  {
-     
-     if(ty_query($6) == TYERROR || ty_query($6) == TYFUNC)
-     {
-        error("Data type expected for array elements");
-        //$$ = ty_build_array($6, $3);
-        $$ = ty_build_basic(TYERROR);
-     }
-     else
-     {
-        TYPE tyarr = ty_build_array($6, $3);
-        $$ = tyarr;   
-     }
+  {  $$ = createArray($3, $6);
   };
 
 array_index_list:
     ordinal_index_type
-  {
-     
-     if (ty_query($1) != TYERROR)
-     {
-        INDEX_LIST ilist = addend($1,NULL);
-        $$ = ilist;
-     }
-     else
-     { 
-        $$ = NULL;
-     }
+  { $$ = createIndexList($1, NULL);   
   }| array_index_list ',' ordinal_index_type
-  {
-     
-     if (ty_query($3) != TYERROR)
-     {
-        INDEX_LIST ilist = addend($3,$1);
-        $$ = ilist;
-     }
-     else
-     {
-        $$ = NULL;
-     } 
+  { $$ = createIndexList($3, $1);
   };
 
 
@@ -843,6 +672,7 @@ variable_declaration:
         TYPE tpunres = ty_get_unresolved();
         ST_ID id;
         TYPE next;
+        
         while(tpunres != NULL)
         {	  
            TYPE tpque = ty_query_ptr(tpunres,&id,&next);
