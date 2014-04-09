@@ -221,7 +221,7 @@ INDEX_LIST createIndexList(TYPE type, INDEX_LIST indexList){
 void declaVariable(ID_LIST idList, TYPE type){
        if((ty_query(type) == TYERROR) || (ty_query(type)) == TYFUNC)
            error("Variable(s) must be of data type");
-       ID_List localidList = idList;
+       ID_LIST localidList = idList;
        
        resolvePointer();
         
@@ -238,9 +238,22 @@ void declaVariable(ID_LIST idList, TYPE type){
                  entry->u.decl.err = FALSE;
              
              int temp;
-             ST_DR checkEntry = st_lookup(idList->id, &temp);
+             ST_DR checkEntry = st_lookup(localidList->id, &temp);
              if(!checkEntry)
-                error("Duplicate variable declaration: \"%s\"", st_get_id_str(idList->id))
+                error("Duplicate variable declaration: \"%s\"", st_get_id_str(localidList->id));
+             else{
+                st_install(localidList->id, entry);
+                int size = 0;
+                int align = 0;
+                calSizeAlign(entry->u.decl.type, &align, &size);
+                TYPETAG typetag = ty_query(entry->u.decl.type);
+                char *str = st_get_id_str(localidList->id);
+                if((ty_query(type) != TYERROR) && (ty_query(type) != TYFUNC)){
+                       b_global_decl(str, align, size);
+                       b_skip(size);
+                   }
+             }
+            localidList = localidList->next;
          } 
    }
 

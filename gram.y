@@ -651,71 +651,7 @@ variable_declaration_list:
 
 variable_declaration:
     id_list ':' type_denoter semi
-  {
-     
-     if(ty_query($3) == TYERROR || ty_query($3) == TYFUNC)
-        error("Variable(s) must be of data type");
-     ID_LIST idlist = $1;
-     while(idlist != NULL)
-     {
-        ST_DR dr;
-        dr = stdr_alloc();
-        dr->tag = GDECL;
-        dr->u.decl.type = $3;
-        dr->u.decl.sc = NO_SC;
-        dr->u.decl.is_ref = FALSE;
-        if(ty_query($3) == TYERROR)
-           dr->u.decl.err = TRUE;
-        else
-           dr->u.decl.err = FALSE; 
-            
-        TYPE tpunres = ty_get_unresolved();
-        ST_ID id;
-        TYPE next;
-        
-        while(tpunres != NULL)
-        {	  
-           TYPE tpque = ty_query_ptr(tpunres,&id,&next);
-      	   if(tpque == NULL)
-	   {
-	      int tmpblk;
-              ST_DR stdr;
-              stdr = st_lookup(id,&tmpblk);
-              if(stdr != NULL)
-              {
-	         ty_resolve_ptr(tpunres,stdr->u.typename.type);
-              }
-              else
-              {
-                 error("Unresolved type name: \"%s\"",st_get_id_str(id));
-              }
-           }  
-           tpunres = next;
-        }
-        /* error */
-        int tmpblk1;
-        ST_DR dr1 = st_lookup(idlist->id, &tmpblk1);
-        if(dr1 != NULL)
-        {
-           error("Duplicate variable declaration: \"%s\"",st_get_id_str(idlist->id));
-        }
-        else
-        {
-           st_install(idlist->id,dr);
-           int size = 0;
-           int align = 0;
-           calSizeAlign(dr->u.decl.type, &align, &size);
-           TYPETAG tytag = ty_query(dr->u.decl.type);
-           char *str = st_get_id_str(idlist->id);
-           if(ty_query($3) != TYERROR && ty_query($3) != TYFUNC)
-           {
-              b_global_decl(str,align,size);
-              b_skip(size);
-           }
-        }
-        idlist = idlist->next;
-     }
-  }
+  {  declaVariable($1, $3);  }
 function_declaration:
     function_heading semi directive_list semi
   {}| function_heading semi any_declaration_part statement_part semi
@@ -739,18 +675,7 @@ directive:
 functiontype:
     /* empty */
   {}| ':' typename
-  {
-     
-     int tmpblk;
-     ST_DR dr = st_lookup($2,&tmpblk);
-     if((dr != NULL) && (dr->tag == TYPENAME))
-        $$ = dr->u.typename.type;
-     else
-     {
-        error("Undeclared type name: \"%s\"",st_get_id_str($2));
-        $$ = ty_build_basic(TYERROR);         
-     }
-  };
+  {  $$ = checkTypeName($2);  };
 
 /* parameter specification section */
 
