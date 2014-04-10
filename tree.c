@@ -11,8 +11,13 @@
 #include "types.h"
 #include "defs.h"
 #include "symtab.h"
-#include "encode.h"
+//#include "encode.h"
 #include <assert.h>
+
+extern void calSizeAlign(TYPE ty, int *align, unsigned int *size);
+extern NODE unaryConvert(NODE oldNode);
+extern void geneAsmForNode(NODE node);
+
 
 PARAM_LIST addbeginParamList(ST_ID id, TYPE ty, BOOLEAN is_ref, PARAM_LIST *head);
 
@@ -287,10 +292,10 @@ PARAM_LIST addbeginParamList(ST_ID id, TYPE ty, BOOLEAN is_ref, PARAM_LIST *head
 void geneAsmForStmt(NODE vari_or_func_access, NODE restofstmt){
        if(restofstmt){                             // is rest of the statment is not NULL, then this is an assignment statement
             NODE localNode = malloc(sizeof(struct exprtree_node));
-            assert(localNode);
+            assert(localNode);           //then build an assignment node
             localNode->exprTypeTag = ASSIGN;
             localNode->u.assign.right = restofstmt;
-            localNode->u.assgin.left  = vari_or_func_access;
+            localNode->u.assign.left  = vari_or_func_access;
             localNode->type = vari_or_func_access->type;
             if(localNode->u.assign.right->exprTypeTag == VARIABLE ){       // if the right node is a variable, we need an explict deref node
                  NODE derefNode = malloc(sizeof(struct exprtree_node));
@@ -298,7 +303,7 @@ void geneAsmForStmt(NODE vari_or_func_access, NODE restofstmt){
                  derefNode->type = localNode->u.assign.right->type;
                  derefNode->u.deref.child = localNode->u.assign.right;
                  localNode->u.assign.right = derefNode;
-                 localNode->u.assign.right = unary_convert(localNode->u.assign.right);
+                 localNode->u.assign.right = unaryConvert(localNode->u.assign.right);
               }
             if(localNode->u.assign.left->type != localNode->u.assign.right->type){
                  NODE tempNode = malloc(sizeof(struct exprtree_node));
@@ -309,8 +314,14 @@ void geneAsmForStmt(NODE vari_or_func_access, NODE restofstmt){
                  tempNode->u.convert.child   = localNode->u.assign.right;
                  tempNode->u.assign.right    = tempNode;
               }
-            if(localNode)
-        }       
+            if(localNode->u.assign.left->exprTypeTag == FUNC){   //maybeshould be right here
+                 localNode->exprTypeTag = FUNC_ASSIGN;
+              }
+            geneAsmForNode(localNode);
+        } 
+       else{
+            geneAsmForNode(vari_or_func_access);
+        }      
    }
 
 

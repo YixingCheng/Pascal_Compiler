@@ -42,7 +42,7 @@ typedef struct exprtree_node{
         }negate;
         struct{
             char* funcName;
-            struct expretree_node *arglist;
+            struct exprtree_node *arglist;
         }func;
         struct{
             char* str_const;

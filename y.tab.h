@@ -436,16 +436,17 @@ union YYSTYPE
 {
 #line 82 "gram.y" /* yacc.c:1909  */
 
-    char  *y_string;
-    long   y_int;
-    double y_real;
-    TYPE   y_type;
-    ST_ID y_stid;
-    INDEX_LIST y_indexlist;
-    ID_LIST y_idlist;
-    PARAM_LIST y_paramlist;
+    char         *y_string;
+    long         y_int;
+    double       y_real;
+    TYPE         y_type;
+    ST_ID        y_stid;
+    INDEX_LIST   y_indexlist;
+    ID_LIST      y_idlist;
+    PARAM_LIST   y_paramlist;
+    NODE         y_node;
 
-#line 449 "y.tab.h" /* yacc.c:1909  */
+#line 450 "y.tab.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

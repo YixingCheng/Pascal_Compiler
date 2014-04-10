@@ -62,7 +62,7 @@
 
 #include "symtab.h"
 #include "tree.h"
-#include "encode.h"
+//#include "encode.h"
 
 /* Cause the `yydebug' variable to be defined.  */
 #define YYDEBUG 1
@@ -875,7 +875,7 @@ actual_parameter:
 
 assignment_or_call_statement:
     variable_or_function_access_maybe_assignment rest_of_statement
-  {};
+  { geneAsmForStmt($1, $2);};       //ethan commit @4/10/2014 2:36pm
 
 variable_or_function_access_maybe_assignment:
     identifier

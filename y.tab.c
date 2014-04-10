@@ -67,7 +67,7 @@
 
 #include "symtab.h"
 #include "tree.h"
-#include "encode.h"
+//#include "encode.h"
 
 /* Cause the `yydebug' variable to be defined.  */
 #define YYDEBUG 1
@@ -504,16 +504,17 @@ union YYSTYPE
 {
 #line 82 "gram.y" /* yacc.c:355  */
 
-    char  *y_string;
-    long   y_int;
-    double y_real;
-    TYPE   y_type;
-    ST_ID y_stid;
-    INDEX_LIST y_indexlist;
-    ID_LIST y_idlist;
-    PARAM_LIST y_paramlist;
+    char         *y_string;
+    long         y_int;
+    double       y_real;
+    TYPE         y_type;
+    ST_ID        y_stid;
+    INDEX_LIST   y_indexlist;
+    ID_LIST      y_idlist;
+    PARAM_LIST   y_paramlist;
+    NODE         y_node;
 
-#line 517 "y.tab.c" /* yacc.c:355  */
+#line 518 "y.tab.c" /* yacc.c:355  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
@@ -528,7 +529,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 532 "y.tab.c" /* yacc.c:358  */
+#line 533 "y.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -844,50 +845,50 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   190,   190,   190,   194,   195,   199,   203,   207,   212,
-     212,   216,   219,   226,   232,   236,   242,   247,   248,   249,
-     251,   252,   253,   254,   255,   256,   257,   258,   259,   260,
-     261,   262,   263,   265,   266,   268,   269,   270,   271,   272,
-     273,   274,   275,   276,   277,   279,   280,   282,   283,   284,
-     285,   286,   288,   289,   290,   291,   292,   293,   294,   295,
-     299,   304,   304,   308,   309,   314,   314,   318,   319,   323,
-     324,   325,   326,   332,   336,   337,   342,   343,   349,   353,
-     354,   358,   362,   363,   364,   368,   372,   377,   384,   387,
-     391,   392,   396,   397,   401,   402,   403,   407,   411,   412,
-     416,   438,   439,   443,   451,   463,   469,   470,   474,   478,
-     485,   486,   493,   497,   498,   502,   506,   523,   529,   530,
-     534,   537,   543,   548,   566,   569,   597,   601,   617,   618,
-     641,   663,   667,   668,   675,   679,   680,   681,   687,   704,
-     716,   732,   735,   740,   745,   745,   751,   755,   760,   760,
-     761,   762,   766,   767,   771,   775,   779,   780,   784,   785,
-     789,   790,   794,   795,   799,   803,   804,   808,   809,   815,
-     819,   820,   824,   890,   891,   895,   896,   900,   901,   905,
-     906,   911,   911,   929,   929,   933,   934,   938,   939,   940,
-     941,   942,   946,   947,   951,   952,   956,   957,   958,   962,
-     966,   970,   974,   975,   979,   983,   987,   991,   992,   996,
-     997,  1001,  1002,  1006,  1007,  1008,  1009,  1013,  1017,  1018,
-    1022,  1026,  1027,  1031,  1035,  1036,  1040,  1044,  1045,  1049,
-    1050,  1054,  1058,  1059,  1063,  1064,  1065,  1069,  1073,  1077,
-    1081,  1082,  1086,  1087,  1088,  1089,  1090,  1094,  1098,  1105,
-    1105,  1109,  1110,  1114,  1120,  1124,  1125,  1126,  1131,  1131,
-    1135,  1136,  1137,  1138,  1139,  1140,  1141,  1142,  1143,  1144,
-    1149,  1149,  1153,  1154,  1158,  1159,  1160,  1165,  1166,  1167,
-    1168,  1169,  1170,  1171,  1172,  1176,  1177,  1178,  1179,  1180,
-    1181,  1182,  1183,  1184,  1185,  1186,  1187,  1188,  1189,  1190,
-    1191,  1192,  1196,  1197,  1198,  1202,  1203,  1204,  1205,  1209,
-    1213,  1217,  1218,  1222,  1223,  1227,  1228,  1234,  1238,  1242,
-    1243,  1244,  1248,  1249,  1250,  1251,  1252,  1256,  1257,  1258,
-    1262,  1263,  1267,  1268,  1269,  1270,  1274,  1275,  1279,  1280,
-    1281,  1282,  1283,  1284,  1288,  1292,  1293,  1297,  1298,  1302,
-    1303,  1307,  1308,  1309,  1310,  1311,  1312,  1313,  1314,  1318,
-    1319,  1323,  1324,  1328,  1329,  1333,  1334,  1335,  1340,  1340,
-    1344,  1345,  1349,  1350,  1351,  1352,  1353,  1354,  1355,  1356,
-    1357,  1358,  1359,  1360,  1361,  1362,  1363,  1364,  1365,  1366,
-    1367,  1368,  1369,  1370,  1371,  1375,  1376,  1380,  1381,  1382,
-    1383,  1384,  1385,  1389,  1390,  1391,  1392,  1396,  1397,  1401,
-    1406,  1406,  1411,  1411,  1415,  1416,  1420,  1421,  1425,  1426,
-    1430,  1435,  1435,  1440,  1440,  1441,  1446,  1446,  1450,  1451,
-    1455
+       0,   192,   192,   192,   196,   197,   201,   205,   209,   214,
+     214,   218,   221,   228,   234,   239,   245,   250,   251,   252,
+     254,   255,   256,   257,   258,   259,   260,   261,   262,   263,
+     264,   265,   266,   268,   269,   271,   272,   273,   274,   275,
+     276,   277,   278,   279,   280,   282,   283,   285,   286,   287,
+     288,   289,   291,   292,   293,   294,   295,   296,   297,   298,
+     302,   307,   307,   311,   312,   317,   317,   321,   322,   326,
+     327,   328,   329,   335,   339,   340,   345,   346,   352,   356,
+     357,   361,   365,   366,   367,   370,   374,   379,   386,   389,
+     393,   394,   398,   399,   403,   404,   405,   409,   413,   414,
+     418,   423,   424,   428,   436,   438,   444,   445,   447,   449,
+     454,   455,   460,   464,   465,   469,   473,   478,   483,   484,
+     488,   490,   495,   500,   512,   513,   517,   519,   524,   525,
+     527,   530,   534,   535,   540,   542,   543,   544,   550,   555,
+     557,   563,   566,   571,   576,   576,   582,   586,   591,   591,
+     592,   593,   597,   598,   602,   606,   610,   611,   615,   616,
+     620,   621,   625,   626,   630,   634,   635,   639,   640,   646,
+     650,   651,   655,   658,   659,   663,   664,   668,   669,   673,
+     674,   679,   679,   686,   686,   690,   691,   695,   696,   697,
+     698,   699,   703,   704,   708,   709,   713,   714,   715,   719,
+     723,   727,   731,   732,   736,   740,   744,   748,   749,   753,
+     754,   758,   759,   763,   764,   765,   766,   770,   774,   775,
+     779,   783,   784,   788,   792,   793,   797,   801,   802,   806,
+     807,   811,   815,   816,   820,   821,   822,   826,   830,   834,
+     838,   839,   843,   844,   845,   846,   847,   851,   855,   862,
+     862,   866,   867,   871,   877,   881,   882,   883,   888,   888,
+     892,   893,   894,   895,   896,   897,   898,   899,   900,   901,
+     906,   906,   910,   911,   915,   916,   917,   922,   923,   924,
+     925,   926,   927,   928,   929,   933,   934,   935,   936,   937,
+     938,   939,   940,   941,   942,   943,   944,   945,   946,   947,
+     948,   949,   953,   954,   955,   959,   960,   961,   962,   966,
+     970,   974,   975,   979,   980,   984,   985,   991,   995,   999,
+    1000,  1001,  1005,  1006,  1007,  1008,  1009,  1013,  1014,  1015,
+    1019,  1020,  1024,  1025,  1026,  1027,  1031,  1032,  1036,  1037,
+    1038,  1039,  1040,  1041,  1045,  1049,  1050,  1054,  1055,  1059,
+    1060,  1064,  1065,  1066,  1067,  1068,  1069,  1070,  1071,  1075,
+    1076,  1080,  1081,  1085,  1086,  1090,  1091,  1092,  1097,  1097,
+    1101,  1102,  1106,  1107,  1108,  1109,  1110,  1111,  1112,  1113,
+    1114,  1115,  1116,  1117,  1118,  1119,  1120,  1121,  1122,  1123,
+    1124,  1125,  1126,  1127,  1128,  1132,  1133,  1137,  1138,  1139,
+    1140,  1141,  1142,  1146,  1147,  1148,  1149,  1153,  1154,  1158,
+    1163,  1163,  1168,  1168,  1172,  1173,  1177,  1178,  1182,  1183,
+    1187,  1192,  1192,  1197,  1197,  1198,  1203,  1203,  1207,  1208,
+    1212
 };
 #endif
 
@@ -2520,525 +2521,524 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 190 "gram.y" /* yacc.c:1646  */
+#line 192 "gram.y" /* yacc.c:1646  */
     {}
-#line 2526 "y.tab.c" /* yacc.c:1646  */
+#line 2527 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 191 "gram.y" /* yacc.c:1646  */
+#line 193 "gram.y" /* yacc.c:1646  */
     {}
-#line 2532 "y.tab.c" /* yacc.c:1646  */
+#line 2533 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 195 "gram.y" /* yacc.c:1646  */
+#line 197 "gram.y" /* yacc.c:1646  */
     {}
-#line 2538 "y.tab.c" /* yacc.c:1646  */
+#line 2539 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 196 "gram.y" /* yacc.c:1646  */
+#line 198 "gram.y" /* yacc.c:1646  */
     {}
-#line 2544 "y.tab.c" /* yacc.c:1646  */
+#line 2545 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 200 "gram.y" /* yacc.c:1646  */
+#line 202 "gram.y" /* yacc.c:1646  */
     {}
-#line 2550 "y.tab.c" /* yacc.c:1646  */
+#line 2551 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 204 "gram.y" /* yacc.c:1646  */
+#line 206 "gram.y" /* yacc.c:1646  */
     {}
-#line 2556 "y.tab.c" /* yacc.c:1646  */
+#line 2557 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 208 "gram.y" /* yacc.c:1646  */
+#line 210 "gram.y" /* yacc.c:1646  */
     {}
-#line 2562 "y.tab.c" /* yacc.c:1646  */
+#line 2563 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 212 "gram.y" /* yacc.c:1646  */
+#line 214 "gram.y" /* yacc.c:1646  */
     {}
-#line 2568 "y.tab.c" /* yacc.c:1646  */
+#line 2569 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 213 "gram.y" /* yacc.c:1646  */
+#line 215 "gram.y" /* yacc.c:1646  */
     {}
-#line 2574 "y.tab.c" /* yacc.c:1646  */
+#line 2575 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 217 "gram.y" /* yacc.c:1646  */
+#line 219 "gram.y" /* yacc.c:1646  */
     {
-     (yyval.y_idlist) =  appendIDList((yyvsp[0].y_stid),NULL);
+     (yyval.y_idlist) =  appendIDList((yyvsp[0].y_stid),NULL);      //ethan's commit@4/7/2014
   }
-#line 2582 "y.tab.c" /* yacc.c:1646  */
+#line 2583 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 220 "gram.y" /* yacc.c:1646  */
+#line 222 "gram.y" /* yacc.c:1646  */
     {
      (yyval.y_idlist) = appendIDList((yyvsp[0].y_stid),(yyvsp[-2].y_idlist));
   }
-#line 2590 "y.tab.c" /* yacc.c:1646  */
+#line 2591 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 227 "gram.y" /* yacc.c:1646  */
+#line 229 "gram.y" /* yacc.c:1646  */
     {     
      (yyval.y_stid) = st_enter_id((yyvsp[0].y_string));
   }
-#line 2598 "y.tab.c" /* yacc.c:1646  */
+#line 2599 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 233 "gram.y" /* yacc.c:1646  */
+#line 235 "gram.y" /* yacc.c:1646  */
     {}
-#line 2604 "y.tab.c" /* yacc.c:1646  */
+#line 2605 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 237 "gram.y" /* yacc.c:1646  */
+#line 240 "gram.y" /* yacc.c:1646  */
     {
      (yyval.y_stid) = st_enter_id((yyvsp[0].y_string));
   }
-#line 2612 "y.tab.c" /* yacc.c:1646  */
+#line 2613 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 244 "gram.y" /* yacc.c:1646  */
+#line 247 "gram.y" /* yacc.c:1646  */
     {
      
      (yyval.y_string) = (yyvsp[0].y_string);
   }
-#line 2621 "y.tab.c" /* yacc.c:1646  */
+#line 2622 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 248 "gram.y" /* yacc.c:1646  */
+#line 251 "gram.y" /* yacc.c:1646  */
     {}
-#line 2627 "y.tab.c" /* yacc.c:1646  */
+#line 2628 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 249 "gram.y" /* yacc.c:1646  */
+#line 252 "gram.y" /* yacc.c:1646  */
     {}
-#line 2633 "y.tab.c" /* yacc.c:1646  */
+#line 2634 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 251 "gram.y" /* yacc.c:1646  */
+#line 254 "gram.y" /* yacc.c:1646  */
     {}
-#line 2639 "y.tab.c" /* yacc.c:1646  */
+#line 2640 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 252 "gram.y" /* yacc.c:1646  */
+#line 255 "gram.y" /* yacc.c:1646  */
     {}
-#line 2645 "y.tab.c" /* yacc.c:1646  */
+#line 2646 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 253 "gram.y" /* yacc.c:1646  */
+#line 256 "gram.y" /* yacc.c:1646  */
     {}
-#line 2651 "y.tab.c" /* yacc.c:1646  */
+#line 2652 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 254 "gram.y" /* yacc.c:1646  */
+#line 257 "gram.y" /* yacc.c:1646  */
     {}
-#line 2657 "y.tab.c" /* yacc.c:1646  */
+#line 2658 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 255 "gram.y" /* yacc.c:1646  */
+#line 258 "gram.y" /* yacc.c:1646  */
     {}
-#line 2663 "y.tab.c" /* yacc.c:1646  */
+#line 2664 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 256 "gram.y" /* yacc.c:1646  */
+#line 259 "gram.y" /* yacc.c:1646  */
     {}
-#line 2669 "y.tab.c" /* yacc.c:1646  */
+#line 2670 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 257 "gram.y" /* yacc.c:1646  */
+#line 260 "gram.y" /* yacc.c:1646  */
     {}
-#line 2675 "y.tab.c" /* yacc.c:1646  */
+#line 2676 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 258 "gram.y" /* yacc.c:1646  */
+#line 261 "gram.y" /* yacc.c:1646  */
     {}
-#line 2681 "y.tab.c" /* yacc.c:1646  */
+#line 2682 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 259 "gram.y" /* yacc.c:1646  */
+#line 262 "gram.y" /* yacc.c:1646  */
     {}
-#line 2687 "y.tab.c" /* yacc.c:1646  */
+#line 2688 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 260 "gram.y" /* yacc.c:1646  */
+#line 263 "gram.y" /* yacc.c:1646  */
     {}
-#line 2693 "y.tab.c" /* yacc.c:1646  */
+#line 2694 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 261 "gram.y" /* yacc.c:1646  */
+#line 264 "gram.y" /* yacc.c:1646  */
     {}
-#line 2699 "y.tab.c" /* yacc.c:1646  */
+#line 2700 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 262 "gram.y" /* yacc.c:1646  */
+#line 265 "gram.y" /* yacc.c:1646  */
     {}
-#line 2705 "y.tab.c" /* yacc.c:1646  */
+#line 2706 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 263 "gram.y" /* yacc.c:1646  */
+#line 266 "gram.y" /* yacc.c:1646  */
     {}
-#line 2711 "y.tab.c" /* yacc.c:1646  */
+#line 2712 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 265 "gram.y" /* yacc.c:1646  */
+#line 268 "gram.y" /* yacc.c:1646  */
     {}
-#line 2717 "y.tab.c" /* yacc.c:1646  */
+#line 2718 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 266 "gram.y" /* yacc.c:1646  */
+#line 269 "gram.y" /* yacc.c:1646  */
     {}
-#line 2723 "y.tab.c" /* yacc.c:1646  */
+#line 2724 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 268 "gram.y" /* yacc.c:1646  */
+#line 271 "gram.y" /* yacc.c:1646  */
     {}
-#line 2729 "y.tab.c" /* yacc.c:1646  */
+#line 2730 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 269 "gram.y" /* yacc.c:1646  */
+#line 272 "gram.y" /* yacc.c:1646  */
     {}
-#line 2735 "y.tab.c" /* yacc.c:1646  */
+#line 2736 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 270 "gram.y" /* yacc.c:1646  */
+#line 273 "gram.y" /* yacc.c:1646  */
     {}
-#line 2741 "y.tab.c" /* yacc.c:1646  */
+#line 2742 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 271 "gram.y" /* yacc.c:1646  */
+#line 274 "gram.y" /* yacc.c:1646  */
     {}
-#line 2747 "y.tab.c" /* yacc.c:1646  */
+#line 2748 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 38:
-#line 272 "gram.y" /* yacc.c:1646  */
+#line 275 "gram.y" /* yacc.c:1646  */
     {}
-#line 2753 "y.tab.c" /* yacc.c:1646  */
+#line 2754 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 273 "gram.y" /* yacc.c:1646  */
+#line 276 "gram.y" /* yacc.c:1646  */
     {}
-#line 2759 "y.tab.c" /* yacc.c:1646  */
+#line 2760 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 274 "gram.y" /* yacc.c:1646  */
+#line 277 "gram.y" /* yacc.c:1646  */
     {}
-#line 2765 "y.tab.c" /* yacc.c:1646  */
+#line 2766 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 41:
-#line 275 "gram.y" /* yacc.c:1646  */
+#line 278 "gram.y" /* yacc.c:1646  */
     {}
-#line 2771 "y.tab.c" /* yacc.c:1646  */
+#line 2772 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 42:
-#line 276 "gram.y" /* yacc.c:1646  */
+#line 279 "gram.y" /* yacc.c:1646  */
     {}
-#line 2777 "y.tab.c" /* yacc.c:1646  */
+#line 2778 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 277 "gram.y" /* yacc.c:1646  */
+#line 280 "gram.y" /* yacc.c:1646  */
     {}
-#line 2783 "y.tab.c" /* yacc.c:1646  */
+#line 2784 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 44:
-#line 279 "gram.y" /* yacc.c:1646  */
+#line 282 "gram.y" /* yacc.c:1646  */
     {}
-#line 2789 "y.tab.c" /* yacc.c:1646  */
+#line 2790 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 45:
-#line 280 "gram.y" /* yacc.c:1646  */
+#line 283 "gram.y" /* yacc.c:1646  */
     {}
-#line 2795 "y.tab.c" /* yacc.c:1646  */
+#line 2796 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 282 "gram.y" /* yacc.c:1646  */
+#line 285 "gram.y" /* yacc.c:1646  */
     {}
-#line 2801 "y.tab.c" /* yacc.c:1646  */
+#line 2802 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 47:
-#line 283 "gram.y" /* yacc.c:1646  */
+#line 286 "gram.y" /* yacc.c:1646  */
     {}
-#line 2807 "y.tab.c" /* yacc.c:1646  */
+#line 2808 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 48:
-#line 284 "gram.y" /* yacc.c:1646  */
+#line 287 "gram.y" /* yacc.c:1646  */
     {}
-#line 2813 "y.tab.c" /* yacc.c:1646  */
+#line 2814 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 49:
-#line 285 "gram.y" /* yacc.c:1646  */
+#line 288 "gram.y" /* yacc.c:1646  */
     {}
-#line 2819 "y.tab.c" /* yacc.c:1646  */
+#line 2820 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 50:
-#line 286 "gram.y" /* yacc.c:1646  */
+#line 289 "gram.y" /* yacc.c:1646  */
     {}
-#line 2825 "y.tab.c" /* yacc.c:1646  */
+#line 2826 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 51:
-#line 288 "gram.y" /* yacc.c:1646  */
+#line 291 "gram.y" /* yacc.c:1646  */
     {}
-#line 2831 "y.tab.c" /* yacc.c:1646  */
+#line 2832 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 52:
-#line 289 "gram.y" /* yacc.c:1646  */
+#line 292 "gram.y" /* yacc.c:1646  */
     {}
-#line 2837 "y.tab.c" /* yacc.c:1646  */
+#line 2838 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 53:
-#line 290 "gram.y" /* yacc.c:1646  */
+#line 293 "gram.y" /* yacc.c:1646  */
     {}
-#line 2843 "y.tab.c" /* yacc.c:1646  */
+#line 2844 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 54:
-#line 291 "gram.y" /* yacc.c:1646  */
+#line 294 "gram.y" /* yacc.c:1646  */
     {}
-#line 2849 "y.tab.c" /* yacc.c:1646  */
+#line 2850 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 55:
-#line 292 "gram.y" /* yacc.c:1646  */
+#line 295 "gram.y" /* yacc.c:1646  */
     {}
-#line 2855 "y.tab.c" /* yacc.c:1646  */
+#line 2856 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 56:
-#line 293 "gram.y" /* yacc.c:1646  */
+#line 296 "gram.y" /* yacc.c:1646  */
     {}
-#line 2861 "y.tab.c" /* yacc.c:1646  */
+#line 2862 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 57:
-#line 294 "gram.y" /* yacc.c:1646  */
+#line 297 "gram.y" /* yacc.c:1646  */
     {}
-#line 2867 "y.tab.c" /* yacc.c:1646  */
+#line 2868 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 58:
-#line 295 "gram.y" /* yacc.c:1646  */
+#line 298 "gram.y" /* yacc.c:1646  */
     {}
-#line 2873 "y.tab.c" /* yacc.c:1646  */
+#line 2874 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 59:
-#line 296 "gram.y" /* yacc.c:1646  */
+#line 299 "gram.y" /* yacc.c:1646  */
     {}
-#line 2879 "y.tab.c" /* yacc.c:1646  */
+#line 2880 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 60:
-#line 300 "gram.y" /* yacc.c:1646  */
+#line 303 "gram.y" /* yacc.c:1646  */
     {}
-#line 2885 "y.tab.c" /* yacc.c:1646  */
+#line 2886 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 61:
-#line 304 "gram.y" /* yacc.c:1646  */
+#line 307 "gram.y" /* yacc.c:1646  */
     {}
-#line 2891 "y.tab.c" /* yacc.c:1646  */
+#line 2892 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 62:
-#line 305 "gram.y" /* yacc.c:1646  */
+#line 308 "gram.y" /* yacc.c:1646  */
     {}
-#line 2897 "y.tab.c" /* yacc.c:1646  */
+#line 2898 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 63:
-#line 309 "gram.y" /* yacc.c:1646  */
+#line 312 "gram.y" /* yacc.c:1646  */
     {}
-#line 2903 "y.tab.c" /* yacc.c:1646  */
+#line 2904 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 64:
-#line 310 "gram.y" /* yacc.c:1646  */
+#line 313 "gram.y" /* yacc.c:1646  */
     {}
-#line 2909 "y.tab.c" /* yacc.c:1646  */
+#line 2910 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 65:
-#line 314 "gram.y" /* yacc.c:1646  */
+#line 317 "gram.y" /* yacc.c:1646  */
     {}
-#line 2915 "y.tab.c" /* yacc.c:1646  */
+#line 2916 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 66:
-#line 315 "gram.y" /* yacc.c:1646  */
+#line 318 "gram.y" /* yacc.c:1646  */
     {}
-#line 2921 "y.tab.c" /* yacc.c:1646  */
+#line 2922 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 67:
-#line 319 "gram.y" /* yacc.c:1646  */
+#line 322 "gram.y" /* yacc.c:1646  */
     {}
-#line 2927 "y.tab.c" /* yacc.c:1646  */
+#line 2928 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 68:
-#line 320 "gram.y" /* yacc.c:1646  */
+#line 323 "gram.y" /* yacc.c:1646  */
     {}
-#line 2933 "y.tab.c" /* yacc.c:1646  */
+#line 2934 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 69:
-#line 324 "gram.y" /* yacc.c:1646  */
+#line 327 "gram.y" /* yacc.c:1646  */
     {}
-#line 2939 "y.tab.c" /* yacc.c:1646  */
+#line 2940 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 70:
-#line 325 "gram.y" /* yacc.c:1646  */
+#line 328 "gram.y" /* yacc.c:1646  */
     {}
-#line 2945 "y.tab.c" /* yacc.c:1646  */
+#line 2946 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 71:
-#line 326 "gram.y" /* yacc.c:1646  */
+#line 329 "gram.y" /* yacc.c:1646  */
     {}
-#line 2951 "y.tab.c" /* yacc.c:1646  */
+#line 2952 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 72:
-#line 327 "gram.y" /* yacc.c:1646  */
+#line 330 "gram.y" /* yacc.c:1646  */
     {}
-#line 2957 "y.tab.c" /* yacc.c:1646  */
+#line 2958 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 73:
-#line 333 "gram.y" /* yacc.c:1646  */
+#line 336 "gram.y" /* yacc.c:1646  */
     {}
-#line 2963 "y.tab.c" /* yacc.c:1646  */
+#line 2964 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 74:
-#line 337 "gram.y" /* yacc.c:1646  */
+#line 340 "gram.y" /* yacc.c:1646  */
     {}
-#line 2969 "y.tab.c" /* yacc.c:1646  */
+#line 2970 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 75:
-#line 338 "gram.y" /* yacc.c:1646  */
+#line 341 "gram.y" /* yacc.c:1646  */
     {}
-#line 2975 "y.tab.c" /* yacc.c:1646  */
+#line 2976 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 76:
-#line 343 "gram.y" /* yacc.c:1646  */
+#line 346 "gram.y" /* yacc.c:1646  */
     {}
-#line 2981 "y.tab.c" /* yacc.c:1646  */
+#line 2982 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 77:
-#line 344 "gram.y" /* yacc.c:1646  */
+#line 347 "gram.y" /* yacc.c:1646  */
     {}
-#line 2987 "y.tab.c" /* yacc.c:1646  */
+#line 2988 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 78:
-#line 350 "gram.y" /* yacc.c:1646  */
+#line 353 "gram.y" /* yacc.c:1646  */
     {}
-#line 2993 "y.tab.c" /* yacc.c:1646  */
+#line 2994 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 79:
-#line 354 "gram.y" /* yacc.c:1646  */
+#line 357 "gram.y" /* yacc.c:1646  */
     {}
-#line 2999 "y.tab.c" /* yacc.c:1646  */
+#line 3000 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 80:
-#line 355 "gram.y" /* yacc.c:1646  */
+#line 358 "gram.y" /* yacc.c:1646  */
     {}
-#line 3005 "y.tab.c" /* yacc.c:1646  */
+#line 3006 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 81:
-#line 359 "gram.y" /* yacc.c:1646  */
+#line 362 "gram.y" /* yacc.c:1646  */
     {}
-#line 3011 "y.tab.c" /* yacc.c:1646  */
+#line 3012 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 82:
-#line 363 "gram.y" /* yacc.c:1646  */
+#line 366 "gram.y" /* yacc.c:1646  */
     {}
-#line 3017 "y.tab.c" /* yacc.c:1646  */
+#line 3018 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 83:
-#line 364 "gram.y" /* yacc.c:1646  */
+#line 367 "gram.y" /* yacc.c:1646  */
     {}
-#line 3023 "y.tab.c" /* yacc.c:1646  */
+#line 3024 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 84:
-#line 365 "gram.y" /* yacc.c:1646  */
+#line 368 "gram.y" /* yacc.c:1646  */
     {
-     
      (yyval.y_int) = (yyvsp[0].y_int);
   }
 #line 3032 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 85:
-#line 369 "gram.y" /* yacc.c:1646  */
+#line 371 "gram.y" /* yacc.c:1646  */
     {}
 #line 3038 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 86:
-#line 373 "gram.y" /* yacc.c:1646  */
+#line 375 "gram.y" /* yacc.c:1646  */
     {
      
      (yyval.y_int) = (yyvsp[0].y_int);
@@ -3048,7 +3048,7 @@ yyreduce:
     break;
 
   case 87:
-#line 378 "gram.y" /* yacc.c:1646  */
+#line 380 "gram.y" /* yacc.c:1646  */
     {
      
      (yyval.y_int) = (yyvsp[0].y_int);
@@ -3057,7 +3057,7 @@ yyreduce:
     break;
 
   case 88:
-#line 385 "gram.y" /* yacc.c:1646  */
+#line 387 "gram.y" /* yacc.c:1646  */
     {
      (yyval.y_int) = (yyvsp[0].y_int);
   }
@@ -3065,2345 +3065,2100 @@ yyreduce:
     break;
 
   case 89:
-#line 388 "gram.y" /* yacc.c:1646  */
+#line 390 "gram.y" /* yacc.c:1646  */
     {}
 #line 3071 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 90:
-#line 392 "gram.y" /* yacc.c:1646  */
+#line 394 "gram.y" /* yacc.c:1646  */
     {}
 #line 3077 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 91:
-#line 393 "gram.y" /* yacc.c:1646  */
+#line 395 "gram.y" /* yacc.c:1646  */
     {}
 #line 3083 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 92:
-#line 397 "gram.y" /* yacc.c:1646  */
+#line 399 "gram.y" /* yacc.c:1646  */
     {}
 #line 3089 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 93:
-#line 398 "gram.y" /* yacc.c:1646  */
+#line 400 "gram.y" /* yacc.c:1646  */
     {}
 #line 3095 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 94:
-#line 402 "gram.y" /* yacc.c:1646  */
+#line 404 "gram.y" /* yacc.c:1646  */
     {}
 #line 3101 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 95:
-#line 403 "gram.y" /* yacc.c:1646  */
+#line 405 "gram.y" /* yacc.c:1646  */
     {}
 #line 3107 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 96:
-#line 404 "gram.y" /* yacc.c:1646  */
+#line 406 "gram.y" /* yacc.c:1646  */
     {}
 #line 3113 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 97:
-#line 408 "gram.y" /* yacc.c:1646  */
+#line 410 "gram.y" /* yacc.c:1646  */
     {}
 #line 3119 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 98:
-#line 412 "gram.y" /* yacc.c:1646  */
+#line 414 "gram.y" /* yacc.c:1646  */
     {}
 #line 3125 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 99:
-#line 413 "gram.y" /* yacc.c:1646  */
+#line 415 "gram.y" /* yacc.c:1646  */
     {}
 #line 3131 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 100:
-#line 417 "gram.y" /* yacc.c:1646  */
-    {
-     TYPE typeu = ty_get_unresolved();
-     ST_ID id;
-     TYPE next;
-     while(typeu != NULL)
-     {	  
-        TYPE type = ty_query_ptr(typeu,&id,&next);
-      	if(type == NULL)
-	{
-	   int tmpblk;
-           ST_DR stdr = st_lookup(id,&tmpblk);
-           if(stdr != NULL)
-	      ty_resolve_ptr(typeu,stdr->u.typename.type);
-           else 
-              error("Unresolved type name: \"%s\"",st_get_id_str(id));
-        }
-        typeu = next;        
-     }
+#line 419 "gram.y" /* yacc.c:1646  */
+    {  resolvePointer();
   }
-#line 3155 "y.tab.c" /* yacc.c:1646  */
+#line 3138 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 101:
-#line 439 "gram.y" /* yacc.c:1646  */
+#line 424 "gram.y" /* yacc.c:1646  */
     {}
-#line 3161 "y.tab.c" /* yacc.c:1646  */
+#line 3144 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 102:
-#line 440 "gram.y" /* yacc.c:1646  */
+#line 425 "gram.y" /* yacc.c:1646  */
     {}
-#line 3167 "y.tab.c" /* yacc.c:1646  */
+#line 3150 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 103:
-#line 443 "gram.y" /* yacc.c:1646  */
+#line 428 "gram.y" /* yacc.c:1646  */
     {
      ST_DR dr = stdr_alloc();
      dr->tag = TYPENAME;
      dr->u.typename.type = (yyvsp[0].y_type);
      st_install((yyvsp[-2].y_stid),dr);
   }
-#line 3178 "y.tab.c" /* yacc.c:1646  */
+#line 3161 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 104:
-#line 451 "gram.y" /* yacc.c:1646  */
-    {  
-      int tmpblk;    
-      ST_DR stdr = st_lookup((yyvsp[0].y_stid),&tmpblk);
-      if(stdr != NULL)
-      {
-         (yyval.y_type) = stdr->u.typename.type;
-      }
-      else
-      {
-         error("Undeclared type name: \"%s\"",st_get_id_str((yyvsp[0].y_stid)));
-         (yyval.y_type) = ty_build_basic(TYERROR);
-      } 
+#line 436 "gram.y" /* yacc.c:1646  */
+    {                       //ethan's commit@4/7/2014 9:58pm
+      (yyval.y_type) = checkTypeName((yyvsp[0].y_stid));
   }
-#line 3196 "y.tab.c" /* yacc.c:1646  */
+#line 3169 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 105:
-#line 464 "gram.y" /* yacc.c:1646  */
+#line 439 "gram.y" /* yacc.c:1646  */
     {
     (yyval.y_type) = (yyvsp[0].y_type);
+  }
+#line 3177 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 106:
+#line 445 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3183 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 107:
+#line 446 "gram.y" /* yacc.c:1646  */
+    {   (yyval.y_type) = (yyvsp[0].y_type);
+  }
+#line 3190 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 108:
+#line 448 "gram.y" /* yacc.c:1646  */
+    {   (yyval.y_type) = (yyvsp[0].y_type);
+  }
+#line 3197 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 109:
+#line 450 "gram.y" /* yacc.c:1646  */
+    {   (yyval.y_type) = (yyvsp[0].y_type); 
   }
 #line 3204 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 106:
-#line 470 "gram.y" /* yacc.c:1646  */
+  case 110:
+#line 455 "gram.y" /* yacc.c:1646  */
     {}
 #line 3210 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 107:
-#line 471 "gram.y" /* yacc.c:1646  */
-    {
-     
-     (yyval.y_type) = (yyvsp[0].y_type);
-  }
-#line 3219 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 108:
-#line 475 "gram.y" /* yacc.c:1646  */
-    {
-     
-     (yyval.y_type) = (yyvsp[0].y_type);
-  }
-#line 3228 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 109:
-#line 479 "gram.y" /* yacc.c:1646  */
-    {
-     
-     (yyval.y_type) = (yyvsp[0].y_type); 
-  }
-#line 3237 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 110:
-#line 486 "gram.y" /* yacc.c:1646  */
-    {}
-#line 3243 "y.tab.c" /* yacc.c:1646  */
-    break;
-
   case 111:
-#line 487 "gram.y" /* yacc.c:1646  */
-    {
-     
-     (yyval.y_type) = (yyvsp[0].y_type);
+#line 456 "gram.y" /* yacc.c:1646  */
+    {  (yyval.y_type) = (yyvsp[0].y_type);
   }
-#line 3252 "y.tab.c" /* yacc.c:1646  */
+#line 3217 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 112:
-#line 494 "gram.y" /* yacc.c:1646  */
+#line 461 "gram.y" /* yacc.c:1646  */
     {}
-#line 3258 "y.tab.c" /* yacc.c:1646  */
+#line 3223 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 113:
-#line 498 "gram.y" /* yacc.c:1646  */
+#line 465 "gram.y" /* yacc.c:1646  */
     {}
-#line 3264 "y.tab.c" /* yacc.c:1646  */
+#line 3229 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 114:
-#line 499 "gram.y" /* yacc.c:1646  */
+#line 466 "gram.y" /* yacc.c:1646  */
     {}
-#line 3270 "y.tab.c" /* yacc.c:1646  */
+#line 3235 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 115:
-#line 503 "gram.y" /* yacc.c:1646  */
+#line 470 "gram.y" /* yacc.c:1646  */
     {}
-#line 3276 "y.tab.c" /* yacc.c:1646  */
+#line 3241 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 116:
-#line 507 "gram.y" /* yacc.c:1646  */
-    {
-     
-     /* error */
-     TYPE subrange;
-     if((yyvsp[-2].y_int) > (yyvsp[0].y_int))
-     {
-        error("Empty subrange in array index");
-        error("Illegal index type (ignored)");
-        subrange = ty_build_basic(TYERROR);
-     }
-     else
-        subrange = ty_build_subrange(ty_build_basic(TYSIGNEDLONGINT), (yyvsp[-2].y_int), (yyvsp[0].y_int));
-     (yyval.y_type) = subrange;
+#line 474 "gram.y" /* yacc.c:1646  */
+    {  (yyval.y_type) = createSubrange((yyvsp[-2].y_int), (yyvsp[0].y_int));  
   }
-#line 3295 "y.tab.c" /* yacc.c:1646  */
+#line 3248 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 117:
-#line 524 "gram.y" /* yacc.c:1646  */
-    {
-    (yyval.y_type) = (yyvsp[0].y_type);
+#line 479 "gram.y" /* yacc.c:1646  */
+    { (yyval.y_type) = (yyvsp[0].y_type);
   }
-#line 3303 "y.tab.c" /* yacc.c:1646  */
+#line 3255 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 118:
-#line 530 "gram.y" /* yacc.c:1646  */
+#line 484 "gram.y" /* yacc.c:1646  */
     {}
-#line 3309 "y.tab.c" /* yacc.c:1646  */
+#line 3261 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 119:
-#line 531 "gram.y" /* yacc.c:1646  */
+#line 485 "gram.y" /* yacc.c:1646  */
     {}
-#line 3315 "y.tab.c" /* yacc.c:1646  */
+#line 3267 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 120:
-#line 535 "gram.y" /* yacc.c:1646  */
-    {
-     (yyval.y_type) = ty_build_ptr((yyvsp[0].y_stid),NULL);
+#line 489 "gram.y" /* yacc.c:1646  */
+    { (yyval.y_type) = ty_build_ptr((yyvsp[0].y_stid),NULL);
   }
-#line 3323 "y.tab.c" /* yacc.c:1646  */
+#line 3274 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 121:
-#line 538 "gram.y" /* yacc.c:1646  */
-    {
-     (yyval.y_type) = ty_build_ptr(NULL,(yyvsp[0].y_type));
+#line 491 "gram.y" /* yacc.c:1646  */
+    { (yyval.y_type) = ty_build_ptr(NULL,(yyvsp[0].y_type));
   }
-#line 3331 "y.tab.c" /* yacc.c:1646  */
+#line 3281 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 122:
-#line 544 "gram.y" /* yacc.c:1646  */
+#line 496 "gram.y" /* yacc.c:1646  */
     {
      
      TYPE typroc = ty_build_func(ty_build_basic(TYVOID), (yyvsp[0].y_paramlist), TRUE);
      (yyval.y_type) = typroc;
   }
-#line 3341 "y.tab.c" /* yacc.c:1646  */
+#line 3291 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 123:
-#line 549 "gram.y" /* yacc.c:1646  */
+#line 501 "gram.y" /* yacc.c:1646  */
     {
-     
-     TYPETAG tytag = ty_query((yyvsp[0].y_type));
-     if (tytag != TYSIGNEDINT &&
-         tytag != TYDOUBLE &&
-         tytag != TYSIGNEDLONGINT &&
-         tytag != TYUNSIGNEDCHAR &&
-         tytag != TYSIGNEDCHAR &&
-         tytag != TYPTR &&
-         tytag != TYSUBRANGE)
-         error("Function return type must be simple type");
-      
+     if(checkTypetag((yyvsp[0].y_type))){
+       }
+     else{
+        error("Function return type must be simple type");
+       }      
      (yyval.y_type) = ty_build_func((yyvsp[0].y_type), (yyvsp[-1].y_paramlist), TRUE);
   }
-#line 3360 "y.tab.c" /* yacc.c:1646  */
+#line 3304 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 124:
-#line 566 "gram.y" /* yacc.c:1646  */
-    {
-     
-     (yyval.y_paramlist) = NULL;
+#line 512 "gram.y" /* yacc.c:1646  */
+    { (yyval.y_paramlist) = NULL;
   }
-#line 3369 "y.tab.c" /* yacc.c:1646  */
+#line 3311 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 125:
-#line 570 "gram.y" /* yacc.c:1646  */
-    {
-     
-     PARAM_LIST plist = (yyvsp[-1].y_paramlist);
-     while(plist)
-     {
-        TYPETAG tytag = ty_query(plist->type);
-        if (tytag != TYSIGNEDINT &&
-            tytag != TYDOUBLE &&
-            tytag != TYSIGNEDLONGINT &&
-            tytag != TYUNSIGNEDCHAR &&
-            tytag != TYSIGNEDCHAR &&
-            tytag != TYPTR &&
-            tytag != TYSUBRANGE)
-            error("Parameter type must be a simple type");
-        PARAM_LIST pnxt = plist->next;
-        while(pnxt)
-        {
-           if(plist->id == pnxt->id)
-              error("Duplicate parameter name: \"%s\"",st_get_id_str(plist->id)); 
-           pnxt = pnxt->next;
-        }
-        plist = plist->next;
-     }
-     (yyval.y_paramlist) = (yyvsp[-1].y_paramlist);
-  }
-#line 3399 "y.tab.c" /* yacc.c:1646  */
+#line 514 "gram.y" /* yacc.c:1646  */
+    {  (yyval.y_paramlist) = createParalist((yyvsp[-1].y_paramlist)); }
+#line 3317 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 126:
-#line 598 "gram.y" /* yacc.c:1646  */
-    {
-     
-     (yyval.y_paramlist) = (yyvsp[0].y_paramlist);
+#line 518 "gram.y" /* yacc.c:1646  */
+    {  (yyval.y_paramlist) = (yyvsp[0].y_paramlist);
   }
-#line 3408 "y.tab.c" /* yacc.c:1646  */
+#line 3324 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 127:
-#line 602 "gram.y" /* yacc.c:1646  */
-    {
-     
-     PARAM_LIST p1, p2, p3;
-     p1 = (yyvsp[-2].y_paramlist);
-     p3 = p1;
-     p2 = (yyvsp[0].y_paramlist);
-     while(p1->next != NULL)
-     {
-        p1 = p1->next;
-     }
-     p1->next = p2;
-     (yyval.y_paramlist) = p3;
+#line 520 "gram.y" /* yacc.c:1646  */
+    {  (yyval.y_paramlist) = appendParaList((yyvsp[-2].y_paramlist), (yyvsp[0].y_paramlist));   
   }
-#line 3426 "y.tab.c" /* yacc.c:1646  */
+#line 3331 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 128:
-#line 618 "gram.y" /* yacc.c:1646  */
+#line 525 "gram.y" /* yacc.c:1646  */
     {}
-#line 3432 "y.tab.c" /* yacc.c:1646  */
+#line 3337 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 129:
-#line 619 "gram.y" /* yacc.c:1646  */
-    {
-     
-     ID_LIST idlist = (yyvsp[-2].y_idlist);
-     int tmpblk;
-     ST_DR dr1 = st_lookup((yyvsp[0].y_stid), &tmpblk);
-     PARAM_LIST plist = NULL;
-     TYPE ty;
-     if(dr1 != NULL && dr1->tag == TYPENAME)
-        ty = dr1->u.typename.type;
-     else
-     {
-        error("Undeclared type name: \"%s\"",st_get_id_str((yyvsp[0].y_stid)));
-        ty = ty_build_basic(TYERROR);
-     }
-     addbeginParamList(idlist->id, ty, FALSE, &plist);
-     idlist = idlist->next; 
-     while(idlist)
-     {
-        addbeginParamList(idlist->id, ty, FALSE, &plist);
-        idlist = idlist->next;
-     }
-     (yyval.y_paramlist) = plist;
+#line 526 "gram.y" /* yacc.c:1646  */
+    {  (yyval.y_paramlist) = createFormPara((yyvsp[-2].y_idlist), (yyvsp[0].y_stid), FALSE);   
   }
-#line 3460 "y.tab.c" /* yacc.c:1646  */
+#line 3344 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 130:
-#line 642 "gram.y" /* yacc.c:1646  */
-    {
-     
-     ID_LIST idlist = (yyvsp[-2].y_idlist);
-     int tmpblk;
-     ST_DR dr1 = st_lookup((yyvsp[0].y_stid), &tmpblk); 
-     PARAM_LIST plist = NULL;
-     TYPE ty;
-     if(dr1 != NULL && dr1->tag == TYPENAME)
-        ty = dr1->u.typename.type;
-     else
-        ty = ty_build_basic(TYERROR);
-
-     addbeginParamList(idlist->id, ty, TRUE, &plist);
-     idlist = idlist->next;
-     while(idlist)
-     {
-        addbeginParamList(idlist->id, ty, TRUE, &plist);
-        idlist = idlist->next;
-     }
-     (yyval.y_paramlist) = plist;
+#line 528 "gram.y" /* yacc.c:1646  */
+    {  (yyval.y_paramlist) = createFormPara((yyvsp[-2].y_idlist), (yyvsp[0].y_stid), TRUE);
   }
-#line 3486 "y.tab.c" /* yacc.c:1646  */
+#line 3351 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 131:
-#line 664 "gram.y" /* yacc.c:1646  */
+#line 531 "gram.y" /* yacc.c:1646  */
     {}
-#line 3492 "y.tab.c" /* yacc.c:1646  */
+#line 3357 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 132:
-#line 668 "gram.y" /* yacc.c:1646  */
+#line 535 "gram.y" /* yacc.c:1646  */
     {}
-#line 3498 "y.tab.c" /* yacc.c:1646  */
+#line 3363 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 133:
-#line 669 "gram.y" /* yacc.c:1646  */
-    {
-     
-     (yyval.y_type) = (yyvsp[0].y_type);
+#line 536 "gram.y" /* yacc.c:1646  */
+    { (yyval.y_type) = (yyvsp[0].y_type);
   }
-#line 3507 "y.tab.c" /* yacc.c:1646  */
+#line 3370 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 134:
-#line 676 "gram.y" /* yacc.c:1646  */
-    {
-     
-     (yyval.y_type) = (yyvsp[0].y_type);
+#line 541 "gram.y" /* yacc.c:1646  */
+    { (yyval.y_type) = (yyvsp[0].y_type);
   }
-#line 3516 "y.tab.c" /* yacc.c:1646  */
+#line 3377 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 135:
-#line 680 "gram.y" /* yacc.c:1646  */
+#line 543 "gram.y" /* yacc.c:1646  */
     {}
-#line 3522 "y.tab.c" /* yacc.c:1646  */
+#line 3383 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 136:
-#line 681 "gram.y" /* yacc.c:1646  */
+#line 544 "gram.y" /* yacc.c:1646  */
     {}
-#line 3528 "y.tab.c" /* yacc.c:1646  */
+#line 3389 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 137:
-#line 682 "gram.y" /* yacc.c:1646  */
+#line 545 "gram.y" /* yacc.c:1646  */
     {}
-#line 3534 "y.tab.c" /* yacc.c:1646  */
+#line 3395 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 138:
-#line 688 "gram.y" /* yacc.c:1646  */
-    {
-     
-     if(ty_query((yyvsp[0].y_type)) == TYERROR || ty_query((yyvsp[0].y_type)) == TYFUNC)
-     {
-        error("Data type expected for array elements");
-        //$$ = ty_build_array($6, $3);
-        (yyval.y_type) = ty_build_basic(TYERROR);
-     }
-     else
-     {
-        TYPE tyarr = ty_build_array((yyvsp[0].y_type), (yyvsp[-3].y_indexlist));
-        (yyval.y_type) = tyarr;   
-     }
+#line 551 "gram.y" /* yacc.c:1646  */
+    {  (yyval.y_type) = createArray((yyvsp[-3].y_indexlist), (yyvsp[0].y_type));
   }
-#line 3553 "y.tab.c" /* yacc.c:1646  */
+#line 3402 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 139:
-#line 705 "gram.y" /* yacc.c:1646  */
-    {
-     
-     if (ty_query((yyvsp[0].y_type)) != TYERROR)
-     {
-        INDEX_LIST ilist = addend((yyvsp[0].y_type),NULL);
-        (yyval.y_indexlist) = ilist;
-     }
-     else
-     { 
-        (yyval.y_indexlist) = NULL;
-     }
+#line 556 "gram.y" /* yacc.c:1646  */
+    { (yyval.y_indexlist) = createIndexList((yyvsp[0].y_type), NULL);   
   }
-#line 3570 "y.tab.c" /* yacc.c:1646  */
+#line 3409 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 140:
-#line 717 "gram.y" /* yacc.c:1646  */
-    {
-     
-     if (ty_query((yyvsp[0].y_type)) != TYERROR)
-     {
-        INDEX_LIST ilist = addend((yyvsp[0].y_type),(yyvsp[-2].y_indexlist));
-        (yyval.y_indexlist) = ilist;
-     }
-     else
-     {
-        (yyval.y_indexlist) = NULL;
-     } 
+#line 558 "gram.y" /* yacc.c:1646  */
+    { (yyval.y_indexlist) = createIndexList((yyvsp[0].y_type), (yyvsp[-2].y_indexlist));
   }
-#line 3587 "y.tab.c" /* yacc.c:1646  */
+#line 3416 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 141:
-#line 733 "gram.y" /* yacc.c:1646  */
+#line 564 "gram.y" /* yacc.c:1646  */
     {
      (yyval.y_type) = (yyvsp[0].y_type);
   }
-#line 3595 "y.tab.c" /* yacc.c:1646  */
+#line 3424 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 142:
-#line 736 "gram.y" /* yacc.c:1646  */
+#line 567 "gram.y" /* yacc.c:1646  */
     {}
-#line 3601 "y.tab.c" /* yacc.c:1646  */
+#line 3430 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 143:
-#line 741 "gram.y" /* yacc.c:1646  */
+#line 572 "gram.y" /* yacc.c:1646  */
     {}
-#line 3607 "y.tab.c" /* yacc.c:1646  */
+#line 3436 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 144:
-#line 745 "gram.y" /* yacc.c:1646  */
+#line 576 "gram.y" /* yacc.c:1646  */
     {}
-#line 3613 "y.tab.c" /* yacc.c:1646  */
+#line 3442 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 145:
-#line 746 "gram.y" /* yacc.c:1646  */
+#line 577 "gram.y" /* yacc.c:1646  */
     {}
-#line 3619 "y.tab.c" /* yacc.c:1646  */
+#line 3448 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 146:
-#line 752 "gram.y" /* yacc.c:1646  */
+#line 583 "gram.y" /* yacc.c:1646  */
     {}
-#line 3625 "y.tab.c" /* yacc.c:1646  */
+#line 3454 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 147:
-#line 756 "gram.y" /* yacc.c:1646  */
+#line 587 "gram.y" /* yacc.c:1646  */
     {}
-#line 3631 "y.tab.c" /* yacc.c:1646  */
+#line 3460 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 148:
-#line 760 "gram.y" /* yacc.c:1646  */
+#line 591 "gram.y" /* yacc.c:1646  */
     {}
-#line 3637 "y.tab.c" /* yacc.c:1646  */
+#line 3466 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 149:
-#line 761 "gram.y" /* yacc.c:1646  */
+#line 592 "gram.y" /* yacc.c:1646  */
     {}
-#line 3643 "y.tab.c" /* yacc.c:1646  */
+#line 3472 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 150:
-#line 762 "gram.y" /* yacc.c:1646  */
+#line 593 "gram.y" /* yacc.c:1646  */
     {}
-#line 3649 "y.tab.c" /* yacc.c:1646  */
+#line 3478 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 151:
-#line 763 "gram.y" /* yacc.c:1646  */
+#line 594 "gram.y" /* yacc.c:1646  */
     {}
-#line 3655 "y.tab.c" /* yacc.c:1646  */
+#line 3484 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 152:
-#line 767 "gram.y" /* yacc.c:1646  */
+#line 598 "gram.y" /* yacc.c:1646  */
     {}
-#line 3661 "y.tab.c" /* yacc.c:1646  */
+#line 3490 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 153:
-#line 768 "gram.y" /* yacc.c:1646  */
+#line 599 "gram.y" /* yacc.c:1646  */
     {}
-#line 3667 "y.tab.c" /* yacc.c:1646  */
+#line 3496 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 154:
-#line 772 "gram.y" /* yacc.c:1646  */
+#line 603 "gram.y" /* yacc.c:1646  */
     {}
-#line 3673 "y.tab.c" /* yacc.c:1646  */
+#line 3502 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 155:
-#line 776 "gram.y" /* yacc.c:1646  */
+#line 607 "gram.y" /* yacc.c:1646  */
     {}
-#line 3679 "y.tab.c" /* yacc.c:1646  */
+#line 3508 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 156:
-#line 780 "gram.y" /* yacc.c:1646  */
+#line 611 "gram.y" /* yacc.c:1646  */
     {}
-#line 3685 "y.tab.c" /* yacc.c:1646  */
+#line 3514 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 157:
-#line 781 "gram.y" /* yacc.c:1646  */
+#line 612 "gram.y" /* yacc.c:1646  */
     {}
-#line 3691 "y.tab.c" /* yacc.c:1646  */
+#line 3520 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 158:
-#line 785 "gram.y" /* yacc.c:1646  */
+#line 616 "gram.y" /* yacc.c:1646  */
     {}
-#line 3697 "y.tab.c" /* yacc.c:1646  */
+#line 3526 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 159:
-#line 786 "gram.y" /* yacc.c:1646  */
+#line 617 "gram.y" /* yacc.c:1646  */
     {}
-#line 3703 "y.tab.c" /* yacc.c:1646  */
+#line 3532 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 160:
-#line 790 "gram.y" /* yacc.c:1646  */
+#line 621 "gram.y" /* yacc.c:1646  */
     {}
-#line 3709 "y.tab.c" /* yacc.c:1646  */
+#line 3538 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 161:
-#line 791 "gram.y" /* yacc.c:1646  */
+#line 622 "gram.y" /* yacc.c:1646  */
     {}
-#line 3715 "y.tab.c" /* yacc.c:1646  */
+#line 3544 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 162:
-#line 795 "gram.y" /* yacc.c:1646  */
+#line 626 "gram.y" /* yacc.c:1646  */
     {}
-#line 3721 "y.tab.c" /* yacc.c:1646  */
+#line 3550 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 163:
-#line 796 "gram.y" /* yacc.c:1646  */
+#line 627 "gram.y" /* yacc.c:1646  */
     {}
-#line 3727 "y.tab.c" /* yacc.c:1646  */
+#line 3556 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 164:
-#line 800 "gram.y" /* yacc.c:1646  */
+#line 631 "gram.y" /* yacc.c:1646  */
     {}
-#line 3733 "y.tab.c" /* yacc.c:1646  */
+#line 3562 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 165:
-#line 804 "gram.y" /* yacc.c:1646  */
+#line 635 "gram.y" /* yacc.c:1646  */
     {}
-#line 3739 "y.tab.c" /* yacc.c:1646  */
+#line 3568 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 166:
-#line 805 "gram.y" /* yacc.c:1646  */
+#line 636 "gram.y" /* yacc.c:1646  */
     {}
-#line 3745 "y.tab.c" /* yacc.c:1646  */
+#line 3574 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 167:
-#line 809 "gram.y" /* yacc.c:1646  */
+#line 640 "gram.y" /* yacc.c:1646  */
     {}
-#line 3751 "y.tab.c" /* yacc.c:1646  */
+#line 3580 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 168:
-#line 810 "gram.y" /* yacc.c:1646  */
+#line 641 "gram.y" /* yacc.c:1646  */
     {}
-#line 3757 "y.tab.c" /* yacc.c:1646  */
+#line 3586 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 169:
-#line 816 "gram.y" /* yacc.c:1646  */
+#line 647 "gram.y" /* yacc.c:1646  */
     {}
-#line 3763 "y.tab.c" /* yacc.c:1646  */
+#line 3592 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 170:
-#line 820 "gram.y" /* yacc.c:1646  */
+#line 651 "gram.y" /* yacc.c:1646  */
     {}
-#line 3769 "y.tab.c" /* yacc.c:1646  */
+#line 3598 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 171:
-#line 821 "gram.y" /* yacc.c:1646  */
+#line 652 "gram.y" /* yacc.c:1646  */
     {}
-#line 3775 "y.tab.c" /* yacc.c:1646  */
+#line 3604 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 172:
-#line 825 "gram.y" /* yacc.c:1646  */
-    {
-     
-     if(ty_query((yyvsp[-1].y_type)) == TYERROR || ty_query((yyvsp[-1].y_type)) == TYFUNC)
-        error("Variable(s) must be of data type");
-     ID_LIST idlist = (yyvsp[-3].y_idlist);
-     while(idlist != NULL)
-     {
-        ST_DR dr;
-        dr = stdr_alloc();
-        dr->tag = GDECL;
-        dr->u.decl.type = (yyvsp[-1].y_type);
-        dr->u.decl.sc = NO_SC;
-        dr->u.decl.is_ref = FALSE;
-        if(ty_query((yyvsp[-1].y_type)) == TYERROR)
-           dr->u.decl.err = TRUE;
-        else
-           dr->u.decl.err = FALSE; 
-            
-        TYPE tpunres = ty_get_unresolved();
-        ST_ID id;
-        TYPE next;
-        while(tpunres != NULL)
-        {	  
-           TYPE tpque = ty_query_ptr(tpunres,&id,&next);
-      	   if(tpque == NULL)
-	   {
-	      int tmpblk;
-              ST_DR stdr;
-              stdr = st_lookup(id,&tmpblk);
-              if(stdr != NULL)
-              {
-	         ty_resolve_ptr(tpunres,stdr->u.typename.type);
-              }
-              else
-              {
-                 error("Unresolved type name: \"%s\"",st_get_id_str(id));
-              }
-           }  
-           tpunres = next;
-        }
-        /* error */
-        int tmpblk1;
-        ST_DR dr1 = st_lookup(idlist->id, &tmpblk1);
-        if(dr1 != NULL)
-        {
-           error("Duplicate variable declaration: \"%s\"",st_get_id_str(idlist->id));
-        }
-        else
-        {
-           st_install(idlist->id,dr);
-           int size = 0;
-           int align = 0;
-           calSizeAlign(dr->u.decl.type, &align, &size);
-           TYPETAG tytag = ty_query(dr->u.decl.type);
-           char *str = st_get_id_str(idlist->id);
-           if(ty_query((yyvsp[-1].y_type)) != TYERROR && ty_query((yyvsp[-1].y_type)) != TYFUNC)
-           {
-              b_global_decl(str,align,size);
-              b_skip(size);
-           }
-        }
-        idlist = idlist->next;
-     }
-  }
-#line 3844 "y.tab.c" /* yacc.c:1646  */
+#line 656 "gram.y" /* yacc.c:1646  */
+    {  declaVariable((yyvsp[-3].y_idlist), (yyvsp[-1].y_type));  }
+#line 3610 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 173:
-#line 891 "gram.y" /* yacc.c:1646  */
+#line 659 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3616 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 174:
+#line 660 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3622 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 175:
+#line 664 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3628 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 176:
+#line 665 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3634 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 177:
+#line 669 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3640 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 178:
+#line 670 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3646 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 179:
+#line 674 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3652 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 180:
+#line 675 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3658 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 181:
+#line 679 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3664 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 182:
+#line 680 "gram.y" /* yacc.c:1646  */
+    {  (yyval.y_type) = checkTypeName((yyvsp[0].y_stid));  }
+#line 3670 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 183:
+#line 686 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3676 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 184:
+#line 687 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3682 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 185:
+#line 691 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3688 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 186:
+#line 692 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3694 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 187:
+#line 696 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3700 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 188:
+#line 697 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3706 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 189:
+#line 698 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3712 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 190:
+#line 699 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3718 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 191:
+#line 700 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3724 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 192:
+#line 704 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3730 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 193:
+#line 705 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3736 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 194:
+#line 709 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3742 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 195:
+#line 710 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3748 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 196:
+#line 714 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3754 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 197:
+#line 715 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3760 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 198:
+#line 716 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3766 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 199:
+#line 720 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3772 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 200:
+#line 724 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3778 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 201:
+#line 728 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3784 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 202:
+#line 732 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3790 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 203:
+#line 733 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3796 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 204:
+#line 737 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3802 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 205:
+#line 741 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3808 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 206:
+#line 745 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3814 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 207:
+#line 749 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3820 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 208:
+#line 750 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3826 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 209:
+#line 754 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3832 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 210:
+#line 755 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3838 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 211:
+#line 759 "gram.y" /* yacc.c:1646  */
+    {}
+#line 3844 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 212:
+#line 760 "gram.y" /* yacc.c:1646  */
     {}
 #line 3850 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 174:
-#line 892 "gram.y" /* yacc.c:1646  */
+  case 213:
+#line 764 "gram.y" /* yacc.c:1646  */
     {}
 #line 3856 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 175:
-#line 896 "gram.y" /* yacc.c:1646  */
+  case 214:
+#line 765 "gram.y" /* yacc.c:1646  */
     {}
 #line 3862 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 176:
-#line 897 "gram.y" /* yacc.c:1646  */
+  case 215:
+#line 766 "gram.y" /* yacc.c:1646  */
     {}
 #line 3868 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 177:
-#line 901 "gram.y" /* yacc.c:1646  */
+  case 216:
+#line 767 "gram.y" /* yacc.c:1646  */
     {}
 #line 3874 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 178:
-#line 902 "gram.y" /* yacc.c:1646  */
+  case 217:
+#line 771 "gram.y" /* yacc.c:1646  */
     {}
 #line 3880 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 179:
-#line 906 "gram.y" /* yacc.c:1646  */
+  case 218:
+#line 775 "gram.y" /* yacc.c:1646  */
     {}
 #line 3886 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 180:
-#line 907 "gram.y" /* yacc.c:1646  */
+  case 219:
+#line 776 "gram.y" /* yacc.c:1646  */
     {}
 #line 3892 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 181:
-#line 911 "gram.y" /* yacc.c:1646  */
+  case 220:
+#line 780 "gram.y" /* yacc.c:1646  */
     {}
 #line 3898 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 182:
-#line 912 "gram.y" /* yacc.c:1646  */
-    {
-     
-     int tmpblk;
-     ST_DR dr = st_lookup((yyvsp[0].y_stid),&tmpblk);
-     if((dr != NULL) && (dr->tag == TYPENAME))
-        (yyval.y_type) = dr->u.typename.type;
-     else
-     {
-        error("Undeclared type name: \"%s\"",st_get_id_str((yyvsp[0].y_stid)));
-        (yyval.y_type) = ty_build_basic(TYERROR);         
-     }
-  }
-#line 3915 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 183:
-#line 929 "gram.y" /* yacc.c:1646  */
-    {}
-#line 3921 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 184:
-#line 930 "gram.y" /* yacc.c:1646  */
-    {}
-#line 3927 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 185:
-#line 934 "gram.y" /* yacc.c:1646  */
-    {}
-#line 3933 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 186:
-#line 935 "gram.y" /* yacc.c:1646  */
-    {}
-#line 3939 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 187:
-#line 939 "gram.y" /* yacc.c:1646  */
-    {}
-#line 3945 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 188:
-#line 940 "gram.y" /* yacc.c:1646  */
-    {}
-#line 3951 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 189:
-#line 941 "gram.y" /* yacc.c:1646  */
-    {}
-#line 3957 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 190:
-#line 942 "gram.y" /* yacc.c:1646  */
-    {}
-#line 3963 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 191:
-#line 943 "gram.y" /* yacc.c:1646  */
-    {}
-#line 3969 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 192:
-#line 947 "gram.y" /* yacc.c:1646  */
-    {}
-#line 3975 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 193:
-#line 948 "gram.y" /* yacc.c:1646  */
-    {}
-#line 3981 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 194:
-#line 952 "gram.y" /* yacc.c:1646  */
-    {}
-#line 3987 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 195:
-#line 953 "gram.y" /* yacc.c:1646  */
-    {}
-#line 3993 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 196:
-#line 957 "gram.y" /* yacc.c:1646  */
-    {}
-#line 3999 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 197:
-#line 958 "gram.y" /* yacc.c:1646  */
-    {}
-#line 4005 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 198:
-#line 959 "gram.y" /* yacc.c:1646  */
-    {}
-#line 4011 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 199:
-#line 963 "gram.y" /* yacc.c:1646  */
-    {}
-#line 4017 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 200:
-#line 967 "gram.y" /* yacc.c:1646  */
-    {}
-#line 4023 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 201:
-#line 971 "gram.y" /* yacc.c:1646  */
-    {}
-#line 4029 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 202:
-#line 975 "gram.y" /* yacc.c:1646  */
-    {}
-#line 4035 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 203:
-#line 976 "gram.y" /* yacc.c:1646  */
-    {}
-#line 4041 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 204:
-#line 980 "gram.y" /* yacc.c:1646  */
-    {}
-#line 4047 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 205:
-#line 984 "gram.y" /* yacc.c:1646  */
-    {}
-#line 4053 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 206:
-#line 988 "gram.y" /* yacc.c:1646  */
-    {}
-#line 4059 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 207:
-#line 992 "gram.y" /* yacc.c:1646  */
-    {}
-#line 4065 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 208:
-#line 993 "gram.y" /* yacc.c:1646  */
-    {}
-#line 4071 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 209:
-#line 997 "gram.y" /* yacc.c:1646  */
-    {}
-#line 4077 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 210:
-#line 998 "gram.y" /* yacc.c:1646  */
-    {}
-#line 4083 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 211:
-#line 1002 "gram.y" /* yacc.c:1646  */
-    {}
-#line 4089 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 212:
-#line 1003 "gram.y" /* yacc.c:1646  */
-    {}
-#line 4095 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 213:
-#line 1007 "gram.y" /* yacc.c:1646  */
-    {}
-#line 4101 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 214:
-#line 1008 "gram.y" /* yacc.c:1646  */
-    {}
-#line 4107 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 215:
-#line 1009 "gram.y" /* yacc.c:1646  */
-    {}
-#line 4113 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 216:
-#line 1010 "gram.y" /* yacc.c:1646  */
-    {}
-#line 4119 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 217:
-#line 1014 "gram.y" /* yacc.c:1646  */
-    {}
-#line 4125 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 218:
-#line 1018 "gram.y" /* yacc.c:1646  */
-    {}
-#line 4131 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 219:
-#line 1019 "gram.y" /* yacc.c:1646  */
-    {}
-#line 4137 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 220:
-#line 1023 "gram.y" /* yacc.c:1646  */
-    {}
-#line 4143 "y.tab.c" /* yacc.c:1646  */
-    break;
-
   case 221:
-#line 1027 "gram.y" /* yacc.c:1646  */
+#line 784 "gram.y" /* yacc.c:1646  */
     {}
-#line 4149 "y.tab.c" /* yacc.c:1646  */
+#line 3904 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 222:
-#line 1028 "gram.y" /* yacc.c:1646  */
+#line 785 "gram.y" /* yacc.c:1646  */
     {}
-#line 4155 "y.tab.c" /* yacc.c:1646  */
+#line 3910 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 223:
-#line 1032 "gram.y" /* yacc.c:1646  */
+#line 789 "gram.y" /* yacc.c:1646  */
     {}
-#line 4161 "y.tab.c" /* yacc.c:1646  */
+#line 3916 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 224:
-#line 1036 "gram.y" /* yacc.c:1646  */
+#line 793 "gram.y" /* yacc.c:1646  */
     {}
-#line 4167 "y.tab.c" /* yacc.c:1646  */
+#line 3922 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 225:
-#line 1037 "gram.y" /* yacc.c:1646  */
+#line 794 "gram.y" /* yacc.c:1646  */
     {}
-#line 4173 "y.tab.c" /* yacc.c:1646  */
+#line 3928 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 226:
-#line 1041 "gram.y" /* yacc.c:1646  */
+#line 798 "gram.y" /* yacc.c:1646  */
     {}
-#line 4179 "y.tab.c" /* yacc.c:1646  */
+#line 3934 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 227:
-#line 1045 "gram.y" /* yacc.c:1646  */
+#line 802 "gram.y" /* yacc.c:1646  */
     {}
-#line 4185 "y.tab.c" /* yacc.c:1646  */
+#line 3940 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 228:
-#line 1046 "gram.y" /* yacc.c:1646  */
+#line 803 "gram.y" /* yacc.c:1646  */
     {}
-#line 4191 "y.tab.c" /* yacc.c:1646  */
+#line 3946 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 229:
-#line 1050 "gram.y" /* yacc.c:1646  */
+#line 807 "gram.y" /* yacc.c:1646  */
     {}
-#line 4197 "y.tab.c" /* yacc.c:1646  */
+#line 3952 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 230:
-#line 1051 "gram.y" /* yacc.c:1646  */
+#line 808 "gram.y" /* yacc.c:1646  */
     {}
-#line 4203 "y.tab.c" /* yacc.c:1646  */
+#line 3958 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 231:
-#line 1055 "gram.y" /* yacc.c:1646  */
+#line 812 "gram.y" /* yacc.c:1646  */
     {}
-#line 4209 "y.tab.c" /* yacc.c:1646  */
+#line 3964 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 232:
-#line 1059 "gram.y" /* yacc.c:1646  */
+#line 816 "gram.y" /* yacc.c:1646  */
     {}
-#line 4215 "y.tab.c" /* yacc.c:1646  */
+#line 3970 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 233:
-#line 1060 "gram.y" /* yacc.c:1646  */
+#line 817 "gram.y" /* yacc.c:1646  */
     {}
-#line 4221 "y.tab.c" /* yacc.c:1646  */
+#line 3976 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 234:
-#line 1064 "gram.y" /* yacc.c:1646  */
+#line 821 "gram.y" /* yacc.c:1646  */
     {}
-#line 4227 "y.tab.c" /* yacc.c:1646  */
+#line 3982 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 235:
-#line 1065 "gram.y" /* yacc.c:1646  */
+#line 822 "gram.y" /* yacc.c:1646  */
     {}
-#line 4233 "y.tab.c" /* yacc.c:1646  */
+#line 3988 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 236:
-#line 1066 "gram.y" /* yacc.c:1646  */
+#line 823 "gram.y" /* yacc.c:1646  */
     {}
-#line 4239 "y.tab.c" /* yacc.c:1646  */
+#line 3994 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 237:
-#line 1070 "gram.y" /* yacc.c:1646  */
+#line 827 "gram.y" /* yacc.c:1646  */
     {}
-#line 4245 "y.tab.c" /* yacc.c:1646  */
+#line 4000 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 238:
-#line 1074 "gram.y" /* yacc.c:1646  */
+#line 831 "gram.y" /* yacc.c:1646  */
     {}
-#line 4251 "y.tab.c" /* yacc.c:1646  */
+#line 4006 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 239:
-#line 1078 "gram.y" /* yacc.c:1646  */
+#line 835 "gram.y" /* yacc.c:1646  */
     {}
-#line 4257 "y.tab.c" /* yacc.c:1646  */
+#line 4012 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 240:
-#line 1082 "gram.y" /* yacc.c:1646  */
+#line 839 "gram.y" /* yacc.c:1646  */
     {}
-#line 4263 "y.tab.c" /* yacc.c:1646  */
+#line 4018 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 241:
-#line 1083 "gram.y" /* yacc.c:1646  */
+#line 840 "gram.y" /* yacc.c:1646  */
     {}
-#line 4269 "y.tab.c" /* yacc.c:1646  */
+#line 4024 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 242:
-#line 1087 "gram.y" /* yacc.c:1646  */
+#line 844 "gram.y" /* yacc.c:1646  */
     {}
-#line 4275 "y.tab.c" /* yacc.c:1646  */
+#line 4030 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 243:
-#line 1088 "gram.y" /* yacc.c:1646  */
+#line 845 "gram.y" /* yacc.c:1646  */
     {}
-#line 4281 "y.tab.c" /* yacc.c:1646  */
+#line 4036 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 244:
-#line 1089 "gram.y" /* yacc.c:1646  */
+#line 846 "gram.y" /* yacc.c:1646  */
     {}
-#line 4287 "y.tab.c" /* yacc.c:1646  */
+#line 4042 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 245:
-#line 1090 "gram.y" /* yacc.c:1646  */
+#line 847 "gram.y" /* yacc.c:1646  */
     {}
-#line 4293 "y.tab.c" /* yacc.c:1646  */
+#line 4048 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 246:
-#line 1091 "gram.y" /* yacc.c:1646  */
+#line 848 "gram.y" /* yacc.c:1646  */
     {}
-#line 4299 "y.tab.c" /* yacc.c:1646  */
+#line 4054 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 247:
-#line 1095 "gram.y" /* yacc.c:1646  */
+#line 852 "gram.y" /* yacc.c:1646  */
     {}
-#line 4305 "y.tab.c" /* yacc.c:1646  */
+#line 4060 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 248:
-#line 1099 "gram.y" /* yacc.c:1646  */
+#line 856 "gram.y" /* yacc.c:1646  */
     {}
-#line 4311 "y.tab.c" /* yacc.c:1646  */
+#line 4066 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 249:
-#line 1105 "gram.y" /* yacc.c:1646  */
+#line 862 "gram.y" /* yacc.c:1646  */
     {}
-#line 4317 "y.tab.c" /* yacc.c:1646  */
+#line 4072 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 250:
-#line 1106 "gram.y" /* yacc.c:1646  */
+#line 863 "gram.y" /* yacc.c:1646  */
     {}
-#line 4323 "y.tab.c" /* yacc.c:1646  */
+#line 4078 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 251:
-#line 1110 "gram.y" /* yacc.c:1646  */
+#line 867 "gram.y" /* yacc.c:1646  */
     {}
-#line 4329 "y.tab.c" /* yacc.c:1646  */
+#line 4084 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 252:
-#line 1111 "gram.y" /* yacc.c:1646  */
+#line 868 "gram.y" /* yacc.c:1646  */
     {}
-#line 4335 "y.tab.c" /* yacc.c:1646  */
+#line 4090 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 253:
-#line 1115 "gram.y" /* yacc.c:1646  */
+#line 872 "gram.y" /* yacc.c:1646  */
     {}
-#line 4341 "y.tab.c" /* yacc.c:1646  */
+#line 4096 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 254:
-#line 1121 "gram.y" /* yacc.c:1646  */
-    {}
-#line 4347 "y.tab.c" /* yacc.c:1646  */
+#line 878 "gram.y" /* yacc.c:1646  */
+    { geneAsmForStmt((yyvsp[-1].y_node), (yyvsp[0].y_node));}
+#line 4102 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 255:
-#line 1125 "gram.y" /* yacc.c:1646  */
+#line 882 "gram.y" /* yacc.c:1646  */
     {}
-#line 4353 "y.tab.c" /* yacc.c:1646  */
+#line 4108 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 256:
-#line 1126 "gram.y" /* yacc.c:1646  */
+#line 883 "gram.y" /* yacc.c:1646  */
     {}
-#line 4359 "y.tab.c" /* yacc.c:1646  */
+#line 4114 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 257:
-#line 1127 "gram.y" /* yacc.c:1646  */
+#line 884 "gram.y" /* yacc.c:1646  */
     {}
-#line 4365 "y.tab.c" /* yacc.c:1646  */
+#line 4120 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 258:
-#line 1131 "gram.y" /* yacc.c:1646  */
+#line 888 "gram.y" /* yacc.c:1646  */
     {}
-#line 4371 "y.tab.c" /* yacc.c:1646  */
+#line 4126 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 259:
-#line 1132 "gram.y" /* yacc.c:1646  */
+#line 889 "gram.y" /* yacc.c:1646  */
     {}
-#line 4377 "y.tab.c" /* yacc.c:1646  */
+#line 4132 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 260:
-#line 1136 "gram.y" /* yacc.c:1646  */
+#line 893 "gram.y" /* yacc.c:1646  */
     {}
-#line 4383 "y.tab.c" /* yacc.c:1646  */
+#line 4138 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 261:
-#line 1137 "gram.y" /* yacc.c:1646  */
+#line 894 "gram.y" /* yacc.c:1646  */
     {}
-#line 4389 "y.tab.c" /* yacc.c:1646  */
+#line 4144 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 262:
-#line 1138 "gram.y" /* yacc.c:1646  */
+#line 895 "gram.y" /* yacc.c:1646  */
     {}
-#line 4395 "y.tab.c" /* yacc.c:1646  */
+#line 4150 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 263:
-#line 1139 "gram.y" /* yacc.c:1646  */
+#line 896 "gram.y" /* yacc.c:1646  */
     {}
-#line 4401 "y.tab.c" /* yacc.c:1646  */
+#line 4156 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 264:
-#line 1140 "gram.y" /* yacc.c:1646  */
+#line 897 "gram.y" /* yacc.c:1646  */
     {}
-#line 4407 "y.tab.c" /* yacc.c:1646  */
+#line 4162 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 265:
-#line 1141 "gram.y" /* yacc.c:1646  */
+#line 898 "gram.y" /* yacc.c:1646  */
     {}
-#line 4413 "y.tab.c" /* yacc.c:1646  */
+#line 4168 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 266:
-#line 1142 "gram.y" /* yacc.c:1646  */
+#line 899 "gram.y" /* yacc.c:1646  */
     {}
-#line 4419 "y.tab.c" /* yacc.c:1646  */
+#line 4174 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 267:
-#line 1143 "gram.y" /* yacc.c:1646  */
+#line 900 "gram.y" /* yacc.c:1646  */
     {}
-#line 4425 "y.tab.c" /* yacc.c:1646  */
+#line 4180 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 268:
-#line 1144 "gram.y" /* yacc.c:1646  */
+#line 901 "gram.y" /* yacc.c:1646  */
     {}
-#line 4431 "y.tab.c" /* yacc.c:1646  */
+#line 4186 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 269:
-#line 1145 "gram.y" /* yacc.c:1646  */
+#line 902 "gram.y" /* yacc.c:1646  */
     {}
-#line 4437 "y.tab.c" /* yacc.c:1646  */
+#line 4192 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 270:
-#line 1149 "gram.y" /* yacc.c:1646  */
+#line 906 "gram.y" /* yacc.c:1646  */
     {}
-#line 4443 "y.tab.c" /* yacc.c:1646  */
+#line 4198 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 271:
-#line 1150 "gram.y" /* yacc.c:1646  */
+#line 907 "gram.y" /* yacc.c:1646  */
     {}
-#line 4449 "y.tab.c" /* yacc.c:1646  */
+#line 4204 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 272:
-#line 1154 "gram.y" /* yacc.c:1646  */
+#line 911 "gram.y" /* yacc.c:1646  */
     {}
-#line 4455 "y.tab.c" /* yacc.c:1646  */
+#line 4210 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 273:
-#line 1155 "gram.y" /* yacc.c:1646  */
+#line 912 "gram.y" /* yacc.c:1646  */
     {}
-#line 4461 "y.tab.c" /* yacc.c:1646  */
+#line 4216 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 274:
-#line 1159 "gram.y" /* yacc.c:1646  */
+#line 916 "gram.y" /* yacc.c:1646  */
     {}
-#line 4467 "y.tab.c" /* yacc.c:1646  */
+#line 4222 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 275:
-#line 1160 "gram.y" /* yacc.c:1646  */
+#line 917 "gram.y" /* yacc.c:1646  */
     {}
-#line 4473 "y.tab.c" /* yacc.c:1646  */
+#line 4228 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 276:
-#line 1161 "gram.y" /* yacc.c:1646  */
+#line 918 "gram.y" /* yacc.c:1646  */
     {}
-#line 4479 "y.tab.c" /* yacc.c:1646  */
+#line 4234 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 277:
-#line 1166 "gram.y" /* yacc.c:1646  */
+#line 923 "gram.y" /* yacc.c:1646  */
     {}
-#line 4485 "y.tab.c" /* yacc.c:1646  */
+#line 4240 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 278:
-#line 1167 "gram.y" /* yacc.c:1646  */
+#line 924 "gram.y" /* yacc.c:1646  */
     {}
-#line 4491 "y.tab.c" /* yacc.c:1646  */
+#line 4246 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 279:
-#line 1168 "gram.y" /* yacc.c:1646  */
+#line 925 "gram.y" /* yacc.c:1646  */
     {}
-#line 4497 "y.tab.c" /* yacc.c:1646  */
+#line 4252 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 280:
-#line 1169 "gram.y" /* yacc.c:1646  */
+#line 926 "gram.y" /* yacc.c:1646  */
     {}
-#line 4503 "y.tab.c" /* yacc.c:1646  */
+#line 4258 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 281:
-#line 1170 "gram.y" /* yacc.c:1646  */
+#line 927 "gram.y" /* yacc.c:1646  */
     {}
-#line 4509 "y.tab.c" /* yacc.c:1646  */
+#line 4264 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 282:
-#line 1171 "gram.y" /* yacc.c:1646  */
+#line 928 "gram.y" /* yacc.c:1646  */
     {}
-#line 4515 "y.tab.c" /* yacc.c:1646  */
+#line 4270 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 283:
-#line 1172 "gram.y" /* yacc.c:1646  */
+#line 929 "gram.y" /* yacc.c:1646  */
     {}
-#line 4521 "y.tab.c" /* yacc.c:1646  */
+#line 4276 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 284:
-#line 1173 "gram.y" /* yacc.c:1646  */
+#line 930 "gram.y" /* yacc.c:1646  */
     {}
-#line 4527 "y.tab.c" /* yacc.c:1646  */
+#line 4282 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 285:
-#line 1177 "gram.y" /* yacc.c:1646  */
+#line 934 "gram.y" /* yacc.c:1646  */
     {}
-#line 4533 "y.tab.c" /* yacc.c:1646  */
+#line 4288 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 286:
-#line 1178 "gram.y" /* yacc.c:1646  */
+#line 935 "gram.y" /* yacc.c:1646  */
     {}
-#line 4539 "y.tab.c" /* yacc.c:1646  */
+#line 4294 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 287:
-#line 1179 "gram.y" /* yacc.c:1646  */
+#line 936 "gram.y" /* yacc.c:1646  */
     {}
-#line 4545 "y.tab.c" /* yacc.c:1646  */
+#line 4300 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 288:
-#line 1180 "gram.y" /* yacc.c:1646  */
+#line 937 "gram.y" /* yacc.c:1646  */
     {}
-#line 4551 "y.tab.c" /* yacc.c:1646  */
+#line 4306 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 289:
-#line 1181 "gram.y" /* yacc.c:1646  */
+#line 938 "gram.y" /* yacc.c:1646  */
     {}
-#line 4557 "y.tab.c" /* yacc.c:1646  */
+#line 4312 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 290:
-#line 1182 "gram.y" /* yacc.c:1646  */
+#line 939 "gram.y" /* yacc.c:1646  */
     {}
-#line 4563 "y.tab.c" /* yacc.c:1646  */
+#line 4318 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 291:
-#line 1183 "gram.y" /* yacc.c:1646  */
+#line 940 "gram.y" /* yacc.c:1646  */
     {}
-#line 4569 "y.tab.c" /* yacc.c:1646  */
+#line 4324 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 292:
-#line 1184 "gram.y" /* yacc.c:1646  */
+#line 941 "gram.y" /* yacc.c:1646  */
     {}
-#line 4575 "y.tab.c" /* yacc.c:1646  */
+#line 4330 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 293:
-#line 1185 "gram.y" /* yacc.c:1646  */
+#line 942 "gram.y" /* yacc.c:1646  */
     {}
-#line 4581 "y.tab.c" /* yacc.c:1646  */
+#line 4336 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 294:
-#line 1186 "gram.y" /* yacc.c:1646  */
+#line 943 "gram.y" /* yacc.c:1646  */
     {}
-#line 4587 "y.tab.c" /* yacc.c:1646  */
+#line 4342 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 295:
-#line 1187 "gram.y" /* yacc.c:1646  */
+#line 944 "gram.y" /* yacc.c:1646  */
     {}
-#line 4593 "y.tab.c" /* yacc.c:1646  */
+#line 4348 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 296:
-#line 1188 "gram.y" /* yacc.c:1646  */
+#line 945 "gram.y" /* yacc.c:1646  */
     {}
-#line 4599 "y.tab.c" /* yacc.c:1646  */
+#line 4354 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 297:
-#line 1189 "gram.y" /* yacc.c:1646  */
+#line 946 "gram.y" /* yacc.c:1646  */
     {}
-#line 4605 "y.tab.c" /* yacc.c:1646  */
+#line 4360 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 298:
-#line 1190 "gram.y" /* yacc.c:1646  */
+#line 947 "gram.y" /* yacc.c:1646  */
     {}
-#line 4611 "y.tab.c" /* yacc.c:1646  */
+#line 4366 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 299:
-#line 1191 "gram.y" /* yacc.c:1646  */
+#line 948 "gram.y" /* yacc.c:1646  */
     {}
-#line 4617 "y.tab.c" /* yacc.c:1646  */
+#line 4372 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 300:
-#line 1192 "gram.y" /* yacc.c:1646  */
+#line 949 "gram.y" /* yacc.c:1646  */
     {}
-#line 4623 "y.tab.c" /* yacc.c:1646  */
+#line 4378 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 301:
-#line 1193 "gram.y" /* yacc.c:1646  */
+#line 950 "gram.y" /* yacc.c:1646  */
     {}
-#line 4629 "y.tab.c" /* yacc.c:1646  */
+#line 4384 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 302:
-#line 1197 "gram.y" /* yacc.c:1646  */
+#line 954 "gram.y" /* yacc.c:1646  */
     {}
-#line 4635 "y.tab.c" /* yacc.c:1646  */
+#line 4390 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 303:
-#line 1198 "gram.y" /* yacc.c:1646  */
+#line 955 "gram.y" /* yacc.c:1646  */
     {}
-#line 4641 "y.tab.c" /* yacc.c:1646  */
+#line 4396 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 304:
-#line 1199 "gram.y" /* yacc.c:1646  */
+#line 956 "gram.y" /* yacc.c:1646  */
     {}
-#line 4647 "y.tab.c" /* yacc.c:1646  */
+#line 4402 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 305:
-#line 1203 "gram.y" /* yacc.c:1646  */
+#line 960 "gram.y" /* yacc.c:1646  */
     {}
-#line 4653 "y.tab.c" /* yacc.c:1646  */
+#line 4408 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 306:
-#line 1204 "gram.y" /* yacc.c:1646  */
+#line 961 "gram.y" /* yacc.c:1646  */
     {}
-#line 4659 "y.tab.c" /* yacc.c:1646  */
+#line 4414 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 307:
-#line 1205 "gram.y" /* yacc.c:1646  */
+#line 962 "gram.y" /* yacc.c:1646  */
     {}
-#line 4665 "y.tab.c" /* yacc.c:1646  */
+#line 4420 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 308:
-#line 1206 "gram.y" /* yacc.c:1646  */
+#line 963 "gram.y" /* yacc.c:1646  */
     {}
-#line 4671 "y.tab.c" /* yacc.c:1646  */
+#line 4426 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 309:
-#line 1210 "gram.y" /* yacc.c:1646  */
+#line 967 "gram.y" /* yacc.c:1646  */
     {}
-#line 4677 "y.tab.c" /* yacc.c:1646  */
+#line 4432 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 310:
-#line 1214 "gram.y" /* yacc.c:1646  */
+#line 971 "gram.y" /* yacc.c:1646  */
     {}
-#line 4683 "y.tab.c" /* yacc.c:1646  */
+#line 4438 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 311:
-#line 1218 "gram.y" /* yacc.c:1646  */
+#line 975 "gram.y" /* yacc.c:1646  */
     {}
-#line 4689 "y.tab.c" /* yacc.c:1646  */
+#line 4444 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 312:
-#line 1219 "gram.y" /* yacc.c:1646  */
+#line 976 "gram.y" /* yacc.c:1646  */
     {}
-#line 4695 "y.tab.c" /* yacc.c:1646  */
+#line 4450 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 313:
-#line 1223 "gram.y" /* yacc.c:1646  */
+#line 980 "gram.y" /* yacc.c:1646  */
     {}
-#line 4701 "y.tab.c" /* yacc.c:1646  */
+#line 4456 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 314:
-#line 1224 "gram.y" /* yacc.c:1646  */
+#line 981 "gram.y" /* yacc.c:1646  */
     {}
-#line 4707 "y.tab.c" /* yacc.c:1646  */
+#line 4462 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 315:
-#line 1228 "gram.y" /* yacc.c:1646  */
+#line 985 "gram.y" /* yacc.c:1646  */
     {}
-#line 4713 "y.tab.c" /* yacc.c:1646  */
+#line 4468 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 316:
-#line 1229 "gram.y" /* yacc.c:1646  */
+#line 986 "gram.y" /* yacc.c:1646  */
     {}
-#line 4719 "y.tab.c" /* yacc.c:1646  */
+#line 4474 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 317:
-#line 1235 "gram.y" /* yacc.c:1646  */
+#line 992 "gram.y" /* yacc.c:1646  */
     {}
-#line 4725 "y.tab.c" /* yacc.c:1646  */
+#line 4480 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 318:
-#line 1239 "gram.y" /* yacc.c:1646  */
+#line 996 "gram.y" /* yacc.c:1646  */
     {}
-#line 4731 "y.tab.c" /* yacc.c:1646  */
+#line 4486 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 319:
-#line 1243 "gram.y" /* yacc.c:1646  */
+#line 1000 "gram.y" /* yacc.c:1646  */
     {}
-#line 4737 "y.tab.c" /* yacc.c:1646  */
+#line 4492 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 320:
-#line 1244 "gram.y" /* yacc.c:1646  */
+#line 1001 "gram.y" /* yacc.c:1646  */
     {}
-#line 4743 "y.tab.c" /* yacc.c:1646  */
+#line 4498 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 321:
-#line 1245 "gram.y" /* yacc.c:1646  */
+#line 1002 "gram.y" /* yacc.c:1646  */
     {}
-#line 4749 "y.tab.c" /* yacc.c:1646  */
+#line 4504 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 322:
-#line 1249 "gram.y" /* yacc.c:1646  */
+#line 1006 "gram.y" /* yacc.c:1646  */
     {}
-#line 4755 "y.tab.c" /* yacc.c:1646  */
+#line 4510 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 323:
-#line 1250 "gram.y" /* yacc.c:1646  */
+#line 1007 "gram.y" /* yacc.c:1646  */
     {}
-#line 4761 "y.tab.c" /* yacc.c:1646  */
+#line 4516 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 324:
-#line 1251 "gram.y" /* yacc.c:1646  */
+#line 1008 "gram.y" /* yacc.c:1646  */
     {}
-#line 4767 "y.tab.c" /* yacc.c:1646  */
+#line 4522 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 325:
-#line 1252 "gram.y" /* yacc.c:1646  */
+#line 1009 "gram.y" /* yacc.c:1646  */
     {}
-#line 4773 "y.tab.c" /* yacc.c:1646  */
+#line 4528 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 326:
-#line 1253 "gram.y" /* yacc.c:1646  */
+#line 1010 "gram.y" /* yacc.c:1646  */
     {}
-#line 4779 "y.tab.c" /* yacc.c:1646  */
+#line 4534 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 327:
-#line 1257 "gram.y" /* yacc.c:1646  */
+#line 1014 "gram.y" /* yacc.c:1646  */
     {}
-#line 4785 "y.tab.c" /* yacc.c:1646  */
+#line 4540 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 328:
-#line 1258 "gram.y" /* yacc.c:1646  */
+#line 1015 "gram.y" /* yacc.c:1646  */
     {}
-#line 4791 "y.tab.c" /* yacc.c:1646  */
+#line 4546 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 329:
-#line 1259 "gram.y" /* yacc.c:1646  */
+#line 1016 "gram.y" /* yacc.c:1646  */
     {}
-#line 4797 "y.tab.c" /* yacc.c:1646  */
+#line 4552 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 330:
-#line 1263 "gram.y" /* yacc.c:1646  */
+#line 1020 "gram.y" /* yacc.c:1646  */
     {}
-#line 4803 "y.tab.c" /* yacc.c:1646  */
+#line 4558 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 331:
-#line 1264 "gram.y" /* yacc.c:1646  */
+#line 1021 "gram.y" /* yacc.c:1646  */
     {}
-#line 4809 "y.tab.c" /* yacc.c:1646  */
+#line 4564 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 332:
-#line 1268 "gram.y" /* yacc.c:1646  */
+#line 1025 "gram.y" /* yacc.c:1646  */
     {}
-#line 4815 "y.tab.c" /* yacc.c:1646  */
+#line 4570 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 333:
-#line 1269 "gram.y" /* yacc.c:1646  */
+#line 1026 "gram.y" /* yacc.c:1646  */
     {}
-#line 4821 "y.tab.c" /* yacc.c:1646  */
+#line 4576 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 334:
-#line 1270 "gram.y" /* yacc.c:1646  */
+#line 1027 "gram.y" /* yacc.c:1646  */
     {}
-#line 4827 "y.tab.c" /* yacc.c:1646  */
+#line 4582 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 335:
-#line 1271 "gram.y" /* yacc.c:1646  */
+#line 1028 "gram.y" /* yacc.c:1646  */
     {}
-#line 4833 "y.tab.c" /* yacc.c:1646  */
+#line 4588 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 336:
-#line 1275 "gram.y" /* yacc.c:1646  */
+#line 1032 "gram.y" /* yacc.c:1646  */
     {}
-#line 4839 "y.tab.c" /* yacc.c:1646  */
+#line 4594 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 337:
-#line 1276 "gram.y" /* yacc.c:1646  */
+#line 1033 "gram.y" /* yacc.c:1646  */
     {}
-#line 4845 "y.tab.c" /* yacc.c:1646  */
+#line 4600 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 338:
-#line 1280 "gram.y" /* yacc.c:1646  */
+#line 1037 "gram.y" /* yacc.c:1646  */
     {}
-#line 4851 "y.tab.c" /* yacc.c:1646  */
+#line 4606 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 339:
-#line 1281 "gram.y" /* yacc.c:1646  */
+#line 1038 "gram.y" /* yacc.c:1646  */
     {}
-#line 4857 "y.tab.c" /* yacc.c:1646  */
+#line 4612 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 340:
-#line 1282 "gram.y" /* yacc.c:1646  */
+#line 1039 "gram.y" /* yacc.c:1646  */
     {}
-#line 4863 "y.tab.c" /* yacc.c:1646  */
+#line 4618 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 341:
-#line 1283 "gram.y" /* yacc.c:1646  */
+#line 1040 "gram.y" /* yacc.c:1646  */
     {}
-#line 4869 "y.tab.c" /* yacc.c:1646  */
+#line 4624 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 342:
-#line 1284 "gram.y" /* yacc.c:1646  */
+#line 1041 "gram.y" /* yacc.c:1646  */
     {}
-#line 4875 "y.tab.c" /* yacc.c:1646  */
+#line 4630 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 343:
-#line 1285 "gram.y" /* yacc.c:1646  */
+#line 1042 "gram.y" /* yacc.c:1646  */
     {}
-#line 4881 "y.tab.c" /* yacc.c:1646  */
+#line 4636 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 344:
-#line 1289 "gram.y" /* yacc.c:1646  */
+#line 1046 "gram.y" /* yacc.c:1646  */
     {}
-#line 4887 "y.tab.c" /* yacc.c:1646  */
+#line 4642 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 345:
-#line 1293 "gram.y" /* yacc.c:1646  */
+#line 1050 "gram.y" /* yacc.c:1646  */
     {}
-#line 4893 "y.tab.c" /* yacc.c:1646  */
+#line 4648 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 346:
-#line 1294 "gram.y" /* yacc.c:1646  */
+#line 1051 "gram.y" /* yacc.c:1646  */
     {}
-#line 4899 "y.tab.c" /* yacc.c:1646  */
+#line 4654 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 347:
-#line 1298 "gram.y" /* yacc.c:1646  */
+#line 1055 "gram.y" /* yacc.c:1646  */
     {}
-#line 4905 "y.tab.c" /* yacc.c:1646  */
+#line 4660 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 348:
-#line 1299 "gram.y" /* yacc.c:1646  */
+#line 1056 "gram.y" /* yacc.c:1646  */
     {}
-#line 4911 "y.tab.c" /* yacc.c:1646  */
+#line 4666 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 349:
-#line 1303 "gram.y" /* yacc.c:1646  */
+#line 1060 "gram.y" /* yacc.c:1646  */
     {}
-#line 4917 "y.tab.c" /* yacc.c:1646  */
+#line 4672 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 350:
-#line 1304 "gram.y" /* yacc.c:1646  */
+#line 1061 "gram.y" /* yacc.c:1646  */
     {}
-#line 4923 "y.tab.c" /* yacc.c:1646  */
+#line 4678 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 351:
-#line 1308 "gram.y" /* yacc.c:1646  */
+#line 1065 "gram.y" /* yacc.c:1646  */
     {}
-#line 4929 "y.tab.c" /* yacc.c:1646  */
+#line 4684 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 352:
-#line 1309 "gram.y" /* yacc.c:1646  */
+#line 1066 "gram.y" /* yacc.c:1646  */
     {}
-#line 4935 "y.tab.c" /* yacc.c:1646  */
+#line 4690 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 353:
-#line 1310 "gram.y" /* yacc.c:1646  */
+#line 1067 "gram.y" /* yacc.c:1646  */
     {}
-#line 4941 "y.tab.c" /* yacc.c:1646  */
+#line 4696 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 354:
-#line 1311 "gram.y" /* yacc.c:1646  */
+#line 1068 "gram.y" /* yacc.c:1646  */
     {}
-#line 4947 "y.tab.c" /* yacc.c:1646  */
+#line 4702 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 355:
-#line 1312 "gram.y" /* yacc.c:1646  */
+#line 1069 "gram.y" /* yacc.c:1646  */
     {}
-#line 4953 "y.tab.c" /* yacc.c:1646  */
+#line 4708 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 356:
-#line 1313 "gram.y" /* yacc.c:1646  */
+#line 1070 "gram.y" /* yacc.c:1646  */
     {}
-#line 4959 "y.tab.c" /* yacc.c:1646  */
+#line 4714 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 357:
-#line 1314 "gram.y" /* yacc.c:1646  */
+#line 1071 "gram.y" /* yacc.c:1646  */
     {}
-#line 4965 "y.tab.c" /* yacc.c:1646  */
+#line 4720 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 358:
-#line 1315 "gram.y" /* yacc.c:1646  */
+#line 1072 "gram.y" /* yacc.c:1646  */
     {}
-#line 4971 "y.tab.c" /* yacc.c:1646  */
+#line 4726 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 359:
-#line 1319 "gram.y" /* yacc.c:1646  */
+#line 1076 "gram.y" /* yacc.c:1646  */
     {}
-#line 4977 "y.tab.c" /* yacc.c:1646  */
+#line 4732 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 360:
-#line 1320 "gram.y" /* yacc.c:1646  */
+#line 1077 "gram.y" /* yacc.c:1646  */
     {}
-#line 4983 "y.tab.c" /* yacc.c:1646  */
+#line 4738 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 361:
-#line 1324 "gram.y" /* yacc.c:1646  */
+#line 1081 "gram.y" /* yacc.c:1646  */
     {}
-#line 4989 "y.tab.c" /* yacc.c:1646  */
+#line 4744 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 362:
-#line 1325 "gram.y" /* yacc.c:1646  */
+#line 1082 "gram.y" /* yacc.c:1646  */
     {}
-#line 4995 "y.tab.c" /* yacc.c:1646  */
+#line 4750 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 363:
-#line 1329 "gram.y" /* yacc.c:1646  */
+#line 1086 "gram.y" /* yacc.c:1646  */
     {}
-#line 5001 "y.tab.c" /* yacc.c:1646  */
+#line 4756 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 364:
-#line 1330 "gram.y" /* yacc.c:1646  */
+#line 1087 "gram.y" /* yacc.c:1646  */
     {}
-#line 5007 "y.tab.c" /* yacc.c:1646  */
+#line 4762 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 365:
-#line 1334 "gram.y" /* yacc.c:1646  */
+#line 1091 "gram.y" /* yacc.c:1646  */
     {}
-#line 5013 "y.tab.c" /* yacc.c:1646  */
+#line 4768 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 366:
-#line 1335 "gram.y" /* yacc.c:1646  */
+#line 1092 "gram.y" /* yacc.c:1646  */
     {}
-#line 5019 "y.tab.c" /* yacc.c:1646  */
+#line 4774 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 367:
-#line 1336 "gram.y" /* yacc.c:1646  */
+#line 1093 "gram.y" /* yacc.c:1646  */
     {}
-#line 5025 "y.tab.c" /* yacc.c:1646  */
+#line 4780 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 368:
-#line 1340 "gram.y" /* yacc.c:1646  */
+#line 1097 "gram.y" /* yacc.c:1646  */
     {}
-#line 5031 "y.tab.c" /* yacc.c:1646  */
+#line 4786 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 369:
-#line 1341 "gram.y" /* yacc.c:1646  */
+#line 1098 "gram.y" /* yacc.c:1646  */
     {}
-#line 5037 "y.tab.c" /* yacc.c:1646  */
+#line 4792 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 370:
-#line 1345 "gram.y" /* yacc.c:1646  */
+#line 1102 "gram.y" /* yacc.c:1646  */
     {}
-#line 5043 "y.tab.c" /* yacc.c:1646  */
+#line 4798 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 371:
-#line 1346 "gram.y" /* yacc.c:1646  */
+#line 1103 "gram.y" /* yacc.c:1646  */
     {}
-#line 5049 "y.tab.c" /* yacc.c:1646  */
+#line 4804 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 372:
-#line 1350 "gram.y" /* yacc.c:1646  */
+#line 1107 "gram.y" /* yacc.c:1646  */
     {}
-#line 5055 "y.tab.c" /* yacc.c:1646  */
+#line 4810 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 373:
-#line 1351 "gram.y" /* yacc.c:1646  */
+#line 1108 "gram.y" /* yacc.c:1646  */
     {}
-#line 5061 "y.tab.c" /* yacc.c:1646  */
+#line 4816 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 374:
-#line 1352 "gram.y" /* yacc.c:1646  */
+#line 1109 "gram.y" /* yacc.c:1646  */
     {}
-#line 5067 "y.tab.c" /* yacc.c:1646  */
+#line 4822 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 375:
-#line 1353 "gram.y" /* yacc.c:1646  */
+#line 1110 "gram.y" /* yacc.c:1646  */
     {}
-#line 5073 "y.tab.c" /* yacc.c:1646  */
+#line 4828 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 376:
-#line 1354 "gram.y" /* yacc.c:1646  */
+#line 1111 "gram.y" /* yacc.c:1646  */
     {}
-#line 5079 "y.tab.c" /* yacc.c:1646  */
+#line 4834 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 377:
-#line 1355 "gram.y" /* yacc.c:1646  */
+#line 1112 "gram.y" /* yacc.c:1646  */
     {}
-#line 5085 "y.tab.c" /* yacc.c:1646  */
+#line 4840 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 378:
-#line 1356 "gram.y" /* yacc.c:1646  */
+#line 1113 "gram.y" /* yacc.c:1646  */
     {}
-#line 5091 "y.tab.c" /* yacc.c:1646  */
+#line 4846 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 379:
-#line 1357 "gram.y" /* yacc.c:1646  */
+#line 1114 "gram.y" /* yacc.c:1646  */
     {}
-#line 5097 "y.tab.c" /* yacc.c:1646  */
+#line 4852 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 380:
-#line 1358 "gram.y" /* yacc.c:1646  */
+#line 1115 "gram.y" /* yacc.c:1646  */
     {}
-#line 5103 "y.tab.c" /* yacc.c:1646  */
+#line 4858 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 381:
-#line 1359 "gram.y" /* yacc.c:1646  */
+#line 1116 "gram.y" /* yacc.c:1646  */
     {}
-#line 5109 "y.tab.c" /* yacc.c:1646  */
+#line 4864 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 382:
-#line 1360 "gram.y" /* yacc.c:1646  */
+#line 1117 "gram.y" /* yacc.c:1646  */
     {}
-#line 5115 "y.tab.c" /* yacc.c:1646  */
+#line 4870 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 383:
-#line 1361 "gram.y" /* yacc.c:1646  */
+#line 1118 "gram.y" /* yacc.c:1646  */
     {}
-#line 5121 "y.tab.c" /* yacc.c:1646  */
+#line 4876 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 384:
-#line 1362 "gram.y" /* yacc.c:1646  */
+#line 1119 "gram.y" /* yacc.c:1646  */
     {}
-#line 5127 "y.tab.c" /* yacc.c:1646  */
+#line 4882 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 385:
-#line 1363 "gram.y" /* yacc.c:1646  */
+#line 1120 "gram.y" /* yacc.c:1646  */
     {}
-#line 5133 "y.tab.c" /* yacc.c:1646  */
+#line 4888 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 386:
-#line 1364 "gram.y" /* yacc.c:1646  */
+#line 1121 "gram.y" /* yacc.c:1646  */
     {}
-#line 5139 "y.tab.c" /* yacc.c:1646  */
+#line 4894 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 387:
-#line 1365 "gram.y" /* yacc.c:1646  */
+#line 1122 "gram.y" /* yacc.c:1646  */
     {}
-#line 5145 "y.tab.c" /* yacc.c:1646  */
+#line 4900 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 388:
-#line 1366 "gram.y" /* yacc.c:1646  */
+#line 1123 "gram.y" /* yacc.c:1646  */
     {}
-#line 5151 "y.tab.c" /* yacc.c:1646  */
+#line 4906 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 389:
-#line 1367 "gram.y" /* yacc.c:1646  */
+#line 1124 "gram.y" /* yacc.c:1646  */
     {}
-#line 5157 "y.tab.c" /* yacc.c:1646  */
+#line 4912 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 390:
-#line 1368 "gram.y" /* yacc.c:1646  */
+#line 1125 "gram.y" /* yacc.c:1646  */
     {}
-#line 5163 "y.tab.c" /* yacc.c:1646  */
+#line 4918 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 391:
-#line 1369 "gram.y" /* yacc.c:1646  */
+#line 1126 "gram.y" /* yacc.c:1646  */
     {}
-#line 5169 "y.tab.c" /* yacc.c:1646  */
+#line 4924 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 392:
-#line 1370 "gram.y" /* yacc.c:1646  */
+#line 1127 "gram.y" /* yacc.c:1646  */
     {}
-#line 5175 "y.tab.c" /* yacc.c:1646  */
+#line 4930 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 393:
-#line 1371 "gram.y" /* yacc.c:1646  */
+#line 1128 "gram.y" /* yacc.c:1646  */
     {}
-#line 5181 "y.tab.c" /* yacc.c:1646  */
+#line 4936 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 394:
-#line 1372 "gram.y" /* yacc.c:1646  */
+#line 1129 "gram.y" /* yacc.c:1646  */
     {}
-#line 5187 "y.tab.c" /* yacc.c:1646  */
+#line 4942 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 395:
-#line 1376 "gram.y" /* yacc.c:1646  */
+#line 1133 "gram.y" /* yacc.c:1646  */
     {}
-#line 5193 "y.tab.c" /* yacc.c:1646  */
+#line 4948 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 396:
-#line 1377 "gram.y" /* yacc.c:1646  */
+#line 1134 "gram.y" /* yacc.c:1646  */
     {}
-#line 5199 "y.tab.c" /* yacc.c:1646  */
+#line 4954 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 397:
-#line 1381 "gram.y" /* yacc.c:1646  */
+#line 1138 "gram.y" /* yacc.c:1646  */
     {}
-#line 5205 "y.tab.c" /* yacc.c:1646  */
+#line 4960 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 398:
-#line 1382 "gram.y" /* yacc.c:1646  */
+#line 1139 "gram.y" /* yacc.c:1646  */
     {}
-#line 5211 "y.tab.c" /* yacc.c:1646  */
+#line 4966 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 399:
-#line 1383 "gram.y" /* yacc.c:1646  */
+#line 1140 "gram.y" /* yacc.c:1646  */
     {}
-#line 5217 "y.tab.c" /* yacc.c:1646  */
+#line 4972 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 400:
-#line 1384 "gram.y" /* yacc.c:1646  */
+#line 1141 "gram.y" /* yacc.c:1646  */
     {}
-#line 5223 "y.tab.c" /* yacc.c:1646  */
+#line 4978 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 401:
-#line 1385 "gram.y" /* yacc.c:1646  */
+#line 1142 "gram.y" /* yacc.c:1646  */
     {}
-#line 5229 "y.tab.c" /* yacc.c:1646  */
+#line 4984 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 402:
-#line 1386 "gram.y" /* yacc.c:1646  */
+#line 1143 "gram.y" /* yacc.c:1646  */
     {}
-#line 5235 "y.tab.c" /* yacc.c:1646  */
+#line 4990 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 403:
-#line 1390 "gram.y" /* yacc.c:1646  */
+#line 1147 "gram.y" /* yacc.c:1646  */
     {}
-#line 5241 "y.tab.c" /* yacc.c:1646  */
+#line 4996 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 404:
-#line 1391 "gram.y" /* yacc.c:1646  */
+#line 1148 "gram.y" /* yacc.c:1646  */
     {}
-#line 5247 "y.tab.c" /* yacc.c:1646  */
+#line 5002 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 405:
-#line 1392 "gram.y" /* yacc.c:1646  */
+#line 1149 "gram.y" /* yacc.c:1646  */
     {}
-#line 5253 "y.tab.c" /* yacc.c:1646  */
+#line 5008 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 406:
-#line 1393 "gram.y" /* yacc.c:1646  */
+#line 1150 "gram.y" /* yacc.c:1646  */
     {}
-#line 5259 "y.tab.c" /* yacc.c:1646  */
+#line 5014 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 407:
-#line 1397 "gram.y" /* yacc.c:1646  */
+#line 1154 "gram.y" /* yacc.c:1646  */
     {}
-#line 5265 "y.tab.c" /* yacc.c:1646  */
+#line 5020 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 408:
-#line 1398 "gram.y" /* yacc.c:1646  */
+#line 1155 "gram.y" /* yacc.c:1646  */
     {}
-#line 5271 "y.tab.c" /* yacc.c:1646  */
+#line 5026 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 409:
-#line 1402 "gram.y" /* yacc.c:1646  */
+#line 1159 "gram.y" /* yacc.c:1646  */
     {}
-#line 5277 "y.tab.c" /* yacc.c:1646  */
+#line 5032 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 410:
-#line 1406 "gram.y" /* yacc.c:1646  */
+#line 1163 "gram.y" /* yacc.c:1646  */
     {}
-#line 5283 "y.tab.c" /* yacc.c:1646  */
+#line 5038 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 411:
-#line 1407 "gram.y" /* yacc.c:1646  */
+#line 1164 "gram.y" /* yacc.c:1646  */
     {}
-#line 5289 "y.tab.c" /* yacc.c:1646  */
+#line 5044 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 412:
-#line 1411 "gram.y" /* yacc.c:1646  */
+#line 1168 "gram.y" /* yacc.c:1646  */
     {}
-#line 5295 "y.tab.c" /* yacc.c:1646  */
+#line 5050 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 413:
-#line 1412 "gram.y" /* yacc.c:1646  */
+#line 1169 "gram.y" /* yacc.c:1646  */
     {}
-#line 5301 "y.tab.c" /* yacc.c:1646  */
+#line 5056 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 414:
-#line 1416 "gram.y" /* yacc.c:1646  */
+#line 1173 "gram.y" /* yacc.c:1646  */
     {}
-#line 5307 "y.tab.c" /* yacc.c:1646  */
+#line 5062 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 415:
-#line 1417 "gram.y" /* yacc.c:1646  */
+#line 1174 "gram.y" /* yacc.c:1646  */
     {}
-#line 5313 "y.tab.c" /* yacc.c:1646  */
+#line 5068 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 416:
-#line 1421 "gram.y" /* yacc.c:1646  */
+#line 1178 "gram.y" /* yacc.c:1646  */
     {}
-#line 5319 "y.tab.c" /* yacc.c:1646  */
+#line 5074 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 417:
-#line 1422 "gram.y" /* yacc.c:1646  */
+#line 1179 "gram.y" /* yacc.c:1646  */
     {}
-#line 5325 "y.tab.c" /* yacc.c:1646  */
+#line 5080 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 418:
-#line 1426 "gram.y" /* yacc.c:1646  */
+#line 1183 "gram.y" /* yacc.c:1646  */
     {}
-#line 5331 "y.tab.c" /* yacc.c:1646  */
+#line 5086 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 419:
-#line 1427 "gram.y" /* yacc.c:1646  */
+#line 1184 "gram.y" /* yacc.c:1646  */
     {}
-#line 5337 "y.tab.c" /* yacc.c:1646  */
+#line 5092 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 420:
-#line 1431 "gram.y" /* yacc.c:1646  */
+#line 1188 "gram.y" /* yacc.c:1646  */
     {}
-#line 5343 "y.tab.c" /* yacc.c:1646  */
+#line 5098 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 421:
-#line 1435 "gram.y" /* yacc.c:1646  */
+#line 1192 "gram.y" /* yacc.c:1646  */
     {}
-#line 5349 "y.tab.c" /* yacc.c:1646  */
+#line 5104 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 422:
-#line 1436 "gram.y" /* yacc.c:1646  */
+#line 1193 "gram.y" /* yacc.c:1646  */
     {}
-#line 5355 "y.tab.c" /* yacc.c:1646  */
+#line 5110 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 423:
-#line 1440 "gram.y" /* yacc.c:1646  */
+#line 1197 "gram.y" /* yacc.c:1646  */
     {}
-#line 5361 "y.tab.c" /* yacc.c:1646  */
+#line 5116 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 424:
-#line 1441 "gram.y" /* yacc.c:1646  */
+#line 1198 "gram.y" /* yacc.c:1646  */
     {}
-#line 5367 "y.tab.c" /* yacc.c:1646  */
+#line 5122 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 425:
-#line 1442 "gram.y" /* yacc.c:1646  */
+#line 1199 "gram.y" /* yacc.c:1646  */
     {}
-#line 5373 "y.tab.c" /* yacc.c:1646  */
+#line 5128 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 426:
-#line 1446 "gram.y" /* yacc.c:1646  */
+#line 1203 "gram.y" /* yacc.c:1646  */
     {}
-#line 5379 "y.tab.c" /* yacc.c:1646  */
+#line 5134 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 427:
-#line 1447 "gram.y" /* yacc.c:1646  */
+#line 1204 "gram.y" /* yacc.c:1646  */
     {}
-#line 5385 "y.tab.c" /* yacc.c:1646  */
+#line 5140 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 428:
-#line 1451 "gram.y" /* yacc.c:1646  */
+#line 1208 "gram.y" /* yacc.c:1646  */
     {}
-#line 5391 "y.tab.c" /* yacc.c:1646  */
+#line 5146 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 429:
-#line 1452 "gram.y" /* yacc.c:1646  */
+#line 1209 "gram.y" /* yacc.c:1646  */
     {}
-#line 5397 "y.tab.c" /* yacc.c:1646  */
+#line 5152 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 430:
-#line 1456 "gram.y" /* yacc.c:1646  */
+#line 1213 "gram.y" /* yacc.c:1646  */
     {}
-#line 5403 "y.tab.c" /* yacc.c:1646  */
+#line 5158 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 5407 "y.tab.c" /* yacc.c:1646  */
+#line 5162 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -5631,7 +5386,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 1458 "gram.y" /* yacc.c:1906  */
+#line 1215 "gram.y" /* yacc.c:1906  */
 
 
 void yyerror(const char *msg)

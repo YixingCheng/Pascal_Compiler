@@ -8,8 +8,12 @@
 
 #include "types.h"
 #include "tree.h"
+#include "symtab.h"
 
 void calSizeAlign(TYPE ty, int *align, unsigned int *size);
 
 /* this routine is used to convert an old Node to a new type of node  */
-NODE unaryConvert(NODE, oldNode);
+NODE unaryConvert(NODE oldNode);
+
+/* this routine is used to generate assembly code for expression tree node*/
+void geneAsmForNode(NODE node);
