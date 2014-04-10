@@ -80,14 +80,15 @@ void yyerror(const char *);
 
 /* The union representing a semantic stack entry */
 %union {
-    char  *y_string;
-    long   y_int;
-    double y_real;
-    TYPE   y_type;
-    ST_ID y_stid;
-    INDEX_LIST y_indexlist;
-    ID_LIST y_idlist;
-    PARAM_LIST y_paramlist;
+    char         *y_string;
+    long         y_int;
+    double       y_real;
+    TYPE         y_type;
+    ST_ID        y_stid;
+    INDEX_LIST   y_indexlist;
+    ID_LIST      y_idlist;
+    PARAM_LIST   y_paramlist;
+    NODE         y_node;
 }
 
 %token LEX_ID
@@ -166,6 +167,7 @@ void yyerror(const char *);
 %type <y_paramlist> optional_procedural_type_formal_parameter_list 
 %type <y_paramlist> procedural_type_formal_parameter
 %type <y_paramlist> procedural_type_formal_parameter_list
+%type <y_node> rest_of_statement variable_or_function_access_maybe_assignment 
 
 
 

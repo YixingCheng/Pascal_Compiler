@@ -7,7 +7,9 @@
 */
 
 #include "types.h"
+#include "tree.h"
 
 void calSizeAlign(TYPE ty, int *align, unsigned int *size);
 
-
+/* this routine is used to convert an old Node to a new type of node  */
+NODE unaryConvert(NODE, oldNode);
