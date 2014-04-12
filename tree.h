@@ -92,3 +92,12 @@ void declaVariable(ID_LIST idList, TYPE type);
 
 /* this routine call routine in backend to generate assembly code for statement */
 void geneAsmForStmt(NODE vari_or_func_access, NODE restofstmt);
+
+/* this routine generate node is there's no assignment operator*/
+NODE geneNodeIfNotAssign(char* tokenName);
+
+/* generate assembly code for dispose() routine  */
+void geneAsmForDispose(NODE parameter);
+
+/* this routine generate node for a binary operator  */
+NODE geneNodeForBiop(NODE left, B_ARITH_REL_OP biop, NODE right);

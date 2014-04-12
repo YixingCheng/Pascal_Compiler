@@ -324,5 +324,144 @@ void geneAsmForStmt(NODE vari_or_func_access, NODE restofstmt){
         }      
    }
 
+/* this routine generate node is there's no assignment operator*/
+NODE geneNodeIfNotAssign(char* tokenName){
+      ST_ID id = st_lookup_id(tokenName);
+      int temp;
+      ST_DR entry = st_lookup(id, &temp);
+      NODE newNode = malloc(sizeof(struct exprtree_node));
+      TYPETAG typetag = ty_query(entry->u.decl.type);
+      if(typetag == TYFUNC){                    // in case of function access
+           newNode->exprTypeTag = FUNC;
+           PARAM_LIST paraList;
+           BOOLEAN arguCheck;
+           TYPE returnType = ty_query_func(entry->u.decl.type, &paraList, &arguCheck);
+           TYPETAG returnTag = ty_query(returnType);
+           newNode->type = returnTag;
+           newNode->u.func.funcName = tokenName;
+           newNode->next = NULL;
+           newNode->u.func.arglist = NULL;
+        }
+      else{                                   // in case of variable
+           newNode->exprTypeTag = VARIABLE;
+           newNode->type = typetag;
+           newNode->u.var_name = tokenName; 
+        }
+      
+      if(newNode->type == TYPTR){
+           NODE derefNode = malloc(sizeof(struct exprtree_node));
+           derefNode->exprTypeTag = DEREF;
+           derefNode->type = newNode->type;
+           derefNode->u.deref.child = newNode;
+           newNode = derefNode;  
+        }
+      return newNode;
+   }
+
+/* generate assembly code for dispose() routine  */
+void geneAsmForDispose(NODE parameter){
+      NODE disposeNode = malloc(sizeof(struct exprtree_node));
+      disposeNode->exprTypeTag = FUNC;
+      disposeNode->type = TYVOID;
+      disposeNode->u.func.funcName = "free";
+      disposeNode->next = NULL;
+      parameter->next   = NULL;
+      disposeNode->u.func.arglist = parameter;
+      geneAsmForNode(disposeNode);
+  }
+
+/* this routine generate node for a binary operator */
+NODE geneNodeForBiop(NODE left, B_ARITH_REL_OP biop, NODE right){
+      NODE biopNode = malloc(sizeof(struct exprtree_node));
+      biopNode->exprTypeTag = BIN;
+      biopNode->u.binop.left = left;
+      biopNode->u.binop.right = right;
+      biopNode->u.binop.op_tag = biop;
+      
+      if(biopNode->u.binop.left->exprTypeTag == VARIABLE){       //if left node is a variable
+           NODE derefNode = malloc(sizeof(struct exprtree_node));
+           derefNode->exprTypeTag = DEREF;
+           derefNode->type = biopNode->u.binop.left->type;
+           derefNode->u.deref.child = biopNode->u.binop.left; 
+           biopNode->u.binop.left = derefNode;
+           biopNode->u.binop.left = unaryConvert(biopNode->u.binop.left);
+        }
+      if(biopNode->u.binop.right->exprTypeTag == VARIABLE){      //if right node is a variable
+           NODE derefNode1 = malloc(sizeof(struct exprtree_node));
+           derefNode1->exprTypeTag = DEREF;
+           derefNode1->type = biopNode->u.binop.right->type;
+           derefNode1->u.deref.child = biopNode->u.binop.right; 
+           biopNode->u.binop.right = derefNode1;
+           biopNode->u.binop.right = unaryConvert(biopNode->u.binop.right);
+        }
+      if(biopNode->u.binop.left->type == biopNode->u.binop.right->type){   //if type of operands are the same
+           if(biopNode->u.binop.left->type == TYUNSIGNEDCHAR || biopNode->u.binop.left->type == TYSIGNEDCHAR)         //if operands are char
+            {
+                NODE convNode = malloc(sizeof(struct exprtree_node));
+                convNode->exprTypeTag = CONV;
+                convNode->u.convert.oldType = biopNode->u.binop.left->type;
+                convNode->u.convert.newType = TYSIGNEDLONGINT;
+                convNode->u.convert.child   = biopNode->u.binop.left;
+                convNode->type = TYSIGNEDLONGINT;
+                biopNode->u.binop.left      = convNode;
+
+                NODE rightconvNode = malloc(sizeof(struct exprtree_node));
+                rightconvNode->exprTypeTag = CONV;
+                rightconvNode->u.convert.oldType = biopNode->u.binop.right->type;
+                rightconvNode->u.convert.newType = TYSIGNEDLONGINT;
+                rightconvNode->u.convert.child   = biopNode->u.binop.right;
+                convNode->type = TYSIGNEDLONGINT;
+                biopNode->u.binop.right      = rightconvNode; 
+            }
+           else{
+                biopNode->type=biopNode->u.binop.left->type;
+            }
+        }
+      else if(biopNode->u.binop.left->type == TYDOUBLE && biopNode->u.binop.right->type == TYSIGNEDLONGINT){
+             if(biopNode->u.binop.right->exprTypeTag == CONST){
+                   biopNode->u.binop.right->type = TYDOUBLE;
+                   biopNode->u.binop.right->u.const_node.const_double_val = biopNode->u.binop.right->u.const_node.const_int_val;
+                   biopNode->type = biopNode->u.binop.left->type;
+              }
+             else{      //need to explicitly convert from int to double
+                   NODE itodNode = malloc(sizeof(struct exprtree_node));
+                   itodNode->exprTypeTag = CONV;
+                   itodNode->u.convert.oldType = biopNode->u.binop.right->type;
+                   itodNode->u.convert.newType = TYDOUBLE;
+                   itodNode->u.convert.child   = biopNode->u.binop.right;
+                   itodNode->type = TYDOUBLE;
+                   biopNode->u.binop.right      = itodNode;
+                   biopNode->type = biopNode->u.binop.left->type;
+              }
+          }
+      // if left operand is long and right operand is double 
+      else if(biopNode->u.binop.left->type == TYSIGNEDLONGINT && biopNode->u.binop.right->type == TYDOUBLE ){
+             if(biopNode->u.binop.left->exprTypeTag == CONST){
+                   biopNode->u.binop.left->type = TYDOUBLE;
+                   biopNode->u.binop.left->u.const_node.const_double_val = biopNode->u.binop.left->u.const_node.const_int_val;
+                   biopNode->type = biopNode->u.binop.right->type;
+              }
+             else{
+                   NODE itodNode = malloc(sizeof(struct exprtree_node));
+                   itodNode->exprTypeTag = CONV;
+                   itodNode->u.convert.oldType = biopNode->u.binop.left->type;
+                   itodNode->u.convert.newType = TYDOUBLE;
+                   itodNode->u.convert.child   = biopNode->u.binop.left;
+                   itodNode->type              = TYDOUBLE;
+                   biopNode->u.binop.left      = itodNode;
+                   biopNode->type = biopNode->u.binop.right->type;
+              }      
+           }     
+      
+      NODE convBiopNode = malloc(sizeof(struct exprtree_node));
+      convBiopNode->exprTypeTag = CONV;
+      convBiopNode->u.convert.oldType = biopNode->type;
+      convBiopNode->u.convert.newType = TYSIGNEDCHAR;
+      convBiopNode->u.convert.child   = biopNode;
+      convBiopNode->type              = TYSIGNEDCHAR;
+      biopNode = convBiopNode;
+      return biopNode;
+}
+
 
 

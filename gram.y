@@ -1,6 +1,6 @@
 /************************************************************************
  *   							   		*
- *	CSCE 513 project1 done by Yixing Chen, Ruofan Xia, Zibo Meng	*
+ *	CSCE 513 project1 done by Yixing Cheng, Ruofan Xia, Zibo Meng	*
  *									*
  ************************************************************************/
 
@@ -80,15 +80,16 @@ void yyerror(const char *);
 
 /* The union representing a semantic stack entry */
 %union {
-    char         *y_string;
-    long         y_int;
-    double       y_real;
-    TYPE         y_type;
-    ST_ID        y_stid;
-    INDEX_LIST   y_indexlist;
-    ID_LIST      y_idlist;
-    PARAM_LIST   y_paramlist;
-    NODE         y_node;
+    char            *y_string;
+    long            y_int;
+    double          y_real;
+    TYPE            y_type;
+    ST_ID           y_stid;
+    INDEX_LIST      y_indexlist;
+    ID_LIST         y_idlist;
+    PARAM_LIST      y_paramlist;
+    NODE            y_node;
+    B_ARITH_REL_OP  y_op;
 }
 
 %token LEX_ID
@@ -156,6 +157,7 @@ void yyerror(const char *);
 %type <y_stid> typename new_identifier
 %type <y_int> LEX_INTCONST unsigned_number number constant
 %type <y_string> new_identifier_1 LEX_ID
+%type <y_string> identifier
 %type <y_indexlist> array_index_list
 %type <y_idlist> id_list
 %type <y_type> type_denoter type_denoter_1
@@ -168,8 +170,10 @@ void yyerror(const char *);
 %type <y_paramlist> procedural_type_formal_parameter
 %type <y_paramlist> procedural_type_formal_parameter_list
 %type <y_node> rest_of_statement variable_or_function_access_maybe_assignment 
-
-
+%type <y_node> expression simple_expression
+%type <y_node> actual_parameter actual_parameter_list
+%type <y_string> variable_access_or_typename
+%type <y_op> relational_operator
 
 /* Precedence rules */
 
@@ -879,14 +883,15 @@ assignment_or_call_statement:
 
 variable_or_function_access_maybe_assignment:
     identifier
-  {}| address_operator variable_or_function_access
+  { $$ = geneNodeIfNotAssign($1);   //ethan commit @4/11/2014 1:01am
+}| address_operator variable_or_function_access
   {}| variable_or_function_access_no_id
   {};
 
 rest_of_statement:
     /* Empty */
-  {}| LEX_ASSIGN expression
-  {};
+  { $$ = NULL;}| LEX_ASSIGN expression
+  {$$ = $2;};
 
 standard_procedure_statement:
     rts_proc_onepar '(' actual_parameter ')'
@@ -898,7 +903,8 @@ standard_procedure_statement:
   {}| p_PAGE optional_par_actual_parameter_list
   {}| ucsd_STR '(' write_actual_parameter_list ')'
   {}| p_DISPOSE '(' actual_parameter ')'
-  {}| p_DISPOSE '(' actual_parameter ',' actual_parameter_list ')'
+  { geneAsmForDispose($3);     //ethan commit @4/11/2014 1:35am
+  }| p_DISPOSE '(' actual_parameter ',' actual_parameter_list ')'
   {};
 
 optional_par_write_parameter_list:
@@ -973,7 +979,7 @@ continue_statement:
 variable_access_or_typename:
     variable_or_function_access_no_id
   {}| LEX_ID
-  {};
+  { $$ = $1;};
 
 index_expression_list:
     index_expression_item
@@ -997,9 +1003,9 @@ boolean_expression:
 
 expression:
     expression relational_operator simple_expression
-  {}| expression LEX_IN simple_expression
+  { $$ = geneNodeForBiop($1, $2, $3); }| expression LEX_IN simple_expression
   {}| simple_expression
-  {};
+  { $$ = $1;};
 
 simple_expression:
     term
