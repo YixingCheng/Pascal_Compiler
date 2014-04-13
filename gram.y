@@ -67,6 +67,10 @@
 /* Cause the `yydebug' variable to be defined.  */
 #define YYDEBUG 1
 
+/* global variables  */
+int isDiv = 0;
+int isMod = 0;
+
 void set_yydebug(int);
 void yyerror(const char *);
 
@@ -173,7 +177,8 @@ void yyerror(const char *);
 %type <y_node> expression simple_expression
 %type <y_node> actual_parameter actual_parameter_list
 %type <y_string> variable_access_or_typename
-%type <y_op> relational_operator
+%type <y_op> relational_operator adding_operator multiplying_operator
+%type <y_node> term signed_primary
 
 /* Precedence rules */
 
@@ -1009,16 +1014,16 @@ expression:
 
 simple_expression:
     term
-  {}| simple_expression adding_operator term
-  {}| simple_expression LEX_SYMDIFF term
+  { $$ = $1;}| simple_expression adding_operator term
+  { $$ = geneNodeForAdd($1, $2, $3); }| simple_expression LEX_SYMDIFF term
   {}| simple_expression LEX_OR term
   {}| simple_expression LEX_XOR term
   {};
 
 term:
     signed_primary
-  {}| term multiplying_operator signed_primary
-  {}| term LEX_AND signed_primary
+  { $$ = $1;}| term multiplying_operator signed_primary
+  { $$ = geneNodeForMulti($1, $2, $3); }| term LEX_AND signed_primary
   {};
 
 signed_primary:

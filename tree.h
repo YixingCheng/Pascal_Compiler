@@ -9,6 +9,9 @@
 #include "types.h"
 #include "backend-x86.h"
 
+extern int isDiv;
+extern int isMod;
+
 typedef enum{CONST, VARIABLE, BIN, CONV, DEREF, ASSIGN, NEGATE, FUNC, STRNG, FUNC_ASSIGN} TYPE_EXPR;
 
 /* tree node for expression tree construction-- ethan  */
@@ -101,3 +104,9 @@ void geneAsmForDispose(NODE parameter);
 
 /* this routine generate node for a binary operator  */
 NODE geneNodeForBiop(NODE left, B_ARITH_REL_OP biop, NODE right);
+
+/* this routine generate node for adding operator  */
+NODE geneNodeForAdd(NODE left, B_ARITH_REL_OP addop, NODE right);
+
+/* this routine generate node for mutiplying operator */
+NODE geneNodeForMulti(NODE left, B_ARITH_REL_OP multiop, NODE right);

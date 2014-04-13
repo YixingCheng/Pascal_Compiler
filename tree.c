@@ -442,13 +442,13 @@ NODE geneNodeForBiop(NODE left, B_ARITH_REL_OP biop, NODE right){
                    biopNode->type = biopNode->u.binop.right->type;
               }
              else{
-                   NODE itodNode = malloc(sizeof(struct exprtree_node));
-                   itodNode->exprTypeTag = CONV;
-                   itodNode->u.convert.oldType = biopNode->u.binop.left->type;
-                   itodNode->u.convert.newType = TYDOUBLE;
-                   itodNode->u.convert.child   = biopNode->u.binop.left;
-                   itodNode->type              = TYDOUBLE;
-                   biopNode->u.binop.left      = itodNode;
+                   NODE leftitodNode = malloc(sizeof(struct exprtree_node));
+                   leftitodNode->exprTypeTag = CONV;
+                   leftitodNode->u.convert.oldType = biopNode->u.binop.left->type;
+                   leftitodNode->u.convert.newType = TYDOUBLE;
+                   leftitodNode->u.convert.child   = biopNode->u.binop.left;
+                   leftitodNode->type              = TYDOUBLE;
+                   biopNode->u.binop.left      = leftitodNode;
                    biopNode->type = biopNode->u.binop.right->type;
               }      
            }     
@@ -461,7 +461,160 @@ NODE geneNodeForBiop(NODE left, B_ARITH_REL_OP biop, NODE right){
       convBiopNode->type              = TYSIGNEDCHAR;
       biopNode = convBiopNode;
       return biopNode;
-}
+  }
 
+/* this routine generate node of adding operator  */
+NODE geneNodeForAdd(NODE left, B_ARITH_REL_OP addop, NODE right){
+      NODE addNode = malloc(sizeof(struct exprtree_node));
+      addNode->exprTypeTag = BIN;
+      addNode->u.binop.left = left;
+      addNode->u.binop.right = right;
+      addNode->u.binop.op_tag = addop;  
+      
+      if(addNode->u.binop.left->exprTypeTag == VARIABLE){       //if left node is a variable
+           NODE addderefNode = malloc(sizeof(struct exprtree_node));
+           addderefNode->exprTypeTag = DEREF;
+           addderefNode->type = addNode->u.binop.left->type;
+           addderefNode->u.deref.child = addNode->u.binop.left; 
+           addNode->u.binop.left = addderefNode;
+           addNode->u.binop.left = unaryConvert(addNode->u.binop.left);
+        }
+      if(addNode->u.binop.right->exprTypeTag == VARIABLE){      //if right node is a variable
+           NODE addderefNode1 = malloc(sizeof(struct exprtree_node));
+           addderefNode1->exprTypeTag = DEREF;
+           addderefNode1->type = addNode->u.binop.right->type;
+           addderefNode1->u.deref.child = addNode->u.binop.right; 
+           addNode->u.binop.right = addderefNode1;
+           addNode->u.binop.right = unaryConvert(addNode->u.binop.right);
+        }
+      if(addNode->u.binop.left->type == TYSIGNEDLONGINT && addNode->u.binop.right->type == TYSIGNEDLONGINT){
+            addNode->type = TYSIGNEDLONGINT;
+        }      
+      else if(addNode->u.binop.left->type == TYDOUBLE && addNode->u.binop.right->type == TYSIGNEDLONGINT){
+            if(addNode->u.binop.right->exprTypeTag == CONST){
+                  addNode->u.binop.right->type = TYDOUBLE;
+                  addNode->u.binop.right->u.const_node.const_double_val = addNode->u.binop.right->u.const_node.const_int_val;
+                  addNode->type = addNode->u.binop.left->type;
+              }
+            else{
+                   NODE additodNode = malloc(sizeof(struct exprtree_node));
+                   additodNode->exprTypeTag = CONV;
+                   additodNode->u.convert.oldType = addNode->u.binop.right->type;
+                   additodNode->u.convert.newType = TYDOUBLE;
+                   additodNode->u.convert.child   = addNode->u.binop.right;
+                   additodNode->type = TYDOUBLE;
+                   addNode->u.binop.right      = additodNode;
+                   addNode->type = addNode->u.binop.left->type; 
+             }
+         }
+      else if(addNode->u.binop.left->type == TYSIGNEDLONGINT && addNode->u.binop.right->type == TYDOUBLE){
+            if(addNode->u.binop.left->exprTypeTag == CONST){
+                  addNode->u.binop.left->type = TYDOUBLE;
+                  addNode->u.binop.left->u.const_node.const_double_val = addNode->u.binop.left->u.const_node.const_int_val;
+                  addNode->type = addNode->u.binop.left->type;
+              }
+            else{
+                   NODE leftadditodNode = malloc(sizeof(struct exprtree_node));
+                   leftadditodNode->exprTypeTag = CONV;
+                   leftadditodNode->u.convert.oldType = addNode->u.binop.left->type;
+                   leftadditodNode->u.convert.newType = TYDOUBLE;
+                   leftadditodNode->u.convert.child   = addNode->u.binop.left;
+                   leftadditodNode->type = TYDOUBLE;
+                   addNode->u.binop.left      = leftadditodNode;
+                   addNode->type = addNode->u.binop.left->type; 
+             } 
+        }
+     else if(addNode->u.binop.left->type == TYDOUBLE && addNode->u.binop.right->type == TYDOUBLE)         {
+             addNode->type = TYDOUBLE;  
+         }
 
+     return addNode; 
+  }
 
+/* this routine generate node for mutiplying operator */
+NODE geneNodeForMulti(NODE left, B_ARITH_REL_OP multiop, NODE right){
+       NODE multiNode = malloc(sizeof(struct exprtree_node));
+       multiNode->exprTypeTag = BIN;
+       multiNode->u.binop.left = left;
+       multiNode->u.binop.right = right;
+       multiNode->u.binop.op_tag = multiop;
+
+       if(multiNode->u.binop.left->exprTypeTag == VARIABLE){       //if left node is a variable
+           NODE multiderefNode = malloc(sizeof(struct exprtree_node));
+           multiderefNode->exprTypeTag = DEREF;
+           multiderefNode->type = multiNode->u.binop.left->type;
+           multiderefNode->u.deref.child = multiNode->u.binop.left; 
+           multiNode->u.binop.left = multiderefNode;
+           multiNode->u.binop.left = unaryConvert(multiNode->u.binop.left);
+        }
+      if(multiNode->u.binop.right->exprTypeTag == VARIABLE){      //if right node is a variable
+           NODE multiderefNode1 = malloc(sizeof(struct exprtree_node));
+           multiderefNode1->exprTypeTag = DEREF;
+           multiderefNode1->type = multiNode->u.binop.right->type;
+           multiderefNode1->u.deref.child = multiNode->u.binop.right; 
+           multiNode->u.binop.right = multiderefNode1;
+           multiNode->u.binop.right = unaryConvert(multiNode->u.binop.right);
+        }
+      if(isDiv == 1){
+           isDiv = 0;
+           if(multiNode->u.binop.left->type == TYSIGNEDLONGINT && multiNode->u.binop.right->type == TYSIGNEDLONGINT){
+                        multiNode->type = TYSIGNEDLONGINT;
+                   }
+           else{
+                    multiNode->type = TYSIGNEDLONGINT;
+              }
+       }
+      else if(isMod == 1){
+           isMod = 0;
+           if(multiNode->u.binop.left->type == TYSIGNEDLONGINT && multiNode->u.binop.right->type == TYSIGNEDLONGINT){
+                 multiNode->type = TYSIGNEDLONGINT;
+             }
+           else{
+                 multiNode->type = TYSIGNEDLONGINT;
+             }
+       }
+      else{
+           if(multiNode->u.binop.left->type == TYSIGNEDLONGINT && multiNode->u.binop.right->type == TYSIGNEDLONGINT){
+                multiNode->type = TYSIGNEDLONGINT;
+             }
+           else if(multiNode->u.binop.left->type == TYDOUBLE && multiNode->u.binop.right->type ==TYSIGNEDLONGINT){
+                if(multiNode->u.binop.right->exprTypeTag == CONST){
+                     multiNode->u.binop.right->type = TYDOUBLE;
+                     multiNode->u.binop.right->u.const_node.const_double_val = multiNode->u.binop.right->u.const_node.const_int_val;
+                     multiNode->type = multiNode->u.binop.left->type;
+                  }
+                else{
+                    NODE multiItoDNode = malloc(sizeof(struct exprtree_node));
+                    multiItoDNode->exprTypeTag = CONV;
+                    multiItoDNode->u.convert.oldType = multiNode->u.binop.right->type;
+                    multiItoDNode->u.convert.newType = TYDOUBLE;
+                    multiItoDNode->u.convert.child   = multiNode->u.binop.right;
+                    multiItoDNode->type              = TYDOUBLE;
+                    multiNode->u.binop.right         = multiItoDNode;
+                    multiNode->type                  = multiNode->u.binop.left->type;
+                  }
+             }
+           else if(multiNode->u.binop.left->type == TYSIGNEDLONGINT && multiNode->u.binop.right->type == TYDOUBLE){
+                     if(multiNode->u.binop.left->exprTypeTag == CONST){
+                          multiNode->u.binop.left->type = TYDOUBLE;
+                          multiNode->u.binop.left->u.const_node.const_double_val = multiNode->u.binop.left->u.const_node.const_int_val;
+                          multiNode->type = multiNode->u.binop.right->type;
+                      }
+                else{
+                       NODE leftmultiItoDNode = malloc(sizeof(struct exprtree_node));
+                       leftmultiItoDNode->exprTypeTag = CONV;
+                       leftmultiItoDNode->u.convert.oldType = multiNode->u.binop.left->type;
+                       leftmultiItoDNode->u.convert.newType = TYDOUBLE;
+                       leftmultiItoDNode->u.convert.child   = multiNode->u.binop.left;
+                       leftmultiItoDNode->type              = TYDOUBLE;
+                       multiNode->u.binop.left         = leftmultiItoDNode;
+                       multiNode->type                  = multiNode->u.binop.right->type;
+                  }
+              }
+           else if(multiNode->u.binop.left->type == TYDOUBLE && multiNode->u.binop.right->type == TYDOUBLE){
+               multiNode->type = TYDOUBLE;
+          }
+       }
+    
+      return multiNode;
+   }
