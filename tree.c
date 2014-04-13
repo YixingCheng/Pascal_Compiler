@@ -702,3 +702,47 @@ void funcDeclwithDecl(ST_ID id){
        b_func_epilogue(st_get_id_str(id));
        st_exit_block();                                 //exit block
   }
+
+/* this routine is used to get the function_heading for procedure */
+ST_ID funcHeadingForProc(ST_ID id, PARAM_LIST paraList){
+        int temp;
+        ST_DR entry = st_lookup(id, &temp);
+        if(!entry){
+              TYPE typeProc = ty_build_func(ty_build_basic(TYVOID), paraList, TRUE);
+              ST_DR entry = stdr_alloc();
+              entry->tag = GDECL;
+              entry->u.decl.is_ref = FALSE;
+              entry->u.decl.err    = FALSE;
+              entry->u.decl.type   = typeProc;
+              st_install(id, entry);
+          }
+        else if(entry->tag == GDECL){
+              entry->tag = FDECL;
+          }
+        else if(entry->tag == FDECL){
+          }
+
+        return id;
+   }
+
+/* this routine is used to get the function_heading for function*/
+ST_ID funcHeadingForFunc(ST_ID id, PARAM_LIST paraList, TYPE returnType){
+       int temp;
+       ST_DR entry = st_lookup(id, &temp);
+       if(!entry){
+             TYPE funcType = ty_build_func(returnType, paraList, TRUE);
+             ST_DR entry = stdr_alloc();
+             entry->tag = GDECL;
+             entry->u.decl.is_ref = FALSE;
+             entry->u.decl.err    = FALSE;
+             entry->u.decl.type   = funcType;
+             st_install(id, entry);
+         }
+        else if(entry->tag == GDECL){
+              entry->tag = FDECL;
+          }
+        else if(entry->tag == FDECL){
+          }
+
+        return id;
+   }

@@ -664,18 +664,20 @@ function_declaration:
 
 function_heading:
     LEX_PROCEDURE new_identifier optional_par_formal_parameter_list
-  {}| LEX_FUNCTION new_identifier optional_par_formal_parameter_list functiontype
-  {};
+  { $$ = funcHeadingForProc($2, $3); }| LEX_FUNCTION new_identifier optional_par_formal_parameter_list functiontype
+  { $$ = funcHeadingForFunc($2, $3, $4);};
 
 directive_list:
     directive
-  {}| directive_list semi directive
+  { $$ = $1; }| directive_list semi directive
   {};
 
 directive:
     LEX_FORWARD
-  {}| LEX_EXTERNAL
-  {};
+  { STORAGE_CLASS sc = NO_SC;
+    $$ = sc;}| LEX_EXTERNAL
+  { STORAGE_CLASS sc = NO_SC;
+    $$ = sc;};
 
 functiontype:
     /* empty */
