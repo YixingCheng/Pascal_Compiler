@@ -671,3 +671,34 @@ NODE appendActuPara(NODE paraList, NODE actualPara){
       newNode->next = NULL;
       return headPara;
   }
+
+/* this routine is used for function declaration with func heading and directive list */
+void funcDeclandDireList(ST_ID id, STORAGE_CLASS sc){
+       int temp;
+       ST_DR entry = st_lookup(id, &temp);
+       entry->u.decl.sc = sc;
+  }
+
+/* this routine is used for function declaration with func heading, paralist, etc*/
+void funcDeclwithDecl(ST_ID id){
+       int temp;
+       ST_DR entry = st_lookup(id, &temp);
+       if(entry)
+            entry->tag = FDECL;
+       st_enter_block();                            //enter the local scope of function or precedure
+       b_init_formal_param_offset();            // set offset for local variables
+       
+       b_func_prologue(st_get_id_str(id));
+       PARAM_LIST localParaList;
+       BOOLEAN chargs;
+       TYPE returnType = ty_query_func(entry->u.decl.type, &localParaList, &chargs);   //get the TYPE of return
+       TYPETAG returnTypeTag = ty_query(returnType);     //get the TYPETAG of return
+       if(returnTypeTag != TYVOID)
+            b_alloc_return_value();
+       b_alloc_local_vars(0);
+       
+       if(returnTypeTag != TYVOID)
+            b_prepare_return(returnTypeTag);
+       b_func_epilogue(st_get_id_str(id));
+       st_exit_block();                                 //exit block
+  }

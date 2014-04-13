@@ -116,3 +116,9 @@ NODE geneNodeForActuParaList(NODE actualPara);
 
 /* this routine append new actual parameter to parameter list */
 NODE appendActuPara(NODE paraList, NODE actualPara);
+
+/* this routine is used for function declaration  */
+void funcDeclandDireList(ST_ID id, STORAGE_CLASS sc);
+
+/* this routine is used for function declaration with func heading, paralist, etc*/
+void funcDeclwithDecl(ST_ID id);

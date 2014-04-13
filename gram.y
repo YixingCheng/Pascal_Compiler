@@ -94,6 +94,7 @@ void yyerror(const char *);
     PARAM_LIST      y_paramlist;
     NODE            y_node;
     B_ARITH_REL_OP  y_op;
+    STORAGE_CLASS   y_sc;
 }
 
 %token LEX_ID
@@ -159,6 +160,7 @@ void yyerror(const char *);
 
 
 %type <y_stid> typename new_identifier
+%type <y_stid> function_heading
 %type <y_int> LEX_INTCONST unsigned_number number constant
 %type <y_string> new_identifier_1 LEX_ID
 %type <y_string> identifier
@@ -173,12 +175,15 @@ void yyerror(const char *);
 %type <y_paramlist> optional_procedural_type_formal_parameter_list 
 %type <y_paramlist> procedural_type_formal_parameter
 %type <y_paramlist> procedural_type_formal_parameter_list
+%type <y_paramlist> any_declaration_part
+%type <y_paramlist> optional_par_formal_parameter_list
 %type <y_node> rest_of_statement variable_or_function_access_maybe_assignment 
 %type <y_node> expression simple_expression
 %type <y_node> actual_parameter actual_parameter_list
 %type <y_string> variable_access_or_typename
 %type <y_op> relational_operator adding_operator multiplying_operator
 %type <y_node> term signed_primary
+%type <y_sc> directive_list directive
 
 /* Precedence rules */
 
@@ -654,8 +659,8 @@ variable_declaration:
   {  declaVariable($1, $3);  }
 function_declaration:
     function_heading semi directive_list semi
-  {}| function_heading semi any_declaration_part statement_part semi
-  {};
+  { funcDeclandDireList($1, $3); }| function_heading semi any_declaration_part statement_part semi
+  { funcDeclwithDecl($1); };
 
 function_heading:
     LEX_PROCEDURE new_identifier optional_par_formal_parameter_list
@@ -681,7 +686,9 @@ functiontype:
 
 optional_par_formal_parameter_list:
     /* empty */
-  {}| '(' formal_parameter_list ')'
+  { PARAM_LIST paralist = NULL;
+    $$ = paralist;
+  }| '(' formal_parameter_list ')'
   {};
 
 formal_parameter_list:
@@ -867,7 +874,7 @@ actual_parameter_list:
 
 actual_parameter:
     expression
-  {};
+  {  $$ = $1;};
 
 /* ASSIGNMENT and procedure calls */
 
