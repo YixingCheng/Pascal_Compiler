@@ -187,7 +187,7 @@ void yyerror(const char *);
 %type <y_node> constant_literal variable_or_function_access_no_as
 %type <y_node> variable_or_function_access_no_standard_function
 %type <y_node> variable_or_function_access_no_id standard_functions
-%type <y_pasfunc> rts_fun_onepar
+%type <y_pasfunc> rts_fun_onepar  rts_fun_parlist
 
 /* Precedence rules */
 
@@ -1137,7 +1137,8 @@ standard_functions:
   { $$ = geneNodeForOneParam($1,$3);  //edited by Zibo
    }| rts_fun_optpar optional_par_actual_parameter
   {}| rts_fun_parlist '(' actual_parameter_list ')'
-  {};
+  { $$ = geneNodeForParamList($1,$3); //edited by Zibo
+   };
 
 optional_par_actual_parameter:
     /* empty */
@@ -1149,6 +1150,8 @@ rts_fun_optpar:
   {}| p_EOLN
   {};
 
+
+/* edited by Zibo */
 rts_fun_onepar:
     p_ABS
   {}| p_SQR
@@ -1163,8 +1166,12 @@ rts_fun_onepar:
   {}| p_ROUND
   {}| p_CARD
   {}| p_ORD
-  {}| p_CHR
-  {}| p_ODD
+  { PAS_FUNC pf = ORD;
+    $$ = pf;
+   }| p_CHR
+  { PAS_FUNC pf = CHR;
+    $$ = pf;
+   }| p_ODD
   {}| p_EMPTY
   {}| p_POSITION
   {}| p_LASTPOSITION
@@ -1177,29 +1184,59 @@ rts_fun_onepar:
 
 rts_fun_parlist:
     p_SUCC        /* One or two args */
-  {}| p_PRED        /* One or two args */
-  {};
+  { PAS_FUNC pf = SUCC;
+    $$ = pf;
+   }| p_PRED        /* One or two args */
+  { PAS_FUNC pf = PRED;
+    $$ = pf;
+   };
 
 relational_operator:
     LEX_NE
-  {}| LEX_LE
-  {}| LEX_GE
-  {}| '='
-  {}| '<'
-  {}| '>'
-  {};
+  { B_ARITH_REL_OP operator= B_NE;
+     $$ = operator;
+   }| LEX_LE
+  { B_ARITH_REL_OP operator= B_LE;
+     $$ = operator;
+   }| LEX_GE
+  { B_ARITH_REL_OP operator= B_GE;
+     $$ = operator;
+   }| '='
+  { B_ARITH_REL_OP operator= B_EQ;
+     $$ = operator;
+   }| '<'
+  { B_ARITH_REL_OP operator= B_LT;
+     $$ = operator;
+   }| '>'
+  { B_ARITH_REL_OP operator= B_GT;
+     $$ = operator;
+   };
 
 multiplying_operator:
     LEX_DIV
-  {}| LEX_MOD
-  {}| '/'
-  {}| '*'
-  {};
+  { B_ARITH_REL_OP operator= B_DIV;
+    isDiv = 1;
+    $$ = operator;
+   }| LEX_MOD
+  { B_ARITH_REL_OP operator= B_MOD;
+    isMod = 1;
+    $$ = operator;
+   }| '/'
+  { B_ARITH_REL_OP operator= B_DIV;
+    $$ = operator;
+   }| '*'
+  { B_ARITH_REL_OP operator= B_MULT;
+    $$ = operator;
+   };
 
 adding_operator:
     '-'
-  {}| '+'
-  {};
+  { B_ARITH_REL_OP operator= B_SUB;
+     $$ = operator;
+   }| '+'
+  { B_ARITH_REL_OP operator= B_ADD;
+     $$ = operator;
+   };
 
 semi:
     ';'
