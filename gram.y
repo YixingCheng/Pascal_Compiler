@@ -374,27 +374,20 @@ constant:
     identifier
   {}| sign identifier
   {}| number
-  {
-     $$ = $1;
+  {   $$ = $1;
   }| constant_literal
   {};
 
 number:
     sign unsigned_number
-  {
-     
-     $$ = $2;
-     
+  {  $$ = $2; 
   }| unsigned_number
-  {
-     
-     $$ = $1;
+  {  $$ = $1;
   };
 
 unsigned_number:
     LEX_INTCONST
-  {
-     $$ = $1;
+  {  $$ = $1;
   }| LEX_REALCONST
   {};
 
@@ -502,13 +495,10 @@ pointer_domain_type:
 
 new_procedural_type:
     LEX_PROCEDURE optional_procedural_type_formal_parameter_list
-  {
-     
-     TYPE typroc = ty_build_func(ty_build_basic(TYVOID), $2, TRUE);
+  {  TYPE typroc = ty_build_func(ty_build_basic(TYVOID), $2, TRUE);
      $$ = typroc;
   }| LEX_FUNCTION optional_procedural_type_formal_parameter_list functiontype
-  {
-     if(checkTypetag($3)){
+  {  if(checkTypetag($3)){
        }
      else{
         error("Function return type must be simple type");
@@ -570,8 +560,7 @@ array_index_list:
 
 ordinal_index_type:
     new_ordinal_type
-  {
-     $$ = $1;
+  {  $$ = $1;
   }| typename
   {};
 
@@ -873,8 +862,8 @@ optional_par_actual_parameter_list:
 
 actual_parameter_list:
     actual_parameter
-  {}| actual_parameter_list ',' actual_parameter
-  {};
+  { $$ = geneNodeForActuParaList($1);}| actual_parameter_list ',' actual_parameter
+  { $$ = appendActuPara($1, $3);};
 
 actual_parameter:
     expression
@@ -1098,7 +1087,7 @@ member_designator:
   {};
 
 standard_functions:
-    rts_fun_onepar '(' actual_parameter ')'
+    rts_fun_onepar '('actual_parameter ')'
   {}| rts_fun_optpar optional_par_actual_parameter
   {}| rts_fun_parlist '(' actual_parameter_list ')'
   {};
@@ -1155,8 +1144,12 @@ relational_operator:
 
 multiplying_operator:
     LEX_DIV
-  {}| LEX_MOD
-  {}| '/'
+  { B_ARITH_REL_OP a_op = B_DIV;
+    isDiv = 1;
+    $$ = a_op; }| LEX_MOD
+  { B_ARITH_REL_OP a_op = B_MOD;
+    isMod = 1;
+    $$ = a_op; }| '/'
   {}| '*'
   {};
 

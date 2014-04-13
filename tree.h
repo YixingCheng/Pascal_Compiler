@@ -110,3 +110,9 @@ NODE geneNodeForAdd(NODE left, B_ARITH_REL_OP addop, NODE right);
 
 /* this routine generate node for mutiplying operator */
 NODE geneNodeForMulti(NODE left, B_ARITH_REL_OP multiop, NODE right);
+
+/* this routine generate node for actual parameter list */
+NODE geneNodeForActuParaList(NODE actualPara);
+
+/* this routine append new actual parameter to parameter list */
+NODE appendActuPara(NODE paraList, NODE actualPara);

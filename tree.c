@@ -618,3 +618,56 @@ NODE geneNodeForMulti(NODE left, B_ARITH_REL_OP multiop, NODE right){
     
       return multiNode;
    }
+
+/* this routine generate node for actual parameter list */
+NODE geneNodeForActuParaList(NODE actualPara){
+       NODE paraNode = actualPara;
+       if(paraNode->exprTypeTag == VARIABLE){
+            NODE paraderefNode = malloc(sizeof(struct exprtree_node));
+            paraderefNode->exprTypeTag = DEREF;
+            paraderefNode->type = paraNode->type;
+            paraderefNode->u.deref.child = paraNode;
+            paraNode = paraderefNode;
+            paraNode = unaryConvert(paraNode);
+        }
+       if(paraNode->type == TYUNSIGNEDCHAR || paraNode->type == TYSIGNEDCHAR){
+            NODE paraCtoINode = malloc(sizeof(struct exprtree_node));
+            paraCtoINode->exprTypeTag = CONV;
+            paraCtoINode->type = TYSIGNEDLONGINT;
+            paraCtoINode->u.convert.oldType = paraNode->type;
+            paraCtoINode->u.convert.newType = TYSIGNEDLONGINT;
+            paraCtoINode->u.convert.child   = paraNode;
+            paraNode = paraCtoINode;
+        }
+       return paraNode;
+   }
+
+/* this routine append new actual parameter to parameter list */
+NODE appendActuPara(NODE paraList, NODE actualPara){
+      NODE list = paraList;
+      NODE newNode = actualPara;
+      if(newNode->exprTypeTag == VARIABLE){
+            NODE appAPderefNode = malloc(sizeof(struct exprtree_node));
+            appAPderefNode->exprTypeTag = DEREF;
+            appAPderefNode->type        = newNode->type;
+            appAPderefNode->u.deref.child = newNode;
+            newNode = appAPderefNode;
+            newNode = unaryConvert(newNode);
+        }
+      if(newNode->type == TYUNSIGNEDCHAR || newNode->type == TYSIGNEDCHAR){
+            NODE appAPCtoINode = malloc(sizeof(struct exprtree_node));
+            appAPCtoINode->exprTypeTag = CONV;
+            appAPCtoINode->type        = TYSIGNEDLONGINT;
+            appAPCtoINode->u.convert.oldType = newNode->type;
+            appAPCtoINode->u.convert.newType = TYSIGNEDLONGINT;
+            appAPCtoINode->u.convert.child   = newNode;
+            newNode = appAPCtoINode;
+        }
+      NODE headPara = list;
+      while(list->next != NULL){
+             list = list->next; 
+        }
+      list->next = newNode;
+      newNode->next = NULL;
+      return headPara;
+  }
