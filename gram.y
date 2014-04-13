@@ -1,8 +1,8 @@
-/************************************************************************
- *   							   		*
- *	CSCE 513 project1 done by Yixing Cheng, Ruofan Xia, Zibo Meng	*
- *									*
- ************************************************************************/
+/****************************************************************************************
+ *   									   		*
+ *	CSCE 513 project1 & project 2 done by Yixing Cheng, Ruofan Xia, Zibo Meng	*
+ *											*
+ ****************************************************************************************/
 
 /*A Bison parser for the programming language Pascal.
   Copyright (C) 1989-2002 Free Software Foundation, Inc.
@@ -67,15 +67,19 @@
 /* Cause the `yydebug' variable to be defined.  */
 #define YYDEBUG 1
 
-/* global variables  */
+/* global variables */
 int isDiv = 0;
 int isMod = 0;
+/* by Zibo */
+int tmpDiv = 0;
+int tmpMod = 0;
 
 void set_yydebug(int);
 void yyerror(const char *);
 
 /* Like YYERROR but do call yyerror */
 #define YYERROR1 { yyerror ("syntax error"); YYERROR; }
+
 %}
 
 /* Start symbol for the grammar */
@@ -94,6 +98,7 @@ void yyerror(const char *);
     PARAM_LIST      y_paramlist;
     NODE            y_node;
     B_ARITH_REL_OP  y_op;
+    PAS_FUNC 	    y_pasfunc;
 }
 
 %token LEX_ID
@@ -178,7 +183,11 @@ void yyerror(const char *);
 %type <y_node> actual_parameter actual_parameter_list
 %type <y_string> variable_access_or_typename
 %type <y_op> relational_operator adding_operator multiplying_operator
-%type <y_node> term signed_primary
+%type <y_node> term signed_primary primary factor variable_or_function_access
+%type <y_node> constant_literal variable_or_function_access_no_as
+%type <y_node> variable_or_function_access_no_standard_function
+%type <y_node> variable_or_function_access_no_id standard_functions
+%type <y_pasfunc> rts_fun_onepar
 
 /* Precedence rules */
 
@@ -1023,7 +1032,12 @@ simple_expression:
 term:
     signed_primary
   { $$ = $1;}| term multiplying_operator signed_primary
-  { $$ = geneNodeForMulti($1, $2, $3); }| term LEX_AND signed_primary
+  { tmpDiv = isDiv;
+    tmpMod = isMod;
+    if(isDiv == 1) isDiv = 0;
+    else if(isMod == 1) isMod = 0;
+    $$ = geneNodeForMulti($1, $2, $3, isDiv, isMod); //modified by Zibo
+   }| term LEX_AND signed_primary
   {};
 
 signed_primary:
@@ -1031,9 +1045,11 @@ signed_primary:
   {}| sign signed_primary
   {};
 
+/* edited by Zibo */
 primary:
     factor
-  {}| primary LEX_POW factor
+  { $$ = $1;
+   }| primary LEX_POW factor
   {}| primary LEX_POWER factor
   {}| primary LEX_IS typename
   {};
@@ -1043,11 +1059,15 @@ signed_factor:
   {}| sign signed_factor
   {};
 
+/* edited by Zibo */
 factor:
     variable_or_function_access
-  {}| constant_literal
-  {}| unsigned_number
-  {}| set_constructor
+  { $$ = $1;
+   }| constant_literal
+  { $$ = $1;
+   }| unsigned_number
+  { $$ = $1;
+   }| set_constructor
   {}| LEX_NOT signed_factor
   {}| address_operator factor
   {};
@@ -1056,31 +1076,46 @@ address_operator:
     '@'
   {};
 
+/* edited by Zibo */
 variable_or_function_access:
     variable_or_function_access_no_as
-  {}| variable_or_function_access LEX_AS typename
+  { $$ = $1;
+   }| variable_or_function_access LEX_AS typename
   {};
 
+/* edited by Zibo */
 variable_or_function_access_no_as:
     variable_or_function_access_no_standard_function
-  {}| standard_functions
-  {};
+  { $$ = $1;
+   }| standard_functions
+  { $$ = $1;
+   };
 
+/* edited by Zibo */
 variable_or_function_access_no_standard_function:
     identifier
-  {}| variable_or_function_access_no_id
-  {};
+  { $$ = geneNodeForNoStdFunc($1);    //edited by Zibo
+   }| variable_or_function_access_no_id
+  { $$ = $1;
+   };
 
+/* edited by Zibo */
 variable_or_function_access_no_id:
     p_OUTPUT
   {}| p_INPUT
   {}| variable_or_function_access_no_as '.' new_identifier
   {}| '(' expression ')'
-  {}| variable_or_function_access pointer_char
-  {}| variable_or_function_access '[' index_expression_list ']'
+  { $$ = $2;
+   }| variable_or_function_access pointer_char
+  { $$ = geneNodeForFuncPointer($1);  //edited by Zibo
+   }| variable_or_function_access '[' index_expression_list ']'
   {}| variable_or_function_access_no_standard_function '(' actual_parameter_list ')'
-  {}| p_NEW '(' variable_access_or_typename ')'
-  {};
+  { NODE node = $1;
+    node->u.func.arglist = $3;
+    $$ = node;             //edited by Zibo
+   }| p_NEW '(' variable_access_or_typename ')'
+  { $$ = geneNodeForVarPointer($3);  //edited by Zibo
+   };
 
 set_constructor:
     '[' ']'
@@ -1099,7 +1134,8 @@ member_designator:
 
 standard_functions:
     rts_fun_onepar '(' actual_parameter ')'
-  {}| rts_fun_optpar optional_par_actual_parameter
+  { $$ = geneNodeForOneParam($1,$3);  //edited by Zibo
+   }| rts_fun_optpar optional_par_actual_parameter
   {}| rts_fun_parlist '(' actual_parameter_list ')'
   {};
 

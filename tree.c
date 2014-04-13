@@ -532,7 +532,7 @@ NODE geneNodeForAdd(NODE left, B_ARITH_REL_OP addop, NODE right){
   }
 
 /* this routine generate node for mutiplying operator */
-NODE geneNodeForMulti(NODE left, B_ARITH_REL_OP multiop, NODE right){
+NODE geneNodeForMulti(NODE left, B_ARITH_REL_OP multiop, NODE right, int isDiv, int isMod){
        NODE multiNode = malloc(sizeof(struct exprtree_node));
        multiNode->exprTypeTag = BIN;
        multiNode->u.binop.left = left;
@@ -618,3 +618,159 @@ NODE geneNodeForMulti(NODE left, B_ARITH_REL_OP multiop, NODE right){
     
       return multiNode;
    }
+
+/* generate tree node for variable_or_function_access_no_standard_function*/
+NODE geneNodeForNoStdFunc(char* identifier)
+{
+    ST_ID id = st_lookup_id(identifier);
+    int temp;
+    ST_DR entry = st_lookup(id, &temp);
+    NODE node = (NODE)malloc(sizeof(TREENODE));
+    TYPETAG typetag = ty_query(entry->u.decl.type);
+    if(typetag == TYFUNC){                    // in case of function access
+        node->exprTypeTag = FUNC;
+        PARAM_LIST paraList;
+        BOOLEAN arguCheck;
+        TYPE returnType = ty_query_func(entry->u.decl.type, &paraList, &arguCheck);
+        node->type = ty_query(returnType);
+        node->u.func.funcName = identifier;
+        node->next = NULL;
+        node->u.func.arglist = NULL;
+    }
+    else{                                   // in case of variable
+        node->exprTypeTag = VARIABLE;
+        node->type = typetag;
+        node->u.var_name = identifier;
+    }
+    
+    if(node->type == TYPTR){
+        NODE derefNode = malloc(sizeof(struct exprtree_node));
+        derefNode->exprTypeTag = DEREF;
+        derefNode->type = node->type;
+        derefNode->u.deref.child = node;
+        node = derefNode;
+    }
+    return node;
+}
+
+/* generate tree node for accessing functions using a pointer */
+NODE geneNodeForFuncPointer(NODE pointer)
+{
+    NODE derefNode = (NODE)malloc(sizeof(TREENODE));
+    derefNode->exprTypeTag = DEREF;
+    derefNode->u.deref.child = pointer;
+    
+    ST_ID id = st_lookup_id(pointer->u.deref.child->u.var_name);
+    int temp;
+    ST_DR stdr = st_lookup(id,&temp);
+    ST_ID tmpid;
+    TYPE tmpnext;
+    TYPE returnType = ty_query_ptr(stdr->u.decl.type, &tmpid, &tmpnext);
+    derefNode->type = ty_query(returnType);
+    return derefNode;
+}
+
+/* generate tree node for new pointer points to var */
+NODE geneNodeForVarPointer(char* variable)
+{
+    ST_ID id = st_lookup_id(variable);
+    int temp;
+    ST_DR stdr = st_lookup(id,&temp);
+    ST_ID tmpid;
+    TYPE tmpty;
+    TYPE ty = ty_query_ptr(stdr->u.decl.type,&tmpid,&tmpty);
+    TYPETAG tytag = ty_query(ty);
+    NODE node = (NODE)malloc(sizeof(TREENODE));
+    node->exprTypeTag = VARIABLE;
+    node->type = tytag;
+    node->u.var_name = variable;
+    
+    NODE nodergt = (NODE)malloc(sizeof(TREENODE));
+    nodergt->exprTypeTag = FUNC;
+    nodergt->type = TYPTR;
+    nodergt->u.func.funcName = "malloc";
+    nodergt->next = NULL;
+    
+    NODE nodearg= (NODE)malloc(sizeof(TREENODE));
+    nodearg->exprTypeTag = CONST;
+    nodearg->type = TYUNSIGNEDINT;
+    if(tytag == TYDOUBLE)
+    {
+        nodearg->u.const_node.const_int_val = 8;
+    }
+    else
+    {
+        nodearg->u.const_node.const_int_val = 4;
+    }
+    nodergt->u.func.arglist = nodearg;
+    nodearg->next = NULL;
+    
+    NODE nodeasg = (NODE)malloc(sizeof(TREENODE));
+    nodeasg->exprTypeTag = ASSIGN;
+    nodeasg->u.assign.right = nodergt;
+    nodeasg->u.assign.left = node;
+    nodeasg->type = TYPTR;
+    
+    return nodeasg;
+}
+
+/* generate tree node for function having one param */
+NODE geneNodeForOneParam(PAS_FUNC pf, NODE parameter)
+{
+    NODE node = parameter;
+    if(pf == ORD)
+    {
+        if(node->type != TYUNSIGNEDCHAR)
+        {
+            NODE nodetmp = (NODE)malloc(sizeof(TREENODE));
+            nodetmp->exprTypeTag = CONV;
+            nodetmp->type = TYUNSIGNEDCHAR;
+            nodetmp->u.convert.oldType = node->type;
+            nodetmp->u.convert.newType = TYUNSIGNEDCHAR;
+            nodetmp->u.convert.child = node;
+            node = nodetmp;
+        }
+        if(node->exprTypeTag == VARIABLE)
+        {
+            NODE nodetmp = (NODE)malloc(sizeof(TREENODE));
+            nodetmp->exprTypeTag = DEREF;
+            nodetmp->type = node->type;
+            nodetmp->u.deref.child = node;
+            node = nodetmp;
+            
+            node = unary_convert(node);
+        }
+        
+        NODE nodetmp = (NODE)malloc(sizeof(TREENODE));
+        nodetmp->exprTypeTag = CONV;
+        nodetmp->type = TYSIGNEDLONGINT;
+        nodetmp->u.convert.oldType = TYUNSIGNEDCHAR;
+        nodetmp->u.convert.newType = TYSIGNEDLONGINT;
+        nodetmp->u.convert.child = node;
+        node = nodetmp;
+        
+    }
+    if(pf == CHR)
+    {
+        if(node->exprTypeTag == VARIABLE)
+        {
+            NODE nodetmp = (NODE)malloc(sizeof(TREENODE));
+            nodetmp->exprTypeTag = DEREF;
+            nodetmp->type = node->type;
+            nodetmp->u.deref.child = node;
+            node = nodetmp;
+            
+            node = unary_convert(node);
+        }
+        
+        NODE nodetmp = (NODE)malloc(sizeof(TREENODE));
+        nodetmp->exprTypeTag = CONV;
+        nodetmp->type = TYUNSIGNEDCHAR;
+        nodetmp->u.convert.oldType = TYSIGNEDLONGINT;
+        nodetmp->u.convert.newType = TYUNSIGNEDCHAR;
+        nodetmp->u.convert.child = node;
+        node = nodetmp;
+    }
+    return node;
+
+}
