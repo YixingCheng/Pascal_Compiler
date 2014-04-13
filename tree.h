@@ -12,6 +12,7 @@
 extern int isDiv;
 extern int isMod;
 
+typedef enum{POSITIVE, NEGATIVE} UNARYSIGN;
 typedef enum{CONST, VARIABLE, BIN, CONV, DEREF, ASSIGN, NEGATE, FUNC, STRNG, FUNC_ASSIGN} TYPE_EXPR;
 
 /* tree node for expression tree construction-- ethan  */
@@ -128,3 +129,18 @@ ST_ID funcHeadingForProc(ST_ID id, PARAM_LIST paraList);
 
 /* this routine is used to get the function_heading for function*/
 ST_ID funcHeadingForFunc(ST_ID id, PARAM_LIST paraList, TYPE returnType);
+
+/* this routine is used to create node of predefined FALSE or TRUE */
+NODE geneNodeForBool(BOOLEAN flag);
+
+/* this routine is used to create node of constant literal from combined string*/
+NODE geneNodeForConLiter(char* string);
+
+/* this routine create a node for int constant */
+NODE geneNodeForIntConst(long intconst);
+
+/* this routine create a node for double constant */
+NODE geneNodeForRealConst(double doubleconst);
+
+/* this routine get the value from constant node*/
+int getIntFromConstNode(NODE constNode);

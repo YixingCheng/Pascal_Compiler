@@ -62,6 +62,7 @@
 
 #include "symtab.h"
 #include "tree.h"
+#include <string.h>
 //#include "encode.h"
 
 /* Cause the `yydebug' variable to be defined.  */
@@ -95,6 +96,7 @@ void yyerror(const char *);
     NODE            y_node;
     B_ARITH_REL_OP  y_op;
     STORAGE_CLASS   y_sc;
+    UNARYSIGN       y_sval;
 }
 
 %token LEX_ID
@@ -161,9 +163,10 @@ void yyerror(const char *);
 
 %type <y_stid> typename new_identifier
 %type <y_stid> function_heading
-%type <y_int> LEX_INTCONST unsigned_number number constant
+%type <y_int> LEX_INTCONST number constant
 %type <y_string> new_identifier_1 LEX_ID
 %type <y_string> identifier
+%type <y_string> string combined_string LEX_STRCONST
 %type <y_indexlist> array_index_list
 %type <y_idlist> id_list
 %type <y_type> type_denoter type_denoter_1
@@ -180,10 +183,14 @@ void yyerror(const char *);
 %type <y_node> rest_of_statement variable_or_function_access_maybe_assignment 
 %type <y_node> expression simple_expression
 %type <y_node> actual_parameter actual_parameter_list
+%type <y_node> predefined_literal constant_literal
+%type <y_node> unsigned_number
 %type <y_string> variable_access_or_typename
 %type <y_op> relational_operator adding_operator multiplying_operator
 %type <y_node> term signed_primary
 %type <y_sc> directive_list directive
+%type <y_sval> sign
+%type <y_real> LEX_REALCONST
 
 /* Precedence rules */
 
@@ -213,11 +220,12 @@ program_component_list:
 
 program_component:
     main_program_declaration '.'
-  {};
+  { };
 
 main_program_declaration:
-    program_heading semi import_or_any_declaration_part statement_part
-  {};
+    program_heading semi import_or_any_declaration_part{b_func_prologue("main");} 
+statement_part
+  {b_func_epilogue("main");};
 
 program_heading:
     LEX_PROGRAM new_identifier optional_par_id_list
@@ -240,27 +248,23 @@ id_list:
 
 typename:
     LEX_ID
-  {     
-     $$ = st_enter_id($1);
+  {  $$ = st_enter_id($1);
   };
 
 identifier:
     LEX_ID
-  {};
+  { $$ = $1;};
 
 
 new_identifier:                 //this is the case id1,id2.. TYPENAME             
     new_identifier_1
-  {
-     $$ = st_enter_id($1);
+  { $$ = st_enter_id($1);
   };
 
 new_identifier_1:
     LEX_ID
 /* Standard Pascal constants */
-  {
-     
-     $$ = $1;
+  {  $$ = $1;
   }| p_MAXINT
   {}| p_FALSE
   {}| p_TRUE
@@ -385,41 +389,41 @@ constant:
 
 number:
     sign unsigned_number
-  {  $$ = $2; 
+  {  $$ = getIntFromConstNode($2); 
   }| unsigned_number
-  {  $$ = $1;
+  {  $$ = getIntFromConstNode($1);
   };
 
 unsigned_number:
     LEX_INTCONST
-  {  $$ = $1;
+  {  $$ = geneNodeForIntConst($1);
   }| LEX_REALCONST
-  {};
+  { $$ = geneNodeForRealConst($1); };
 
 sign:
     '+'
-  {}| '-'
-  {};
+  { $$ = POSITIVE; }| '-'
+  { $$ = NEGATIVE; };
 
 constant_literal:
     combined_string
-  {}| predefined_literal
-  {};
+  { $$ = geneNodeForConLiter($1); }| predefined_literal
+  { $$ = $1; };
 
 predefined_literal:
     LEX_NIL
   {}| p_FALSE
-  {}| p_TRUE
-  {};
+  { $$ = geneNodeForBool(FALSE); }| p_TRUE
+  { $$ = geneNodeForBool(TRUE); };
 
 combined_string:
     string
-  {};
+  { $$ = $1; };
 
 string:
     LEX_STRCONST
-  {}| string LEX_STRCONST
-  {};
+  { $$ = $1; } | string LEX_STRCONST
+  { $$ = strcat($1, $2);};
 
 type_definition_part:                //ethan's commit@4/7/2014 9:24pm
     LEX_TYPE type_definition_list semi
