@@ -774,3 +774,50 @@ NODE geneNodeForOneParam(PAS_FUNC pf, NODE parameter)
     return node;
 
 }
+
+/* generate tree node for function having a param list */
+NODE geneNodeForParamList(PAS_FUNC pf, NODE paramlist)
+{
+    NODE node = (NODE)malloc(sizeof(TREENODE));
+    node->exprTypeTag = BIN;
+    node->type = TYSIGNEDLONGINT;
+    node->u.binop.op_tag = B_ADD;
+    
+    NODE nodeRight = (NODE)malloc(sizeof(TREENODE));
+    nodeRight->exprTypeTag = CONST;
+    nodeRight->type = TYSIGNEDLONGINT;
+    if(pf == SUCC)
+    {
+        nodeRight->u.const_node.const_int_val = 1;
+    }
+    else if(pf == PRED)
+    {
+        nodeRight->u.const_node.const_int_val = -1;
+    }
+    node->u.binop.right = nodeRight;
+    
+    NODE nodeLeft = paramlist;
+    if(nodeLeft->exprTypeTag == VARIABLE)
+    {
+        NODE nodetmp = (NODE)malloc(sizeof(TREENODE));
+        nodetmp->exprTypeTag = DEREF;
+        nodetmp->type = nodeLeft->type;
+        nodetmp->u.deref.child = nodeLeft;
+        nodeLeft = nodetmp;
+        
+        nodeLeft = unary_convert(nodeLeft);
+    }
+    if(nodeLeft->type != TYSIGNEDLONGINT)
+    {
+        NODE nodetmp = (NODE)malloc(sizeof(TREENODE));
+        nodetmp->exprTypeTag = CONV;
+        nodetmp->type = TYSIGNEDLONGINT;
+        nodetmp->u.convert.oldType =  nodeLeft->type;
+        nodetmp->u.convert.newType = TYSIGNEDLONGINT;
+        nodetmp->u.convert.child = nodeLeft;
+        nodeLeft = nodetmp;
+    }
+    
+    node->u.binop.left = nodeLeft;
+    return node;
+}

@@ -124,3 +124,6 @@ NODE geneNodeForVarPointer(char* variable);
 
 /* generate tree node for function having one param */
 NODE geneNodeForOneParam(PAS_FUNC pf, NODE parameter);
+
+/* generate tree node for function having a param list */
+NODE geneNodeForParamList(PAS_FUNC pf, NODE paramlist);
