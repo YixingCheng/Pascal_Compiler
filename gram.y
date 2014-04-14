@@ -188,11 +188,11 @@ void yyerror(const char *);
 %type <y_node> rest_of_statement variable_or_function_access_maybe_assignment 
 %type <y_node> expression simple_expression
 %type <y_node> actual_parameter actual_parameter_list
-%type <y_node> predefined_literal constant_literal
+%type <y_node> predefined_literal
 %type <y_node> unsigned_number
 %type <y_string> variable_access_or_typename
 %type <y_op> relational_operator adding_operator multiplying_operator
-%type <y_node> term signed_primary primary factor variable_or_function_access
+%type <y_node> primary factor variable_or_function_access
 %type <y_node> constant_literal variable_or_function_access_no_as
 %type <y_node> variable_or_function_access_no_standard_function
 %type <y_node> variable_or_function_access_no_id standard_functions
@@ -1233,14 +1233,6 @@ multiplying_operator:
   { B_ARITH_REL_OP operator= B_MULT;
     $$ = operator;
    };
-  { B_ARITH_REL_OP a_op = B_DIV;
-    isDiv = 1;
-    $$ = a_op; }| LEX_MOD
-  { B_ARITH_REL_OP a_op = B_MOD;
-    isMod = 1;
-    $$ = a_op; }| '/'
-  {}| '*'
-  {};
 
 adding_operator:
     '-'

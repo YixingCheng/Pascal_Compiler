@@ -739,7 +739,7 @@ NODE geneNodeForOneParam(PAS_FUNC pf, NODE parameter)
             nodetmp->u.deref.child = node;
             node = nodetmp;
             
-            node = unary_convert(node);
+            node = unaryConvert(node);
         }
         
         NODE nodetmp = (NODE)malloc(sizeof(TREENODE));
@@ -761,7 +761,7 @@ NODE geneNodeForOneParam(PAS_FUNC pf, NODE parameter)
             nodetmp->u.deref.child = node;
             node = nodetmp;
             
-            node = unary_convert(node);
+            node = unaryConvert(node);
         }
         
         NODE nodetmp = (NODE)malloc(sizeof(TREENODE));
@@ -806,7 +806,7 @@ NODE geneNodeForParamList(PAS_FUNC pf, NODE paramlist)
         nodetmp->u.deref.child = nodeLeft;
         nodeLeft = nodetmp;
         
-        nodeLeft = unary_convert(nodeLeft);
+        nodeLeft = unaryConvert(nodeLeft);
     }
     if(nodeLeft->type != TYSIGNEDLONGINT)
     {
