@@ -127,3 +127,21 @@ NODE geneNodeForOneParam(PAS_FUNC pf, NODE parameter);
 
 /* generate tree node for function having a param list */
 NODE geneNodeForParamList(PAS_FUNC pf, NODE paramlist);
+
+/* this routine generate node for actual parameter list */
+NODE geneNodeForActuParaList(NODE actualPara);
+
+/* this routine append new actual parameter to parameter list */
+NODE appendActuPara(NODE paraList, NODE actualPara);
+
+/* this routine is used for function declaration  */
+void funcDeclandDireList(ST_ID id, STORAGE_CLASS sc);
+
+/* this routine is used for function declaration with func heading, paralist, etc*/
+void funcDeclwithDecl(ST_ID id);
+
+/* this routine is used to get the function_heading for procedure */
+ST_ID funcHeadingForProc(ST_ID id, PARAM_LIST paraList);
+
+/* this routine is used to get the function_heading for function*/
+ST_ID funcHeadingForFunc(ST_ID id, PARAM_LIST paraList, TYPE returnType);

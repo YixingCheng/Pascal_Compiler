@@ -99,6 +99,7 @@ void yyerror(const char *);
     NODE            y_node;
     B_ARITH_REL_OP  y_op;
     PAS_FUNC 	    y_pasfunc;
+    STORAGE_CLASS   y_sc;
 }
 
 %token LEX_ID
@@ -164,6 +165,7 @@ void yyerror(const char *);
 
 
 %type <y_stid> typename new_identifier
+%type <y_stid> function_heading
 %type <y_int> LEX_INTCONST unsigned_number number constant
 %type <y_string> new_identifier_1 LEX_ID
 %type <y_string> identifier
@@ -178,6 +180,8 @@ void yyerror(const char *);
 %type <y_paramlist> optional_procedural_type_formal_parameter_list 
 %type <y_paramlist> procedural_type_formal_parameter
 %type <y_paramlist> procedural_type_formal_parameter_list
+%type <y_paramlist> any_declaration_part
+%type <y_paramlist> optional_par_formal_parameter_list
 %type <y_node> rest_of_statement variable_or_function_access_maybe_assignment 
 %type <y_node> expression simple_expression
 %type <y_node> actual_parameter actual_parameter_list
@@ -188,6 +192,8 @@ void yyerror(const char *);
 %type <y_node> variable_or_function_access_no_standard_function
 %type <y_node> variable_or_function_access_no_id standard_functions
 %type <y_pasfunc> rts_fun_onepar  rts_fun_parlist
+%type <y_node> term signed_primary
+%type <y_sc> directive_list directive
 
 /* Precedence rules */
 
@@ -383,27 +389,20 @@ constant:
     identifier
   {}| sign identifier
   {}| number
-  {
-     $$ = $1;
+  {   $$ = $1;
   }| constant_literal
   {};
 
 number:
     sign unsigned_number
-  {
-     
-     $$ = $2;
-     
+  {  $$ = $2; 
   }| unsigned_number
-  {
-     
-     $$ = $1;
+  {  $$ = $1;
   };
 
 unsigned_number:
     LEX_INTCONST
-  {
-     $$ = $1;
+  {  $$ = $1;
   }| LEX_REALCONST
   {};
 
@@ -511,13 +510,10 @@ pointer_domain_type:
 
 new_procedural_type:
     LEX_PROCEDURE optional_procedural_type_formal_parameter_list
-  {
-     
-     TYPE typroc = ty_build_func(ty_build_basic(TYVOID), $2, TRUE);
+  {  TYPE typroc = ty_build_func(ty_build_basic(TYVOID), $2, TRUE);
      $$ = typroc;
   }| LEX_FUNCTION optional_procedural_type_formal_parameter_list functiontype
-  {
-     if(checkTypetag($3)){
+  {  if(checkTypetag($3)){
        }
      else{
         error("Function return type must be simple type");
@@ -579,8 +575,7 @@ array_index_list:
 
 ordinal_index_type:
     new_ordinal_type
-  {
-     $$ = $1;
+  {  $$ = $1;
   }| typename
   {};
 
@@ -674,23 +669,25 @@ variable_declaration:
   {  declaVariable($1, $3);  }
 function_declaration:
     function_heading semi directive_list semi
-  {}| function_heading semi any_declaration_part statement_part semi
-  {};
+  { funcDeclandDireList($1, $3); }| function_heading semi any_declaration_part statement_part semi
+  { funcDeclwithDecl($1); };
 
 function_heading:
     LEX_PROCEDURE new_identifier optional_par_formal_parameter_list
-  {}| LEX_FUNCTION new_identifier optional_par_formal_parameter_list functiontype
-  {};
+  { $$ = funcHeadingForProc($2, $3); }| LEX_FUNCTION new_identifier optional_par_formal_parameter_list functiontype
+  { $$ = funcHeadingForFunc($2, $3, $4);};
 
 directive_list:
     directive
-  {}| directive_list semi directive
+  { $$ = $1; }| directive_list semi directive
   {};
 
 directive:
     LEX_FORWARD
-  {}| LEX_EXTERNAL
-  {};
+  { STORAGE_CLASS sc = NO_SC;
+    $$ = sc;}| LEX_EXTERNAL
+  { STORAGE_CLASS sc = NO_SC;
+    $$ = sc;};
 
 functiontype:
     /* empty */
@@ -701,7 +698,9 @@ functiontype:
 
 optional_par_formal_parameter_list:
     /* empty */
-  {}| '(' formal_parameter_list ')'
+  { PARAM_LIST paralist = NULL;
+    $$ = paralist;
+  }| '(' formal_parameter_list ')'
   {};
 
 formal_parameter_list:
@@ -882,12 +881,12 @@ optional_par_actual_parameter_list:
 
 actual_parameter_list:
     actual_parameter
-  {}| actual_parameter_list ',' actual_parameter
-  {};
+  { $$ = geneNodeForActuParaList($1);}| actual_parameter_list ',' actual_parameter
+  { $$ = appendActuPara($1, $3);};
 
 actual_parameter:
     expression
-  {};
+  {  $$ = $1;};
 
 /* ASSIGNMENT and procedure calls */
 
@@ -1136,6 +1135,8 @@ standard_functions:
     rts_fun_onepar '(' actual_parameter ')'
   { $$ = geneNodeForOneParam($1,$3);  //edited by Zibo
    }| rts_fun_optpar optional_par_actual_parameter
+    rts_fun_onepar '('actual_parameter ')'
+  {}| rts_fun_optpar optional_par_actual_parameter
   {}| rts_fun_parlist '(' actual_parameter_list ')'
   { $$ = geneNodeForParamList($1,$3); //edited by Zibo
    };
@@ -1228,6 +1229,14 @@ multiplying_operator:
   { B_ARITH_REL_OP operator= B_MULT;
     $$ = operator;
    };
+  { B_ARITH_REL_OP a_op = B_DIV;
+    isDiv = 1;
+    $$ = a_op; }| LEX_MOD
+  { B_ARITH_REL_OP a_op = B_MOD;
+    isMod = 1;
+    $$ = a_op; }| '/'
+  {}| '*'
+  {};
 
 adding_operator:
     '-'

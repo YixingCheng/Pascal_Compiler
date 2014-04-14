@@ -821,3 +821,131 @@ NODE geneNodeForParamList(PAS_FUNC pf, NODE paramlist)
     node->u.binop.left = nodeLeft;
     return node;
 }
+
+/* this routine generate node for actual parameter list */
+NODE geneNodeForActuParaList(NODE actualPara){
+       NODE paraNode = actualPara;
+       if(paraNode->exprTypeTag == VARIABLE){
+            NODE paraderefNode = malloc(sizeof(struct exprtree_node));
+            paraderefNode->exprTypeTag = DEREF;
+            paraderefNode->type = paraNode->type;
+            paraderefNode->u.deref.child = paraNode;
+            paraNode = paraderefNode;
+            paraNode = unaryConvert(paraNode);
+        }
+       if(paraNode->type == TYUNSIGNEDCHAR || paraNode->type == TYSIGNEDCHAR){
+            NODE paraCtoINode = malloc(sizeof(struct exprtree_node));
+            paraCtoINode->exprTypeTag = CONV;
+            paraCtoINode->type = TYSIGNEDLONGINT;
+            paraCtoINode->u.convert.oldType = paraNode->type;
+            paraCtoINode->u.convert.newType = TYSIGNEDLONGINT;
+            paraCtoINode->u.convert.child   = paraNode;
+            paraNode = paraCtoINode;
+        }
+       return paraNode;
+   }
+
+/* this routine append new actual parameter to parameter list */
+NODE appendActuPara(NODE paraList, NODE actualPara){
+      NODE list = paraList;
+      NODE newNode = actualPara;
+      if(newNode->exprTypeTag == VARIABLE){
+            NODE appAPderefNode = malloc(sizeof(struct exprtree_node));
+            appAPderefNode->exprTypeTag = DEREF;
+            appAPderefNode->type        = newNode->type;
+            appAPderefNode->u.deref.child = newNode;
+            newNode = appAPderefNode;
+            newNode = unaryConvert(newNode);
+        }
+      if(newNode->type == TYUNSIGNEDCHAR || newNode->type == TYSIGNEDCHAR){
+            NODE appAPCtoINode = malloc(sizeof(struct exprtree_node));
+            appAPCtoINode->exprTypeTag = CONV;
+            appAPCtoINode->type        = TYSIGNEDLONGINT;
+            appAPCtoINode->u.convert.oldType = newNode->type;
+            appAPCtoINode->u.convert.newType = TYSIGNEDLONGINT;
+            appAPCtoINode->u.convert.child   = newNode;
+            newNode = appAPCtoINode;
+        }
+      NODE headPara = list;
+      while(list->next != NULL){
+             list = list->next; 
+        }
+      list->next = newNode;
+      newNode->next = NULL;
+      return headPara;
+  }
+
+/* this routine is used for function declaration with func heading and directive list */
+void funcDeclandDireList(ST_ID id, STORAGE_CLASS sc){
+       int temp;
+       ST_DR entry = st_lookup(id, &temp);
+       entry->u.decl.sc = sc;
+  }
+
+/* this routine is used for function declaration with func heading, paralist, etc*/
+void funcDeclwithDecl(ST_ID id){
+       int temp;
+       ST_DR entry = st_lookup(id, &temp);
+       if(entry)
+            entry->tag = FDECL;
+       st_enter_block();                            //enter the local scope of function or precedure
+       b_init_formal_param_offset();            // set offset for local variables
+       
+       b_func_prologue(st_get_id_str(id));
+       PARAM_LIST localParaList;
+       BOOLEAN chargs;
+       TYPE returnType = ty_query_func(entry->u.decl.type, &localParaList, &chargs);   //get the TYPE of return
+       TYPETAG returnTypeTag = ty_query(returnType);     //get the TYPETAG of return
+       if(returnTypeTag != TYVOID)
+            b_alloc_return_value();
+       b_alloc_local_vars(0);
+       
+       if(returnTypeTag != TYVOID)
+            b_prepare_return(returnTypeTag);
+       b_func_epilogue(st_get_id_str(id));
+       st_exit_block();                                 //exit block
+  }
+
+/* this routine is used to get the function_heading for procedure */
+ST_ID funcHeadingForProc(ST_ID id, PARAM_LIST paraList){
+        int temp;
+        ST_DR entry = st_lookup(id, &temp);
+        if(!entry){
+              TYPE typeProc = ty_build_func(ty_build_basic(TYVOID), paraList, TRUE);
+              ST_DR entry = stdr_alloc();
+              entry->tag = GDECL;
+              entry->u.decl.is_ref = FALSE;
+              entry->u.decl.err    = FALSE;
+              entry->u.decl.type   = typeProc;
+              st_install(id, entry);
+          }
+        else if(entry->tag == GDECL){
+              entry->tag = FDECL;
+          }
+        else if(entry->tag == FDECL){
+          }
+
+        return id;
+   }
+
+/* this routine is used to get the function_heading for function*/
+ST_ID funcHeadingForFunc(ST_ID id, PARAM_LIST paraList, TYPE returnType){
+       int temp;
+       ST_DR entry = st_lookup(id, &temp);
+       if(!entry){
+             TYPE funcType = ty_build_func(returnType, paraList, TRUE);
+             ST_DR entry = stdr_alloc();
+             entry->tag = GDECL;
+             entry->u.decl.is_ref = FALSE;
+             entry->u.decl.err    = FALSE;
+             entry->u.decl.type   = funcType;
+             st_install(id, entry);
+         }
+        else if(entry->tag == GDECL){
+              entry->tag = FDECL;
+          }
+        else if(entry->tag == FDECL){
+          }
+
+        return id;
+   }
