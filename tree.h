@@ -15,6 +15,8 @@ extern int isMod;
 typedef enum{POSITIVE, NEGATIVE} UNARYSIGN;
 typedef enum{CONST, VARIABLE, BIN, CONV, DEREF, ASSIGN, NEGATE, FUNC, STRNG, FUNC_ASSIGN} TYPE_EXPR;
 
+typedef enum{SUCC, PRED, ORD, CHR} PAS_FUNC;
+
 /* tree node for expression tree construction-- ethan  */
 typedef struct exprtree_node{
     TYPE_EXPR exprTypeTag;      //type of the expression
@@ -110,7 +112,22 @@ NODE geneNodeForBiop(NODE left, B_ARITH_REL_OP biop, NODE right);
 NODE geneNodeForAdd(NODE left, B_ARITH_REL_OP addop, NODE right);
 
 /* this routine generate node for mutiplying operator */
-NODE geneNodeForMulti(NODE left, B_ARITH_REL_OP multiop, NODE right);
+NODE geneNodeForMulti(NODE left, B_ARITH_REL_OP multiop, NODE right, int isDiv, int isMod);
+
+/* generate tree node for variable_or_function_access_no_standard_function*/
+NODE geneNodeForNoStdFunc(char* identifier);
+
+/* generate tree node for accessing functions using a pointer */
+NODE geneNodeForFuncPointer(NODE pointer);
+
+/* generate tree node for new pointer points to var */
+NODE geneNodeForVarPointer(char* variable);
+
+/* generate tree node for function having one param */
+NODE geneNodeForOneParam(PAS_FUNC pf, NODE parameter);
+
+/* generate tree node for function having a param list */
+NODE geneNodeForParamList(PAS_FUNC pf, NODE paramlist);
 
 /* this routine generate node for actual parameter list */
 NODE geneNodeForActuParaList(NODE actualPara);
