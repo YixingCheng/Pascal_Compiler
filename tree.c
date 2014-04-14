@@ -13,6 +13,7 @@
 #include "symtab.h"
 //#include "encode.h"
 #include <assert.h>
+#include <string.h>
 
 extern void calSizeAlign(TYPE ty, int *align, unsigned int *size);
 extern NODE unaryConvert(NODE oldNode);
@@ -948,4 +949,62 @@ ST_ID funcHeadingForFunc(ST_ID id, PARAM_LIST paraList, TYPE returnType){
           }
 
         return id;
+   }
+
+/* this routine is used to create node of predefined FALSE or TRUE */
+NODE geneNodeForBool(BOOLEAN flag){
+       NODE boolNode = malloc(sizeof(struct exprtree_node));
+       boolNode->exprTypeTag = CONST;
+       boolNode->type = TYSIGNEDLONGINT;
+       if(flag)
+          boolNode->u.const_node.const_int_val = 1;
+       else
+          boolNode->u.const_node.const_int_val = 0;
+       return boolNode;
+   }
+
+/* this routine is used to create node of constant literal from combined string*/
+NODE geneNodeForConLiter(char* combstr){
+       if(strlen(combstr) > 1 ){
+           NODE stringNode = malloc(sizeof(struct exprtree_node));
+           stringNode->exprTypeTag = STRNG;
+           stringNode->type = TYPTR;
+           stringNode->u.string.str_const = combstr;
+           return stringNode;
+         }
+       else if(strlen(combstr) == 1){
+           NODE stringNode = malloc(sizeof(struct exprtree_node));
+           stringNode->exprTypeTag = CONST;
+           stringNode->type = TYSIGNEDLONGINT;
+           stringNode->u.const_node.const_int_val = *(combstr);
+           return stringNode;     
+         }
+   }
+
+/* this routine create a node for int constant */
+NODE geneNodeForIntConst(long intconst){
+       NODE intNode = malloc(sizeof(struct exprtree_node));
+       intNode->exprTypeTag = CONST;
+       intNode->type        = TYSIGNEDLONGINT;
+       intNode->u.const_node.const_int_val = intconst;
+       return intNode;
+   }
+
+/* this routine create a node for double constant */
+NODE geneNodeForRealConst(double doubleconst){
+       NODE realNode = malloc(sizeof(struct exprtree_node));
+       realNode->exprTypeTag = CONST;
+       realNode->type        = TYDOUBLE;
+       realNode->u.const_node.const_double_val = doubleconst;
+       return realNode;
+   }
+
+/* this routine get the value from constant node*/
+int getIntFromConstNode(NODE constNode){
+       if(constNode->type == TYSIGNEDLONGINT){
+             return constNode->u.const_node.const_int_val;
+         }
+       else if( constNode->type == TYDOUBLE){
+             return constNode->u.const_node.const_double_val;
+         }
    }
