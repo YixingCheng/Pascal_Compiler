@@ -342,7 +342,7 @@ any_or_import_decl:
 
 any_declaration_part:
     /* empty */
-  {}| any_declaration_part any_decl
+  { $$ = NULL; }| any_declaration_part any_decl
   {};
 
 any_decl:
@@ -673,8 +673,42 @@ variable_declaration:
   {  declaVariable($1, $3);  }
 function_declaration:
     function_heading semi directive_list semi
-  { funcDeclandDireList($1, $3); }| function_heading semi any_declaration_part statement_part semi
-  { funcDeclwithDecl($1); };
+  {  funcDeclandDireList($1, $3);  }| function_heading semi {
+      ST_ID id = $1;
+      int temp;
+      ST_DR entry = st_lookup(id, &temp);
+      if(entry){
+            entry->tag = FDECL;
+         }
+      st_enter_block();
+      b_init_formal_param_offset();
+  } any_declaration_part {
+      b_func_prologue(st_get_id_str($1));
+      ST_ID id = $1;
+      int temp;
+      ST_DR entry = st_lookup(id, &temp);
+      PARAM_LIST plist;
+      BOOLEAN chargs;
+      TYPE ty = ty_query_func(entry->u.decl.type, &plist, &chargs);
+      TYPETAG tytag = ty_query(ty);
+      if(tytag != TYVOID){
+            b_alloc_return_value();
+         }
+      b_alloc_local_vars(0);
+  } statement_part semi
+  {   ST_ID id = $1;
+      int temp;
+      ST_DR entry = st_lookup(id, &temp);
+      PARAM_LIST plist;
+      BOOLEAN chargs;
+      TYPE ty = ty_query_func(entry->u.decl.type, &plist, &chargs);
+      TYPETAG tytag = ty_query(ty);
+      if(tytag !=TYVOID){
+           b_prepare_return(tytag);
+        }
+      b_func_epilogue(st_get_id_str($1));
+      st_exit_block();
+   };
 
 function_heading:
     LEX_PROCEDURE new_identifier optional_par_formal_parameter_list
@@ -1045,8 +1079,8 @@ term:
 
 signed_primary:
     primary
-  {}| sign signed_primary
-  {};
+  { $$ = $1;}| sign signed_primary
+  { $$ = geneSignedPrimNode($1, $2);};
 
 /* edited by Zibo */
 primary:

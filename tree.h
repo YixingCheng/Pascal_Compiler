@@ -161,3 +161,6 @@ NODE geneNodeForRealConst(double doubleconst);
 
 /* this routine get the value from constant node*/
 int getIntFromConstNode(NODE constNode);
+
+/* this routine generate signed_primary node*/
+NODE geneSignedPrimNode(UNARYSIGN unarySign, NODE node);

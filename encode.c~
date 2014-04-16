@@ -132,9 +132,8 @@ void geneAsmForNode(NODE node){
      else if(node->exprTypeTag == BIN){
          geneAsmForNode(node->u.binop.left);
          geneAsmForNode(node->u.binop.right);
-     
-         b_arith_rel_op(node->u.binop.op_tag, node->type); 
          printf("debug here 3\n");
+         b_arith_rel_op(node->u.binop.op_tag, node->type); 
       }
      else if(node->exprTypeTag == FUNC_ASSIGN){
          geneAsmForNode(node->u.assign.right);

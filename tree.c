@@ -88,6 +88,7 @@ void resolvePointer(){
                     error("Unresolved type name: \"%s\"", st_get_id_str(id));
                   }
              }
+         unresolPtr = next;
        }
 
   }
@@ -229,8 +230,8 @@ void declaVariable(ID_LIST idList, TYPE type){
        if((ty_query(type) == TYERROR) || (ty_query(type)) == TYFUNC)
            error("Variable(s) must be of data type");
        ID_LIST localidList = idList;
-       
-       resolvePointer();
+       //printf("debug\n");       
+       //resolvePointer();
         
        while(localidList){
              ST_DR entry;
@@ -243,10 +244,13 @@ void declaVariable(ID_LIST idList, TYPE type){
                  entry->u.decl.err = TRUE;
              else
                  entry->u.decl.err = FALSE;
-             
+
+            resolvePointer();
+
              int temp;
              ST_DR checkEntry = st_lookup(localidList->id, &temp);
-             if(!checkEntry)
+
+             if(checkEntry)
                 error("Duplicate variable declaration: \"%s\"", st_get_id_str(localidList->id));
              else{
                 st_install(localidList->id, entry);
@@ -411,8 +415,10 @@ NODE geneNodeForBiop(NODE left, B_ARITH_REL_OP biop, NODE right){
                 rightconvNode->u.convert.oldType = biopNode->u.binop.right->type;
                 rightconvNode->u.convert.newType = TYSIGNEDLONGINT;
                 rightconvNode->u.convert.child   = biopNode->u.binop.right;
-                convNode->type = TYSIGNEDLONGINT;
-                biopNode->u.binop.right      = rightconvNode; 
+                rightconvNode->type = TYSIGNEDLONGINT;
+                biopNode->u.binop.right      = rightconvNode;
+
+                biopNode->type = TYSIGNEDLONGINT; 
             }
            else{
                 biopNode->type=biopNode->u.binop.left->type;
@@ -460,6 +466,7 @@ NODE geneNodeForBiop(NODE left, B_ARITH_REL_OP biop, NODE right){
       convBiopNode->u.convert.newType = TYSIGNEDCHAR;
       convBiopNode->u.convert.child   = biopNode;
       convBiopNode->type              = TYSIGNEDCHAR;
+     // printf("debug here;\n");
       biopNode = convBiopNode;
       return biopNode;
   }
@@ -749,7 +756,7 @@ NODE geneNodeForOneParam(PAS_FUNC pf, NODE parameter)
         nodetmp->u.convert.newType = TYSIGNEDLONGINT;
         nodetmp->u.convert.child = node;
         node = nodetmp;
-        
+        return node;        
     }
     if(pf == CHR)
     {
@@ -770,6 +777,7 @@ NODE geneNodeForOneParam(PAS_FUNC pf, NODE parameter)
         nodetmp->u.convert.oldType = TYSIGNEDLONGINT;
         nodetmp->u.convert.newType = TYUNSIGNEDCHAR;
         nodetmp->u.convert.child = node;
+      //  printf("debug\n");
         node = nodetmp;
     }
     return node;
@@ -883,7 +891,7 @@ void funcDeclandDireList(ST_ID id, STORAGE_CLASS sc){
        entry->u.decl.sc = sc;
   }
 
-/* this routine is used for function declaration with func heading, paralist, etc*/
+/* this routine is used for function declaration with func heading, paralist, etc
 void funcDeclwithDecl(ST_ID id){
        int temp;
        ST_DR entry = st_lookup(id, &temp);
@@ -905,11 +913,13 @@ void funcDeclwithDecl(ST_ID id){
             b_prepare_return(returnTypeTag);
        b_func_epilogue(st_get_id_str(id));
        st_exit_block();                                 //exit block
-  }
+  }     */
+
 
 /* this routine is used to get the function_heading for procedure */
 ST_ID funcHeadingForProc(ST_ID id, PARAM_LIST paraList){
         int temp;
+        printf("debug\n");
         ST_DR entry = st_lookup(id, &temp);
         if(!entry){
               TYPE typeProc = ty_build_func(ty_build_basic(TYVOID), paraList, TRUE);
@@ -925,8 +935,9 @@ ST_ID funcHeadingForProc(ST_ID id, PARAM_LIST paraList){
           }
         else if(entry->tag == FDECL){
           }
-
+        printf("debug2\n");
         return id;
+       
    }
 
 /* this routine is used to get the function_heading for function*/
@@ -1007,4 +1018,26 @@ int getIntFromConstNode(NODE constNode){
        else if( constNode->type == TYDOUBLE){
              return constNode->u.const_node.const_double_val;
          }
+   }
+
+/* this routine generate signed_primary node*/
+NODE geneSignedPrimNode(UNARYSIGN unarySign, NODE node){
+       if(node->exprTypeTag == VARIABLE){
+            NODE derefNode = malloc(sizeof(struct exprtree_node));
+            derefNode->exprTypeTag = DEREF;
+            derefNode->type = node->type;
+            derefNode->u.deref.child = node;
+            node = derefNode;
+            node = unaryConvert(node);
+         }
+       if(unarySign == NEGATIVE){
+            NODE signNode = malloc(sizeof(struct exprtree_node));
+            signNode->exprTypeTag = NEGATE;
+            signNode->type        = node->type;
+            signNode->u.deref.child = node;
+            node = signNode;
+         }
+
+       return node;
+
    }
